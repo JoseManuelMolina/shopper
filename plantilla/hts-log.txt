@@ -1,0 +1,16 @@
+HTTrack3.49-2+htsswf+htsjava launched on Wed, 27 Oct 2021 19:46:59 at https://yevgenysim.github.io/shopper/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://yevgenysim.github.io/shopper/ -O1 "C:\My Web Sites\ProyectoFinal" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+19:48:46	Error: 	"Not Found" (404) at link https://yevgenysim.github.io/shopper/product.htmL (from https://yevgenysim.github.io/shopper/index-asymmetric.html)
+19:48:46	Error: 	"Not Found" (404) at link https://yevgenysim.github.io/shopper/prpoduct.html (from https://yevgenysim.github.io/shopper/index-asymmetric.html)
+19:48:48	Error: 	"Not Found" (404) at link https://yevgenysim.github.io/shopper/_blank (from https://yevgenysim.github.io/shopper/overview.html)
+19:48:48	Error: 	"Not Found" (404) at link https://yevgenysim.github.io/shopper/docs/index.html (from https://yevgenysim.github.io/shopper/docs/breadcrumb.html)
+19:48:48	Error: 	"Not Found" (404) at link https://yevgenysim.github.io/shopper/docs/shop.html (from https://yevgenysim.github.io/shopper/docs/breadcrumb.html)
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 minutes 50 seconds : 435 links scanned, 429 files written (53337104 bytes overall) [41105874 bytes received at 373689 bytes/sec], 16341945 bytes transferred using HTTP compression in 183 files, ratio 20%, 87.0 requests per connection
+(5 errors, 0 warnings, 0 messages)
