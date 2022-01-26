@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 
+# FRONTEND
+
 def store(request):
     context = {}
     return render(request, 'diverse/store.html', context)
