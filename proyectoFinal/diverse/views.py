@@ -4,9 +4,9 @@ from django.shortcuts import render
 
 # FRONTEND
 
-def store(request):
+def index(request):
     context = {}
-    return render(request, 'diverse/store.html', context)
+    return render(request, 'diverse/index.html', context)
 
 def cart(request):
     context = {}
