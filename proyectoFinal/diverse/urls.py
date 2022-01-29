@@ -8,7 +8,7 @@ from diverse.views import *
 
 urlpatterns = [
     #Deja la cadena vacía para usar la url base (/)
-    path('', views.store, name="store"),
+    path('', views.index, name="index"),
     path('cart/', views.cart, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
     path('backend/', viewsBackend.indexList, name="indexBackend"),
