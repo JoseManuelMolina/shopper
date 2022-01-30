@@ -22,13 +22,13 @@
     <div class="wrapper ">
         <div class="sidebar" data-color="white" data-active-color="danger">
           <div class="logo">
-            <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+            <a href="{% url 'indexBackend' %}" class="simple-text logo-mini">
               <!-- <div class="logo-image-small">
                 <img src="./assets/img/logo-small.png">
               </div> -->
               <!-- <p>CT</p> -->
             </a>
-            <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+            <a href="{% url 'indexBackend' %}" class="simple-text logo-normal">
               Your Logo
               <!-- <div class="logo-image-big">
                 <img src="../assets/img/logo-big.png">
@@ -40,19 +40,19 @@
               <li class="active ">
                 <a href="javascript:;">
                   <i class="nc-icon nc-bank"></i>
-                  <p>First Item</p>
+                  <p>INICIO</p>
                 </a>
               </li>
               <li>
                 <a href="javascript:;">
-                  <i class="nc-icon nc-diamond"></i>
-                  <p>Second Item</p>
+                  <i class="nc-icon nc-tile-56"></i>
+                  <p>VER</p>
                 </a>
               </li>
               <li>
                 <a href="javascript:;">
-                  <i class="nc-icon nc-pin-3"></i>
-                  <p>Third Item</p>
+                  <i class="nc-icon nc-share-66"></i>
+                  <p>CREAR</p>
                 </a>
               </li>
             </ul>
@@ -70,7 +70,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                   </button>
                 </div>
-                <a class="navbar-brand" href="javascript:;">Diverse</a>
+                <a class="navbar-brand" href="{% url 'indexBackend' %}">Diverse</a>
               </div>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar navbar-kebab"></span>
