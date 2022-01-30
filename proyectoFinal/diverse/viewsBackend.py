@@ -1,6 +1,8 @@
+from decimal import DivisionByZero
 from django.shortcuts import redirect, render
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+import django.apps
 
 from diverse.forms import *
 

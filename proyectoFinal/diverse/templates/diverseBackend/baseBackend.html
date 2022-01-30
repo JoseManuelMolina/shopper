@@ -17,6 +17,9 @@
     <link href="{% static 'backend/css/bootstrap.min.css' %}" rel="stylesheet" />
     <link href="{% static 'backend/css/paper-dashboard.css' %}" rel="stylesheet" />
 
+    <!-- Diverse CSS -->
+    <link href="{% static 'backend/css/backend.css' %}" rel="stylesheet" />
+
 </head>
 <body>
     <div class="wrapper ">
@@ -50,10 +53,33 @@
                 </a>
               </li>
               <li>
-                <a href="javascript:;">
+                <a href="javascript:;" id="botonCrear" onclick="botonCrear()">
                   <i class="nc-icon nc-share-66"></i>
                   <p>CREAR</p>
+                  <i id="mas" class="nc-icon nc-simple-add" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
+                  <i id="menos" class="nc-icon nc-simple-delete display-none" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
                 </a>
+                <ul id="crearDropdown" class="nav display-none">
+                  <hr>
+                  <li>
+                    <a href="{% url 'crearColor' %}">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>COLOR</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>MARCA</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>MODELO</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -148,6 +174,7 @@
     <script src="{% static 'backend/js/plugins/bootstrap-notify.js' %}"></script>
     <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{% static 'backend/js/paper-dashboard.min.js' %}" type="text/javascript"></script>
-
+    <!-- Script Diverse -->
+    <script src="{% static 'backend/js/scripts.js' %}" type="text/javascript"></script>
 </body>
 </html>
