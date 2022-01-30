@@ -19,7 +19,7 @@ def indexList(request):
     colores = color.objects.all()
     return render(request, 'diverseBackend/index.html', {'colores': colores})
 
-#@login_required(login_url='/usuario/login/')
+@login_required(login_url='backendLogin')
 def crearColor(request):
     if request.method == 'POST':
         form = colorForm(request.POST)

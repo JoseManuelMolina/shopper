@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth.views import LoginView, logout_then_login
 
 from . import viewsBackend
 from . import views
@@ -11,6 +12,8 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('cart/', views.cart, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
+    path('login', LoginView.as_view(template_name='diverse/login.html'),name="login"),
     path('backend/', viewsBackend.indexList, name="indexBackend"),
     path('backend/crear', viewsBackend.crearColor, name="crearColor"),
+    path('backend/login', LoginView.as_view(template_name='diverseBackend/login.html'),name="backendLogin"),
 ]
