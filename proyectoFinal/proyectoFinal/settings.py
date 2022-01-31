@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from telnetlib import AUTHENTICATION
 
 from django.urls import reverse_lazy
 
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'account',
     'diverse',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,8 +84,8 @@ DATABASES = {
         'NAME': 'proyectoFinal', 
         'USER': 'postgres', 
         'PASSWORD': 'usuario',
-        'HOST': '62.83.140.100', 
-#        'HOST': '127.0.0.1'
+#        'HOST': '62.83.140.100', 
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
@@ -107,6 +109,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "account.Account"
+
+#AUTH_AUTHENTICATION_TYPE = 'both'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend'
+    'account.backends.CaseIntensitiveModelBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

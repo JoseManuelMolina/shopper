@@ -21,6 +21,9 @@ def indexList(request):
     colores = color.objects.all()
     return render(request, 'diverseBackend/index.html', {'colores': colores})
 
+def login():
+    return ''
+    
 @login_required(login_url='backendLogin')
 def crearColor(request):
     if request.method == 'POST':
