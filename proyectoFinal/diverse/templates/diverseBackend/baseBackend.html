@@ -47,19 +47,13 @@
                 </a>
               </li>
               <li>
-                <a href="javascript:;">
+                <a href="javascript:;" id="botonVer" onclick="botonDropdown('ver')" class="table-dropdown">
                   <i class="nc-icon nc-tile-56"></i>
                   <p>VER</p>
+                  <i id="mas-ver" class="nc-icon nc-simple-add" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
+                  <i id="menos-ver" class="nc-icon nc-simple-delete display-none" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
                 </a>
-              </li>
-              <li>
-                <a href="javascript:;" id="botonCrear" onclick="botonCrear()">
-                  <i class="nc-icon nc-share-66"></i>
-                  <p>CREAR</p>
-                  <i id="mas" class="nc-icon nc-simple-add" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
-                  <i id="menos" class="nc-icon nc-simple-delete display-none" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
-                </a>
-                <ul id="crearDropdown" class="nav display-none">
+                <ul id="verDropdown" class="nav display-none">
                   <hr>
                   <li>
                     <a href="{% url 'crearColor' %}">
@@ -78,7 +72,50 @@
                       <i class="nc-icon nc-tie-bow"></i>
                       <p>MODELO</p>
                     </a>
+                    <hr>
                   </li>
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:;" id="botonCrear" onclick="botonDropdown('crear')"  class="table-dropdown">
+                  <i class="nc-icon nc-share-66"></i>
+                  <p>CREAR</p>
+                  <i id="mas-crear" class="nc-icon nc-simple-add" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
+                  <i id="menos-crear" class="nc-icon nc-simple-delete display-none" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
+                </a>
+                <ul id="crearDropdown" class="nav display-none">
+                  <hr>
+                  <li>
+                    <a href="{% url 'crearColor' %}">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>COLOR</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'crearCategoria' %}">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>CATEGORIA</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'crearTalla' %}">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>TALLA</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>MARCA</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>MODELO</p>
+                    </a>
+                  </li>
+                  <hr>
                 </ul>
               </li>
             </ul>

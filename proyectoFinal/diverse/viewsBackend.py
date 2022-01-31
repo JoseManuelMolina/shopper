@@ -19,7 +19,9 @@ from .models import *
 
 def indexList(request):
     colores = color.objects.all()
-    return render(request, 'diverseBackend/index.html', {'colores': colores})
+    categorias = categoria.objects.all()
+    tallas = talla.objects.all()
+    return render(request, 'diverseBackend/index.html', {'colores': colores, 'categorias':categorias, 'tallas': tallas})
 
 @login_required(login_url='backendLogin')
 def crearColor(request):
@@ -38,3 +40,39 @@ def crearColor(request):
         form = colorForm()
     
     return render(request, 'diverseBackend/color_form.html', {'form':form})
+
+@login_required(login_url='backendLogin')
+def crearCategoria(request):
+    if request.method == 'POST':
+        form = categoriaForm(request.POST)
+        if form.is_valid():
+            categoriaDatosForm = form.cleaned_data
+
+            categoriaDatos = categoria(
+                tipo = categoriaDatosForm['nombreCategoria'],
+            )
+
+            categoriaDatos.save()
+        return redirect('indexBackend')
+    else:
+        form = categoriaForm()
+    
+    return render(request, 'diverseBackend/categoria_form.html', {'form':form})
+
+@login_required(login_url='backendLogin')
+def crearTalla(request):
+    if request.method == 'POST':
+        form = tallaForm(request.POST)
+        if form.is_valid():
+            tallaDatosForm = form.cleaned_data
+
+            tallaDatos = talla(
+                nombre = tallaDatosForm['nombreTalla'],
+            )
+
+            tallaDatos.save()
+        return redirect('indexBackend')
+    else:
+        form = tallaForm()
+    
+    return render(request, 'diverseBackend/talla_form.html', {'form':form})

@@ -15,3 +15,28 @@ class colorForm(forms.Form):
         )
     )
 
+class categoriaForm(forms.Form):
+    
+    nombreCategoria = forms.CharField(
+        max_length=2,
+        label='nombreCategoria',
+        widget=forms.TextInput(
+            attrs={
+                'class':'form-control',
+                'id':'nombreCategoria',
+                'placeHolder':'Símbolo Categoría'}
+        )
+    )
+
+
+class tallaForm(forms.Form):
+    nombreTalla = forms.CharField(
+        max_length=10,
+        label="talla",
+        widget=forms.TextInput(
+            attrs={
+                'class' : 'form-control',
+                'id':'talla',
+                'placeholder':'Talla'}
+        )
+    )

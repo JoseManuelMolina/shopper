@@ -3,6 +3,7 @@
 
     <h3>Diverse Backend</h3>
 
+    <h4>Tabla de colores</h4>
     <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -19,36 +20,44 @@
           {% endfor %}
         </tbody>
     </table>
-      
+
+    <hr>
+
+    <h4>Tabla de categorias</h4>
     <table class="table">
-        <thead class="thead-light">
+        <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">categoria</th>
           </tr>
         </thead>
         <tbody>
+          {% for categoria in categorias %}
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope="row">{{ categoria.id }}</th>
+            <td>{{ categoria.tipo }}</td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {% endfor %}
         </tbody>
     </table>
 
+    <hr>
+
+    <h4>Tabla de tallas</h4>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Talla</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for talla in tallas %}
+          <tr>
+            <th scope="row">{{ talla.id }}</th>
+            <td>{{ talla.nombre }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
