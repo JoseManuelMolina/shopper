@@ -18,4 +18,5 @@ urlpatterns = [
     path('backend/crear-categoria', viewsBackend.crearCategoria, name="crearCategoria"),
     path('backend/crear-talla', viewsBackend.crearTalla, name="crearTalla"),
     path('backend/login', LoginView.as_view(template_name='diverseBackend/login.html'),name="backendLogin"),
+    path('backend/logout', logout_then_login,name="backendCerrarSesion"),
 ]

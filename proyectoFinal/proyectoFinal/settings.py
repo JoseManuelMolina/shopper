@@ -111,11 +111,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "account.Account"
 
-#AUTH_AUTHENTICATION_TYPE = 'both'
+AUTH_AUTHENTICATION_TYPE = 'both'
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.AllowAllUsersModelBackend'
-    'account.backends.CaseIntensitiveModelBackend',
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+#    'account.backends.CaseIntensitiveModelBackend',
+    'account.backends.EmailOrUsernameModelBackend',
 )
 
 # Internationalization
@@ -131,7 +132,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_URL = '/login'
+
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
