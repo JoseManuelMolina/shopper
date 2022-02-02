@@ -1,0 +1,56 @@
+.nav-image-men{
+    background-image: url('../img/products/product-2.jpg');
+}
+
+.nav-image-floral{
+    background-image: url('../img/products/product-3.jpg');
+}
+
+.nav-image-discount{
+    background-image: url('../img/products/product-111.jpg');
+}
+
+.footer{
+    background-image: url('../img/patterns/pattern-2.svg')
+}
+
+.instagram-1{
+    background-image: url('../img/products/product-16.jpg');
+}
+.instagram-2{
+    background-image: url('../img/products/product-55.jpg');
+}
+.instagram-3{
+    background-image: url('../img/products/product-18.jpg');
+    background-position: top !important;
+}
+.instagram-4{
+    background-image: url('../img/products/product-19.jpg');
+    background-position: top !important;
+}
+.instagram-5{
+    background-image: url('../img/products/product-113.jpg');
+    background-position: top !important;
+}
+.instagram-6{
+    background-image: url('../img/products/product-72.jpg');
+}
+.instagram-7{
+    background-image: url('../img/products/product-5.jpg');
+}
+.instagram-8{
+    background-image: url('../img/products/product-158.jpg');
+    background-position: top !important;
+}
+
+.discount-50{
+    background-image: url('../img/covers/cover-16.jpg');
+}
+
+.summer-collection{
+    background-image: url('../img/covers/cover-23.jpg');
+}
+
+.summer-sale{
+    background-image: url('../img/covers/cover-5.jpg');
+}
