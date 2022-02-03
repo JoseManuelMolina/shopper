@@ -1,12 +1,10 @@
-from decimal import DivisionByZero
 from django.shortcuts import redirect, render
-from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-import django.apps
 
 from diverse.forms import *
 
-from .models import *
+from diverse.models import *
+from account.models import *
 
 # Create your views here.
 
@@ -23,9 +21,35 @@ def indexList(request):
     tallas = talla.objects.all()
     return render(request, 'diverseBackend/index.html', {'colores': colores, 'categorias':categorias, 'tallas': tallas})
 
-def login():
-    return ''
+@login_required(login_url='backendLogin')
+def perfil(request):
+    if request.method == 'POST':
+        form = usuarioForm(request.POST)
+        if form.is_valid():
+            usuarioDatosForm = form.cleaned_data
+
+            usuarioDatos = Account(
+                email = usuarioDatosForm['email'],
+                username = usuarioDatosForm['username'],
+                nombre = usuarioDatosForm['nombre'],
+                apellidos = usuarioDatosForm['apellidos'],
+                direccion = usuarioDatosForm['direccion'],
+                pais = usuarioDatosForm['pais'],
+                provincia = usuarioDatosForm['provincia'],
+                localidad = usuarioDatosForm['localidad'],
+                codigoPostal = usuarioDatosForm['codigoPostal'],
+                telefono = usuarioDatosForm['telefono'],
+                imagen_perfil = usuarioDatosForm['imagenPerfil'],
+            )
+
+            usuarioDatos.save()
+        return redirect('backendPerfil')
+    else:
+        usuario = request.user
+        form = usuarioForm()
     
+    return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario})
+
 @login_required(login_url='backendLogin')
 def crearColor(request):
     if request.method == 'POST':

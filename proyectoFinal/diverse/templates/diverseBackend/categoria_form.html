@@ -1,17 +1,19 @@
 {% extends 'diverseBackend/baseBackend.html' %}
 {% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Crear categoría</h3>
 
-    <h3>Crear categoría</h3>
+            <form method="POST">
+                {% csrf_token %}
 
-    <form method="POST">
-        {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.nombreCategoria.label }}">Categoría</label>
+                        {{ form.nombreCategoria }}
+                    </div>
 
-            <div class="form-group">
-                <label for="{{ form.nombreCategoria.label }}">Categoría</label>
-                {{ form.nombreCategoria }}
-            </div>
-
-        <button type="submit" class="btn btn-primary">Crear</button>
-    </form>
-
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
 {% endblock content %}

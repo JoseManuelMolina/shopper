@@ -1,17 +1,19 @@
 {% extends 'diverseBackend/baseBackend.html' %}
 {% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Crear color</h3>
 
-    <h3>Crear color</h3>
+            <form method="POST">
+                {% csrf_token %}
 
-    <form method="POST">
-        {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.nombreColor.label }}">Nombre</label>
+                        {{ form.nombreColor }}
+                    </div>
 
-            <div class="form-group">
-                <label for="{{ form.nombreColor.label }}">Nombre</label>
-                {{ form.nombreColor }}
-            </div>
-
-        <button type="submit" class="btn btn-primary">Crear</button>
-    </form>
-
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
 {% endblock content %}
