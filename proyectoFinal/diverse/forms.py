@@ -26,7 +26,12 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'username',
+<<<<<<< HEAD
                 'placeholder':'Nombre de usuario'}
+=======
+                'placeholder':'Nombre de usuario',
+                'value':'{{ usuario.username }}'}
+>>>>>>> 159ad254cf1f81d6ff3e560910f72b8c4e50ebc6
         )
     )
 
