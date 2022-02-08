@@ -25,7 +25,7 @@ class usuarioForm(forms.Form):
                 'class':'form-control', 
                 'id':'username',
                 'placeholder':'Nombre de usuario',
-                'value':'{{ username}}'}
+                'value':'{{ usuario.username }}'}
         )
     )
 
