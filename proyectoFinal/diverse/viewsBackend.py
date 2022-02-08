@@ -46,10 +46,9 @@ def perfil(request):
         return redirect('backendPerfil')
     else:
         usuario = request.user
-        form = usuarioForm(request)
-        prueba = 'aloha'
+        form = usuarioForm(usuario)
     
-    return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario, 'prueba':prueba})
+    return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario})
 
 @login_required(login_url='backendLogin')
 def crearColor(request):

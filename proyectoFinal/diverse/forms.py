@@ -1,7 +1,10 @@
 from django import forms
 
+from django.contrib.auth.models import User
+
 from diverse.models import *
 from account.models import *
+
 
 class usuarioForm(forms.Form):
 
@@ -12,8 +15,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'email',
-                'placeholder':'Email',
-                'value':'{{ usuario.email }}'}
+                'placeholder':'Email'}
         )
     )
 
@@ -24,8 +26,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'username',
-                'placeholder':'Nombre de usuario',
-                'value':'{{ username}}'}
+                'placeholder':'Nombre de usuario'}
         )
     )
 
@@ -36,8 +37,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'nombre',
-                'placeholder':'Nombre',
-                'value':'{{ usuario.get_nombre }}'}
+                'placeholder':'Nombre'}
         )
     )
 
@@ -48,8 +48,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'apellidos',
-                'placeholder':'Apellidos',
-                'value':'{{ usuario.apellidos }}'}
+                'placeholder':'Apellidos'}
         )
     )
 
@@ -60,8 +59,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'direccion',
-                'placeholder':'Dirección',
-                'value':'{{ usuario.direccion }}'}
+                'placeholder':'Dirección'}
         )
     )
 
@@ -72,8 +70,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'pais',
-                'placeholder':'País',
-                'value':'{{ usuario.pais }}'}
+                'placeholder':'País'}
         )
     )
 
@@ -84,8 +81,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'provincia',
-                'placeholder':'Provincia',
-                'value':'{{ usuario.provincia }}'}
+                'placeholder':'Provincia'}
         )
     )
 
@@ -96,8 +92,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'localidad',
-                'placeholder':'Localidad',
-                'value':'{{ usuario.localidad }}'}
+                'placeholder':'Localidad'}
         )
     )
 
@@ -107,8 +102,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'codigoPostal',
-                'placeholder':'Código Postal',
-                'value':'{{ usuario.codigoPostal }}'}
+                'placeholder':'Código Postal'}
         )
     )
 
@@ -118,8 +112,7 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'telefono',
-                'placeholder':'Teléfono',
-                'value':'{{ usuario.get_telefono }}'}
+                'placeholder':'Teléfono'}
         )
     )
 
@@ -128,10 +121,22 @@ class usuarioForm(forms.Form):
         widget=forms.FileInput(
             attrs={
                 'class':'form-control', 
-                'id':'imagenPerfil',
-                'value':'{{ usuario.imagen_perfil }}'}
+                'id':'imagenPerfil'}
         )
     )
+
+    def __init__(self, usuario, *args, **kwargs):
+        super(usuarioForm, self).__init__(*args, **kwargs)
+        self.fields['email'].initial = usuario.email
+        self.fields['username'].initial = usuario.username
+        self.fields['nombre'].initial = usuario.nombre
+        self.fields['apellidos'].initial = usuario.apellidos
+        self.fields['direccion'].initial = usuario.direccion
+        self.fields['pais'].initial = usuario.pais
+        self.fields['provincia'].initial = usuario.provincia
+        self.fields['localidad'].initial = usuario.localidad
+        self.fields['codigoPostal'].initial = usuario.codigoPostal
+        self.fields['telefono'].initial = usuario.telefono
 
 class colorForm(forms.Form):
 
