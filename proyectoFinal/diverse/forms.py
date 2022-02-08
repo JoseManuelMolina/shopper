@@ -37,7 +37,7 @@ class usuarioForm(forms.Form):
                 'class':'form-control', 
                 'id':'nombre',
                 'placeholder':'Nombre',
-                'value':'{{ usuario.nombre }}'}
+                'value':'{{ usuario.get_nombre }}'}
         )
     )
 
@@ -119,7 +119,7 @@ class usuarioForm(forms.Form):
                 'class':'form-control', 
                 'id':'telefono',
                 'placeholder':'Teléfono',
-                'value':'{{ usuario.telefono }}'}
+                'value':'{{ usuario.get_telefono }}'}
         )
     )
 
