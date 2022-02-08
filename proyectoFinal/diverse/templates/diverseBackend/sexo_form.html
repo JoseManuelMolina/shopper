@@ -2,14 +2,14 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <h3>Crear categoría</h3>
+            <h3>Crear Sexo</h3>
 
             <form method="POST">
                 {% csrf_token %}
 
                     <div class="form-group">
-                        <label for="{{ form.nombreCategoria.label }}">Categoría</label>
-                        {{ form.nombreCategoria }}
+                        <label for="{{ form.nombreSexo.label }}">{{ form.nombreSexo.label }}</label>
+                        {{ form.nombreSexo }}
                     </div>
 
                 <button type="submit" class="btn btn-primary">Crear</button>

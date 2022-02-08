@@ -1,3 +1,5 @@
+from email.policy import default
+from operator import mod
 from django.db import models
 from django.conf import settings
 from django.db import models
@@ -5,14 +7,14 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
-class categoria(models.Model):
+class sexo(models.Model):
 
     HOMBRE = 'H'
     MUJER = 'M'
     NIÑO = 'NO'
     NIÑA = 'NA'
 
-    OPCIONES_CATEGORIA = [
+    OPCIONES_SEXO = [
         (HOMBRE, 'Hombre'),
         (MUJER, 'Mujer'),
         (NIÑO, 'Niño'),
@@ -20,15 +22,25 @@ class categoria(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    tipo = models.CharField(max_length=2, choices=OPCIONES_CATEGORIA)
+    tipo = models.CharField(max_length=2, choices=OPCIONES_SEXO)
+
+class categoria(models.Model):
+    id = models.AutoField(primary_key=True)
+    sexo = models.ForeignKey(
+        'sexo', on_delete=models.CASCADE,
+    )
+    nombre = models.CharField(max_length=40)
 
 class subCategoria(models.Model):
 
     id = models.AutoField(primary_key=True)
-    categoria = models.ForeignKey(
-        'categoria', on_delete=models.CASCADE,
+    sexo = models.ForeignKey(
+        'sexo', on_delete=models.CASCADE,
     )
-    nombre = models.CharField(max_length=40)
+    categoria =  models.ForeignKey(
+        'categoria', on_delete=models.CASCADE, related_name='categoria'
+    )
+    nombre = models.CharField(max_length=40, default='default categoria')
 
 class marca(models.Model):
 
@@ -58,8 +70,8 @@ class talla(models.Model):
 
 class producto(models.Model):
 
-    cateogria =  models.ForeignKey(
-        'categoria', on_delete=models.CASCADE,
+    sexo =  models.ForeignKey(
+        'sexo', on_delete=models.CASCADE,
     )
     subCategoria =  models.ForeignKey(
         'subCategoria', on_delete=models.CASCADE,

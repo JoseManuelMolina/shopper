@@ -25,7 +25,7 @@ class usuarioForm(forms.Form):
                 'class':'form-control', 
                 'id':'username',
                 'placeholder':'Nombre de usuario',
-                'value':'{{ usuario.username }}'}
+                'value':'{{ username}}'}
         )
     )
 
@@ -146,19 +146,18 @@ class colorForm(forms.Form):
         )
     )
 
-class categoriaForm(forms.Form):
+class sexoForm(forms.Form):
     
-    nombreCategoria = forms.CharField(
+    nombreSexo = forms.CharField(
         max_length=2,
-        label='nombreCategoria',
+        label='Sexo',
         widget=forms.TextInput(
             attrs={
                 'class':'form-control',
-                'id':'nombreCategoria',
-                'placeHolder':'Símbolo Categoría'}
+                'id':'nombreSexo',
+                'placeHolder':'Símbolo Sexo'}
         )
     )
-
 
 class tallaForm(forms.Form):
     nombreTalla = forms.CharField(
@@ -170,4 +169,21 @@ class tallaForm(forms.Form):
                 'id':'talla',
                 'placeholder':'Talla'}
         )
+    )
+
+
+class subcategoriaForm(forms.Form):
+    nombreSubcategoria = forms.CharField(
+        max_length = 40,
+        label = "Nombre de la subcategoria",
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'form-control',
+                'id' : 'nombre',
+                'placeholder' : 'Nombre'}
+        )
+    )
+
+    categoria_id = forms.ChoiceField(
+        label = "Categoria"
     )

@@ -24,19 +24,19 @@
 
       <hr>
 
-      <h4>Tabla de categorias</h4>
+      <h4>Tabla de sexos</h4>
       <table class="table">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">categoria</th>
+              <th scope="col">sexo</th>
             </tr>
           </thead>
           <tbody>
-            {% for categoria in categorias %}
+            {% for sexo in sexos %}
             <tr>
-              <th scope="row">{{ categoria.id }}</th>
-              <td>{{ categoria.tipo }}</td>
+              <th scope="row">{{ sexo.id }}</th>
+              <td>{{ sexo.tipo }}</td>
             </tr>
             {% endfor %}
           </tbody>
