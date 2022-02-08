@@ -17,9 +17,9 @@ from account.models import *
 
 def indexList(request):
     colores = color.objects.all()
-    categorias = categoria.objects.all()
+    sexos = sexo.objects.all()
     tallas = talla.objects.all()
-    return render(request, 'diverseBackend/index.html', {'colores': colores, 'categorias':categorias, 'tallas': tallas})
+    return render(request, 'diverseBackend/index.html', {'colores': colores, 'sexos':sexos, 'tallas': tallas})
 
 @login_required(login_url='backendLogin')
 def perfil(request):
@@ -46,9 +46,10 @@ def perfil(request):
         return redirect('backendPerfil')
     else:
         usuario = request.user
-        form = usuarioForm()
+        form = usuarioForm(request)
+        prueba = 'aloha'
     
-    return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario})
+    return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario, 'prueba':prueba})
 
 @login_required(login_url='backendLogin')
 def crearColor(request):
@@ -69,22 +70,22 @@ def crearColor(request):
     return render(request, 'diverseBackend/color_form.html', {'form':form})
 
 @login_required(login_url='backendLogin')
-def crearCategoria(request):
+def crearSexo(request):
     if request.method == 'POST':
-        form = categoriaForm(request.POST)
+        form = sexoForm(request.POST)
         if form.is_valid():
-            categoriaDatosForm = form.cleaned_data
+            sexoDatosForm = form.cleaned_data
 
-            categoriaDatos = categoria(
-                tipo = categoriaDatosForm['nombreCategoria'],
+            sexoDatos = sexo(
+                tipo = sexoDatosForm['nombreSexo'],
             )
 
-            categoriaDatos.save()
+            sexoDatos.save()
         return redirect('indexBackend')
     else:
-        form = categoriaForm()
+        form = sexoForm()
     
-    return render(request, 'diverseBackend/categoria_form.html', {'form':form})
+    return render(request, 'diverseBackend/sexo_form.html', {'form':form})
 
 @login_required(login_url='backendLogin')
 def crearTalla(request):
