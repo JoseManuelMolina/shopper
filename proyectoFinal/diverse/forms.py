@@ -26,18 +26,14 @@ class usuarioForm(forms.Form):
             attrs={
                 'class':'form-control', 
                 'id':'username',
-<<<<<<< HEAD
                 'placeholder':'Nombre de usuario'}
-=======
-                'placeholder':'Nombre de usuario',
-                'value':'{{ usuario.username }}'}
->>>>>>> 159ad254cf1f81d6ff3e560910f72b8c4e50ebc6
         )
     )
 
     nombre = forms.CharField(
         max_length=20,
         label='nombre',
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class':'form-control', 
@@ -49,6 +45,7 @@ class usuarioForm(forms.Form):
     apellidos = forms.CharField(
         max_length=60,
         label='apellidos',
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class':'form-control', 
@@ -60,6 +57,7 @@ class usuarioForm(forms.Form):
     direccion = forms.CharField(
         max_length=100,
         label='direccion',
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class':'form-control', 
@@ -71,6 +69,7 @@ class usuarioForm(forms.Form):
     pais = forms.CharField(
         max_length=40,
         label='pais',
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class':'form-control', 
@@ -82,6 +81,7 @@ class usuarioForm(forms.Form):
     provincia = forms.CharField(
         max_length=40,
         label='provincia',
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class':'form-control', 
@@ -93,6 +93,7 @@ class usuarioForm(forms.Form):
     localidad = forms.CharField(
         max_length=40,
         label='localidad',
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class':'form-control', 
@@ -103,6 +104,7 @@ class usuarioForm(forms.Form):
 
     codigoPostal = forms.IntegerField(
         label='codigoPostal',
+        required=False,
         widget=forms.NumberInput(
             attrs={
                 'class':'form-control', 
@@ -113,6 +115,7 @@ class usuarioForm(forms.Form):
 
     telefono = forms.IntegerField(
         label='telefono',
+        required=False,
         widget=forms.NumberInput(
             attrs={
                 'class':'form-control', 
@@ -125,7 +128,7 @@ class usuarioForm(forms.Form):
         label='imagenPerfil',
         widget=forms.FileInput(
             attrs={
-                'class':'form-control', 
+                'class':'form-control-file', 
                 'id':'imagenPerfil'}
         )
     )

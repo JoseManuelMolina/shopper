@@ -1,10 +1,11 @@
 {% extends 'diverseBackend/baseBackend.html' %}
+{% load static %}
 {% block content %}
     <div class="row">
         <div class="col-md-4">
             <div class="card card-user">
                 <div class="image">
-                    <img src="../assets/img/damir-bosnjak.jpg" alt="...">
+                    <img src="{% static 'backend/img/damir-bosnjak.jpg' %}" alt="...">
                 </div>
                 <div class="card-body">
                     <div class="author">
@@ -167,10 +168,32 @@
                         </div>
                         <div class="row">
                             <div class="update ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
+                                <button type="submit" class="btn btn-primary btn-round">Guardar Cambios</button>
+                                <button type="reset" class="btn btn-primary btn-round">Resetear Datos</button>
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Cambiar Contraseña</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 pr-1">
+                            <div class="form-group">
+                                <label for="">Nueva Contraseña</label>
+                                <input type="password" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-1">
+                            <div class="form-group">
+                                <label for="">Confirmar Contraseña</label>
+                                <input type="password" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

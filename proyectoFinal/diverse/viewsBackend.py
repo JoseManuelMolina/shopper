@@ -24,26 +24,10 @@ def indexList(request):
 @login_required(login_url='backendLogin')
 def perfil(request):
     if request.method == 'POST':
-        form = usuarioForm(request.POST)
+        form = usuarioForm(request.POST, request.FILES, request.user)
         if form.is_valid():
-            usuarioDatosForm = form.cleaned_data
-
-            usuarioDatos = Account(
-                email = usuarioDatosForm['email'],
-                username = usuarioDatosForm['username'],
-                nombre = usuarioDatosForm['nombre'],
-                apellidos = usuarioDatosForm['apellidos'],
-                direccion = usuarioDatosForm['direccion'],
-                pais = usuarioDatosForm['pais'],
-                provincia = usuarioDatosForm['provincia'],
-                localidad = usuarioDatosForm['localidad'],
-                codigoPostal = usuarioDatosForm['codigoPostal'],
-                telefono = usuarioDatosForm['telefono'],
-                imagen_perfil = usuarioDatosForm['imagenPerfil'],
-            )
-
-            usuarioDatos.save()
-        return redirect('backendPerfil')
+            form.save()
+            return redirect('backendPerfil')
     else:
         usuario = request.user
         form = usuarioForm(usuario)
