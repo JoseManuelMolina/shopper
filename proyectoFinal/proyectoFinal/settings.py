@@ -14,6 +14,7 @@ from pathlib import Path
 from telnetlib import AUTHENTICATION
 
 from django.urls import reverse_lazy
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,8 +85,8 @@ DATABASES = {
         'NAME': 'proyectoFinal', 
         'USER': 'postgres', 
         'PASSWORD': 'usuario',
-#        'HOST': '62.83.140.100', 
-        'HOST': '127.0.0.1',
+        'HOST': '62.83.140.100', 
+#        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
@@ -142,9 +143,13 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

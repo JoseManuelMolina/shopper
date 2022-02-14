@@ -87,3 +87,23 @@ def crearTalla(request):
         form = tallaForm()
     
     return render(request, 'diverseBackend/talla_form.html', {'form':form})
+
+@login_required(login_url='backendLogin')
+def crearCategoria(request):
+        if request.method == 'POST':
+            form = categoriaForm(request.POST)
+            if form.is_valid():
+                categoriaDatosForm = form.cleaned_data
+
+                categoriaDatos = categoria(
+                    nombre = categoriaDatosForm['nombreCategoria'],
+                    sexo = categoriaDatosForm['sexoCategoria']
+                )
+
+                categoriaDatos.save()
+            return redirect('indexBackend')
+        else:
+            sexos = sexo.objects.all()
+            form = sexoForm(sexos)
+        
+        return render(request, 'diverseBackend/categoria_form.html', {'form':form, 'sexos':sexos})
