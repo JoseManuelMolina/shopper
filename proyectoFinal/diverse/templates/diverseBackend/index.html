@@ -61,6 +61,28 @@
             {% endfor %}
           </tbody>
       </table>    
+
+      <hr>
+
+      <h4>Tabla de categorias</h4>
+      <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Sexo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for categoria in categorias %}
+            <tr>
+              <th scope="row">{{ categoria.id }}</th>
+              <td scope="row">{{ categoria.nombre }}</td>
+              <td scope="row">{{ categoria.sexo_id }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>   
     </div>
   </div>
 {% endblock content %}

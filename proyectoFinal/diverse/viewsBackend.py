@@ -19,7 +19,8 @@ def indexList(request):
     colores = color.objects.all()
     sexos = sexo.objects.all()
     tallas = talla.objects.all()
-    return render(request, 'diverseBackend/index.html', {'colores': colores, 'sexos':sexos, 'tallas': tallas})
+    categorias = categoria.objects.all()
+    return render(request, 'diverseBackend/index.html', {'colores': colores, 'sexos':sexos, 'tallas': tallas, 'categorias' : categorias})
 
 @login_required(login_url='backendLogin')
 def perfil(request):
@@ -90,20 +91,19 @@ def crearTalla(request):
 
 @login_required(login_url='backendLogin')
 def crearCategoria(request):
-        if request.method == 'POST':
-            form = categoriaForm(request.POST)
-            if form.is_valid():
-                categoriaDatosForm = form.cleaned_data
+    if request.method == 'POST':
+        form = categoriaForm(request.POST)
+        if form.is_valid():
+            categoriaDatosForm = form.cleaned_data
 
-                categoriaDatos = categoria(
-                    nombre = categoriaDatosForm['nombreCategoria'],
-                    sexo = categoriaDatosForm['sexoCategoria']
-                )
+            categoriaDatos = categoria(
+                nombre = categoriaDatosForm['nombreCategoria'],
+                sexo_id = categoriaDatosForm['sexo_id']
+            )
 
-                categoriaDatos.save()
-            return redirect('indexBackend')
-        else:
-            sexos = sexo.objects.all()
-            form = sexoForm(sexos)
-        
-        return render(request, 'diverseBackend/categoria_form.html', {'form':form, 'sexos':sexos})
+            categoriaDatos.save()
+        return redirect('indexBackend')
+    else:
+        form = categoriaForm()
+
+    return render(request, 'diverseBackend/categoria_form.html', {'form':form})

@@ -6,6 +6,9 @@ from django.urls import clear_script_prefix
 from diverse.models import *
 from account.models import *
 
+from django.db import models
+from django.forms import ModelChoiceField, ModelForm
+
 
 class usuarioForm(forms.Form):
 
@@ -186,18 +189,36 @@ class tallaForm(forms.Form):
         )
     )
 
+
 class categoriaForm(forms.Form):
+    sexo_id = forms.ModelChoiceField(queryset=sexo.objects.all().values_list('id', flat=True))
     nombreCategoria = forms.CharField(
         max_length=40,
         label = 'nombreCategoria',
-        widget= forms.TextInput(
-            attrs={
+         widget= forms.TextInput(
+             attrs={
                 'class':'form-control',
                 'id': 'nombreCategoria',
                 'placeholder':'Nombre de la categoria'
             }
         )
     )
+
+
+# SEXOS = ()
+
+# class categoriaForm(forms.Form):
+#     nombreCategoria = forms.CharField(
+#         max_length=40,
+#         label = 'nombreCategoria',
+#         widget= forms.TextInput(
+#             attrs={
+#                 'class':'form-control',
+#                 'id': 'nombreCategoria',
+#                 'placeholder':'Nombre de la categoria'
+#             }
+#         )
+#     )
 
 #self.fields['used_his'].queryset = User.objects.filter(pk = user)
 #self.fields['Nombre_del_input_del_form'].queryset = Model.objects.filter(pk = model)

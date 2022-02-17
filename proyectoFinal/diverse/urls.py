@@ -14,6 +14,10 @@ urlpatterns = [
     #Deja la cadena vacía para usar la url base (/)
     path('', views.index, name="index"),
     path('cart/', views.cart, name="cart"),
+    path('catalogo/h', views.catalogoH, name="catalogoH"),
+    path('catalogo/m', views.catalogoM, name="catalogoM"),
+    path('catalogo/no', views.catalogoNo, name="catalogoNo"),
+    path('catalogo/na', views.catalogoNa, name="catalogoNa"),
     path('checkout/', views.checkout, name="checkout"),
     path('login', LoginView.as_view(template_name='diverse/login.html'),name="login"),
 
