@@ -1,0 +1,27 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+      <h3>Tabla de colores</h3>
+      <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Color</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for color in colores %}
+            <tr>
+              <th scope="row">{{ color.id }}</th>
+              <td>{{ color.nombre }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+</div>
+
+{% endblock content %}

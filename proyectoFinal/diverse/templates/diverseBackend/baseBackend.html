@@ -56,21 +56,27 @@
                 <ul id="verDropdown" class="nav display-none">
                   <hr>
                   <li>
-                    <a href="{% url 'crearColor' %}">
+                    <a href="{% url 'verColor' %}">
                       <i class="nc-icon nc-tie-bow"></i>
                       <p>COLOR</p>
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="{% url 'verTalla' %}">
                       <i class="nc-icon nc-tie-bow"></i>
-                      <p>MARCA</p>
+                      <p>TALLA</p>
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="{% url 'verCategoria' %}">
                       <i class="nc-icon nc-tie-bow"></i>
-                      <p>MODELO</p>
+                      <p>CATEGORIA</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'verSubCategoria' %}">
+                      <i class="nc-icon nc-tie-bow"></i>
+                      <p>SUBCATEGORIA</p>
                     </a>
                     <hr>
                   </li>
@@ -106,13 +112,13 @@
                   <li>
                     <a href="{% url 'crearCategoria' %}">
                       <i class="nc-icon nc-tie-bow"></i>
-                      <p>Categoria</p>
+                      <p>CATEGORIA</p>
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="{% url 'crearSubCategoria' %}">
                       <i class="nc-icon nc-tie-bow"></i>
-                      <p>MODELO</p>
+                      <p>SUBCATEGORIA</p>
                     </a>
                   </li>
                   <hr>

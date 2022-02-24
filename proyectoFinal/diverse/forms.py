@@ -189,9 +189,11 @@ class tallaForm(forms.Form):
         )
     )
 
-
 class categoriaForm(forms.Form):
-    sexo_id = forms.ModelChoiceField(queryset=sexo.objects.all().values_list('id', flat=True))
+    sexo_id = forms.ModelChoiceField(queryset=sexo.objects.all().values_list('id', flat=True), empty_label=None)
+
+#    sexo_id = forms.ModelChoiceField( queryset=sexo.objects.all(), to_field_name="id", empty_label=None)
+
     nombreCategoria = forms.CharField(
         max_length=40,
         label = 'nombreCategoria',
@@ -203,45 +205,19 @@ class categoriaForm(forms.Form):
             }
         )
     )
+        
+class subcategoriaForm(forms.Form):
 
+    nombreSubcategoria = forms.CharField(
+        max_length=40,
+        label = 'nombreSubcategoria',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'form-control',
+                'id' : 'nombreSubcategoria',
+                'placeholder' : 'Nombre de la subcategoria'
+            }
+        )
+    )
 
-# SEXOS = ()
-
-# class categoriaForm(forms.Form):
-#     nombreCategoria = forms.CharField(
-#         max_length=40,
-#         label = 'nombreCategoria',
-#         widget= forms.TextInput(
-#             attrs={
-#                 'class':'form-control',
-#                 'id': 'nombreCategoria',
-#                 'placeholder':'Nombre de la categoria'
-#             }
-#         )
-#     )
-
-#self.fields['used_his'].queryset = User.objects.filter(pk = user)
-#self.fields['Nombre_del_input_del_form'].queryset = Model.objects.filter(pk = model)
-
-
-#    def __init__(self, sexos, *args, **kwargs):
-#        super(categoriaForm, self).__init__(*args, **kwargs)
-#        self.fields[]
-    
-
-
-#class subcategoriaForm(forms.Form):
-#    nombreSubcategoria = forms.CharField(
-#        max_length = 40,
-#        label = "nombreSubCa",
-#        widget = forms.TextInput(
-#            attrs={
-#                'class' : 'form-control',
-#                'id' : 'nombreSubCa',
-#                'placeholder' : 'Nombre'}
-#        )
-#    )
-#
-#    categoria_id = forms.ChoiceField(
-#        label = "Categoria"
-#    )
+    categoria_id = forms.ModelChoiceField(queryset=categoria.objects.all().values_list('id', flat=True), empty_label=None)

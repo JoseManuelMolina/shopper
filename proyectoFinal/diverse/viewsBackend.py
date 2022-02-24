@@ -1,3 +1,5 @@
+from mailbox import NoSuchMailboxError
+import re
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
@@ -47,7 +49,7 @@ def crearColor(request):
             )
 
             colorDatos.save()
-        return redirect('indexBackend')
+        return redirect('ver_color')
     else:
         form = colorForm()
     
@@ -65,7 +67,7 @@ def crearSexo(request):
             )
 
             sexoDatos.save()
-        return redirect('indexBackend')
+        return redirect('ver_sexo')
     else:
         form = sexoForm()
     
@@ -83,7 +85,7 @@ def crearTalla(request):
             )
 
             tallaDatos.save()
-        return redirect('indexBackend')
+        return redirect('ver_talla')
     else:
         form = tallaForm()
     
@@ -102,8 +104,52 @@ def crearCategoria(request):
             )
 
             categoriaDatos.save()
-        return redirect('indexBackend')
+        return redirect('ver_categoria')
     else:
         form = categoriaForm()
 
     return render(request, 'diverseBackend/categoria_form.html', {'form':form})
+
+@login_required(login_url='backendLogin')
+def crearSubCategoria(request):
+    if request.method == 'POST':
+        form = subcategoriaForm(request.POST)
+        if form.is_valid():
+            subcategoriaDatosForm = form.cleaned_data
+
+            subcategoriaDatos = subCategoria(
+                nombre = subcategoriaDatosForm['nombreSubcategoria'],
+                categoria_id = subcategoriaDatosForm['categoria_id']
+            )
+
+            subcategoriaDatos.save()
+        return redirect('ver_subcategoria')
+    else:
+        form = subcategoriaForm()
+
+    return render(request, 'diverseBackend/subcategoria_form.html', {'form' : form})
+
+@login_required(login_url='backendLgin')
+def crearProducto(request):
+
+    return render(request, 'diverseBackend/producto_form.html')
+
+def verColor(request):
+    colores = color.objects.all()
+    return render(request, 'diverseBackend/ver_color.html', {'colores': colores})
+
+def verSexo(request):
+    sexos = sexo.objects.all()
+    return render(request, 'diverseBackend/ver_sexo.html', {'sexos': sexos})
+
+def verCategoria(request):
+    categorias = categoria.objects.all()
+    return render(request, 'diverseBackend/ver_categoria.html', {'categorias': categorias})
+
+def verSubCategoria(request):
+    subCategorias = subCategoria.objects.all()
+    return render(request, 'diverseBackend/ver_subcategoria.html', {'subCategorias': subCategorias})
+
+def verTalla(request):
+    tallas = talla.objects.all()
+    return render(request, 'diverseBackend/ver_talla.html', {'tallas': tallas})

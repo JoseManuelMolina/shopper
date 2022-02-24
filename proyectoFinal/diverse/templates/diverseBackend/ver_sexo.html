@@ -1,0 +1,27 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+      <h3>Tabla de sexos</h3>
+      <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">sexo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sexo in sexos %}
+            <tr>
+              <th scope="row">{{ sexo.id }}</th>
+              <td>{{ sexo.tipo }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+</div>
+
+{% endblock content %}

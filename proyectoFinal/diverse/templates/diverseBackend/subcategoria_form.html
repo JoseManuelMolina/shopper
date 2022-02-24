@@ -1,0 +1,23 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Crear Subcategoria
+            </h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="{{ form.nombreSubcategoria.label }}">{{ form.nombreSubcategoria.label }}</label>
+                        {{ form.nombreSubcategoria }}
+                        </br>
+                        <label for="{{ form.categoria_id.label }}">{{ form.categoria_id.label }}</label></br>
+                        {{ form.categoria_id }}
+                    </div>
+
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

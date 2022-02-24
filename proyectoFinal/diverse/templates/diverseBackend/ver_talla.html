@@ -1,0 +1,27 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+      <h3>Tabla de tallas</h3>
+      <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Talla</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for talla in tallas %}
+            <tr>
+              <th scope="row">{{ talla.id }}</th>
+              <td>{{ talla.nombre }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>  
+    </div>
+</div>
+
+{% endblock content %}

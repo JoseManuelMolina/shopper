@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, logout_then_login
@@ -26,9 +27,17 @@ urlpatterns = [
     path('backend/logout', logout_then_login,name="backendCerrarSesion"),
     path('backend/perfil', viewsBackend.perfil, name="backendPerfil"),
     path('backend/crear-color', viewsBackend.crearColor, name="crearColor"),
+    path('backend/ver-color',viewsBackend.verColor, name="verColor"),
     path('backend/crear-sexo', viewsBackend.crearSexo, name="crearSexo"),
+    path('backend/ver-sexor',viewsBackend.verSexo, name="verSexo"),
     path('backend/crear-talla', viewsBackend.crearTalla, name="crearTalla"),
+    path('backend/ver-talla',viewsBackend.verTalla, name="verTalla"),
     path('backend/crear-categoria', viewsBackend.crearCategoria, name="crearCategoria"),
+    path('backend/ver-categoria',viewsBackend.verCategoria, name="verCategoria"),
+    path('backend/crear-subcategoria', viewsBackend.crearSubCategoria, name="crearSubCategoria"),
+    path('backend/ver-subcategoria',viewsBackend.verSubCategoria, name="verSubCategoria"),
+    
+    
 
         
 ]
