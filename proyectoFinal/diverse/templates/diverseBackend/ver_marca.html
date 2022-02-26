@@ -1,0 +1,29 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+      <h3>Tabla de marcas</h3>
+      <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Subcategoria</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for marca in marcas %}
+            <tr>
+              <th scope="row">{{ marca.id }}</th>
+              <td scope="row">{{ marca.nombre }}</td>
+              <td scope="row">{{ marca.subCategoria_id }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table> 
+    </div>
+</div>
+
+{% endblock content %}

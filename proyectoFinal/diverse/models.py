@@ -34,9 +34,7 @@ class categoria(models.Model):
 class subCategoria(models.Model):
 
     id = models.AutoField(primary_key=True)
-#    sexo = models.ForeignKey(
-#        'sexo', on_delete=models.CASCADE,
-#    )
+
     categoria =  models.ForeignKey(
         'categoria', on_delete=models.CASCADE, related_name='categoria'
     )
