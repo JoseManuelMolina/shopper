@@ -140,6 +140,7 @@ class usuarioForm(forms.Form):
     def __init__(self, usuario, *args, **kwargs):
         super(usuarioForm, self).__init__(*args, **kwargs)
         
+        self.fields['email'].initial = usuario.email
         self.fields['username'].initial = usuario.username
         self.fields['nombre'].initial = usuario.nombre
         self.fields['apellidos'].initial = usuario.apellidos
@@ -149,7 +150,6 @@ class usuarioForm(forms.Form):
         self.fields['localidad'].initial = usuario.localidad
         self.fields['codigoPostal'].initial = usuario.codigoPostal
         self.fields['telefono'].initial = usuario.telefono
-        self.fields['email'].initial = usuario.email
 
 class colorForm(forms.Form):
 
@@ -166,16 +166,32 @@ class colorForm(forms.Form):
 
 class sexoForm(forms.Form):
     
-    nombreSexo = forms.CharField(
-        max_length=2,
-        label='nombreSexo',
-        widget=forms.TextInput(
-            attrs={
-                'class':'form-control',
-                'id':'nombreSexo',
-                'placeHolder':'Símbolo Sexo'}
-        )
+    class Meta:
+        model = sexo
+        fields = ['id', 'tipo']
+
+    tipo = forms.ChoiceField(
+        label='Sexo:',
+        choices=sexo.OPCIONES_SEXO,
     )
+
+    def __init__(self, *args, **kwargs):
+        super(sexoForm, self).__init__(*args, **kwargs)
+        self.fields['tipo'].widget.attrs = {
+            'class':'form-control',
+            'id':'tipo',
+            'placeHolder':'Símbolo Sexo'
+        }
+
+    def comprobarTipo(self):
+        tipo = self.cleaned_data.get('tipo')
+        if(tipo == ""):
+            raise forms.ValidationError('Este campo no se puede dejar vacío')
+
+        for instance in sexo.objects.all():
+            if instance.tipo == tipo:
+                raise forms.ValidationError('Ya existe un tipo con este valor')
+        return tipo
 
 class tallaForm(forms.Form):
     nombreTalla = forms.CharField(

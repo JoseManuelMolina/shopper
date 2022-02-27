@@ -63,7 +63,7 @@ def crearSexo(request):
             sexoDatosForm = form.cleaned_data
 
             sexoDatos = sexo(
-                tipo = sexoDatosForm['nombreSexo'],
+                tipo = sexoDatosForm['tipo'],
             )
 
             sexoDatos.save()

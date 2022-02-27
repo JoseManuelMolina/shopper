@@ -8,9 +8,11 @@
                 {% csrf_token %}
 
                     <div class="form-group">
-                        <label for="{{ form.nombreSexo.label }}">{{ form.nombreSexo.label }}</label>
-                        {{ form.nombreSexo }}
+                        <label for="{{ form.tipo.label }}">{{ form.tipo.label }}</label>
+                        {{ form.tipo }}
                     </div>
+
+
 
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>
