@@ -60,7 +60,7 @@ ROOT_URLCONF = 'proyectoFinal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,8 +85,8 @@ DATABASES = {
         'NAME': 'proyectoFinal', 
         'USER': 'postgres', 
         'PASSWORD': 'usuario',
-#        'HOST': '62.83.140.100', 
-        'HOST': '127.0.0.1',
+        'HOST': '62.83.140.100', 
+#        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }

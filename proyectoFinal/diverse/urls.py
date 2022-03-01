@@ -11,6 +11,7 @@ from diverse.views import *
 
 from django.conf import settings
 
+
 urlpatterns = [
     #Deja la cadena vacía para usar la url base (/)
     path('', views.index, name="index"),
@@ -21,6 +22,10 @@ urlpatterns = [
     path('catalogo/na', views.catalogoNa, name="catalogoNa"),
     path('checkout/', views.checkout, name="checkout"),
     path('login', LoginView.as_view(template_name='diverse/login.html'),name="login"),
+    path('contacto', views.contacto, name="contacto"),
+    path('faq', views.faq, name="faq"),
+    path('envios-devoluciones', views.enviosDevoluciones, name="envios-devoluciones"),
+    path('nosotros', views.nosotros, name="nosotros"),
 
     path('backend/', viewsBackend.indexList, name="indexBackend"),
     path('backend/login', LoginView.as_view(template_name='diverseBackend/login.html'),name="backendLogin"),
@@ -42,5 +47,7 @@ urlpatterns = [
     
         
 ]
+handler404 = "diverse.views.page_not_found_view"
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
