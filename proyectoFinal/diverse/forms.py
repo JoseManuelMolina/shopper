@@ -1,3 +1,5 @@
+from cProfile import label
+from tkinter import FLAT
 from django import forms
 
 from django.contrib.auth.models import User
@@ -212,7 +214,7 @@ class categoriaForm(forms.Form):
 
     nombreCategoria = forms.CharField(
         max_length=40,
-        label = 'nombreCategoria',
+        label = 'Categoria',
          widget= forms.TextInput(
              attrs={
                 'class':'form-control',
@@ -226,7 +228,7 @@ class subcategoriaForm(forms.Form):
 
     nombreSubcategoria = forms.CharField(
         max_length=40,
-        label = 'nombreSubcategoria',
+        label = 'Subcategoria',
         widget = forms.TextInput(
             attrs={
                 'class' : 'form-control',
@@ -236,4 +238,21 @@ class subcategoriaForm(forms.Form):
         )
     )
 
-    categoria_id = forms.ModelChoiceField(queryset=categoria.objects.all().values_list('id', flat=True), empty_label=None)
+    categoria_id = forms.ModelChoiceField(
+        queryset=categoria.objects.all().values_list('id', flat=True), empty_label=None)
+
+class marcaForm(forms.Form):
+
+    nombreMarca = forms.CharField(
+        max_length = 60,
+        label = 'Marca',
+        widget = forms.TextInput(
+            attrs = {
+                'class' : 'form-control',
+                'id' : 'nombreMarca',
+                'placeholder' : 'Nombre de la marca'
+            }
+        )
+    )
+
+    subCategoria_id = forms.ModelChoiceField(queryset = subCategoria.objects.all().values_list('id', flat = True), empty_label = None)

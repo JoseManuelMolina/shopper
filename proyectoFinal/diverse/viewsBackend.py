@@ -37,6 +37,8 @@ def perfil(request):
     
     return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario})
 
+#----------------------------------------------------------------------------- Crear -----------------------------------------------------------------------------
+
 @login_required(login_url='backendLogin')
 def crearColor(request):
     if request.method == 'POST':
@@ -129,27 +131,52 @@ def crearSubCategoria(request):
 
     return render(request, 'diverseBackend/subcategoria_form.html', {'form' : form})
 
+@login_required(login_url='backendLogin')
+def crearMarca(request):
+    if request.method == 'POST':
+        form = marcaForm(request.POST)
+        if form.is_valid():
+            marcaDatosForm = form.cleaned_data
+
+            marcaDatos = marca(
+                nombre = marcaDatosForm['nombreMarca'],
+                subCategoria_id = marcaDatosForm['subCategoria_id']
+            )
+
+            marcaDatos.save()
+        return redirect('verMarca')
+    else:
+        form = marcaForm()
+
+    return render(request, 'diverseBackend/marca_form.html', {'form' : form})
+
 @login_required(login_url='backendLgin')
 def crearProducto(request):
 
     return render(request, 'diverseBackend/producto_form.html')
 
+
+#----------------------------------------------------------------------------- Ver -----------------------------------------------------------------------------
 def verColor(request):
     colores = color.objects.all()
-    return render(request, 'diverseBackend/ver_color.html', {'colores': colores})
+    return render(request, 'diverseBackend/ver_color.html', {'colores' : colores})
 
 def verSexo(request):
     sexos = sexo.objects.all()
-    return render(request, 'diverseBackend/ver_sexo.html', {'sexos': sexos})
+    return render(request, 'diverseBackend/ver_sexo.html', {'sexos' : sexos})
 
 def verCategoria(request):
     categorias = categoria.objects.all()
-    return render(request, 'diverseBackend/ver_categoria.html', {'categorias': categorias})
+    return render(request, 'diverseBackend/ver_categoria.html', {'categorias' : categorias})
 
 def verSubCategoria(request):
     subCategorias = subCategoria.objects.all()
-    return render(request, 'diverseBackend/ver_subcategoria.html', {'subCategorias': subCategorias})
+    return render(request, 'diverseBackend/ver_subcategoria.html', {'subCategorias' : subCategorias})
 
 def verTalla(request):
     tallas = talla.objects.all()
-    return render(request, 'diverseBackend/ver_talla.html', {'tallas': tallas})
+    return render(request, 'diverseBackend/ver_talla.html', {'tallas' : tallas})
+
+def verMarca(request):
+    marcas = marca.objects.all()
+    return render(request, 'diverseBackend/ver_marca.html', {'marcas' : marcas})
