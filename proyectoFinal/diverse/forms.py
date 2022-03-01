@@ -1,4 +1,5 @@
 from cProfile import label
+from dataclasses import fields
 from tkinter import FLAT
 from django import forms
 
@@ -12,7 +13,11 @@ from django.db import models
 from django.forms import ModelChoiceField, ModelForm
 
 
-class usuarioForm(forms.Form):
+class usuarioForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('email', 'username', 'nombre', 'apellidos','direccion','pais','provincia','localidad','codigoPostal','telefono','imagen_perfil')
 
     email = forms.CharField(
         max_length=100,
@@ -153,7 +158,11 @@ class usuarioForm(forms.Form):
         self.fields['codigoPostal'].initial = usuario.codigoPostal
         self.fields['telefono'].initial = usuario.telefono
 
-class colorForm(forms.Form):
+class colorForm(forms.ModelForm):
+
+    class Meta:
+        model = color
+        fields = ('id', 'nombre')
 
     nombreColor = forms.CharField(
         max_length=60,
@@ -166,11 +175,19 @@ class colorForm(forms.Form):
         )
     )
 
-class sexoForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(sexoForm, self).__init__(*args, **kwargs)
+        self.fields['tipo'].widget.attrs = {
+            'class':'form-control',
+            'id':'tipo',
+            'placeHolder':'Símbolo Sexo'
+        }
+
+class sexoForm(forms.ModelForm):
     
     class Meta:
         model = sexo
-        fields = ['id', 'tipo']
+        fields = ('id', 'tipo')
 
     tipo = forms.ChoiceField(
         label='Sexo:',
@@ -195,7 +212,12 @@ class sexoForm(forms.Form):
                 raise forms.ValidationError('Ya existe un tipo con este valor')
         return tipo
 
-class tallaForm(forms.Form):
+class tallaForm(forms.ModelForm):
+
+    class Meta:
+        model = talla
+        fields = ('id', 'nombre')
+
     nombreTalla = forms.CharField(
         max_length=10,
         label="talla",
@@ -207,11 +229,13 @@ class tallaForm(forms.Form):
         )
     )
 
-class categoriaForm(forms.Form):
-    sexo_id = forms.ModelChoiceField(queryset=sexo.objects.all().values_list('id', flat=True), empty_label=None)
+class categoriaForm(forms.ModelForm):
 
-#    sexo_id = forms.ModelChoiceField( queryset=sexo.objects.all(), to_field_name="id", empty_label=None)
-
+    class Meta:
+        model = sexo
+        fields = ('id', 'tipo')
+        read_only_fields = ('id', 'tipo')
+    
     nombreCategoria = forms.CharField(
         max_length=40,
         label = 'Categoria',
@@ -222,9 +246,29 @@ class categoriaForm(forms.Form):
                 'placeholder':'Nombre de la categoria'
             }
         )
+    ) 
+
+    sexo_id = forms.ChoiceField(
+        label='Sexo:',
+        choices=sexo.objects.values_list('id','tipo')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(categoriaForm, self).__init__(*args, **kwargs)
+        self.fields['sexo_id'].widget.attrs = {
+            'class':'form-control',
+            'id':'tipo',
+            'placeHolder':'Símbolo Sexo'
+        }
+
+    #sexo_id = forms.ModelChoiceField( queryset=sexo.objects.all(), to_field_name="id", empty_label=None)
+    #sexo_id = forms.ModelChoiceField()
         
-class subcategoriaForm(forms.Form):
+class subcategoriaForm(forms.ModelForm):
+
+    class Meta:
+        model = subCategoria
+        fields = ('id', 'nombre')
 
     nombreSubcategoria = forms.CharField(
         max_length=40,
@@ -241,7 +285,11 @@ class subcategoriaForm(forms.Form):
     categoria_id = forms.ModelChoiceField(
         queryset=categoria.objects.all().values_list('id', flat=True), empty_label=None)
 
-class marcaForm(forms.Form):
+class marcaForm(forms.ModelForm):
+
+    class Meta:
+        model = marca
+        fields = ('id', 'nombre')
 
     nombreMarca = forms.CharField(
         max_length = 60,
