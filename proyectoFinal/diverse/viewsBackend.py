@@ -51,7 +51,7 @@ def crearColor(request):
             )
 
             colorDatos.save()
-        return redirect('ver_color')
+        return redirect('verColor')
     else:
         form = colorForm()
     
@@ -97,16 +97,19 @@ def crearTalla(request):
 def crearCategoria(request):
     if request.method == 'POST':
         form = categoriaForm(request.POST)
+        print(form)
+        print(form.is_valid())
         if form.is_valid():
+            
             categoriaDatosForm = form.cleaned_data
 
             categoriaDatos = categoria(
-                nombre = categoriaDatosForm['nombreCategoria'],
-                sexo_id = categoriaDatosForm['sexo_id']
+                nombre = categoriaDatosForm['nombreCategoria']
             )
-
+            
             categoriaDatos.save()
-        return redirect('ver_categoria')
+        print('me voys')
+        return redirect('verCategoria')
     else:
         form = categoriaForm()
 
