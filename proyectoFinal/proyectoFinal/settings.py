@@ -85,11 +85,7 @@ DATABASES = {
         'NAME': 'proyectoFinal', 
         'USER': 'postgres', 
         'PASSWORD': 'usuario',
-<<<<<<< HEAD
 #        'HOST': '62.83.140.100', 
-=======
-#           'HOST': '62.83.140.100', 
->>>>>>> 5d1fc4cbe80db00bb1300e1f4dcbadb0316be1e9
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

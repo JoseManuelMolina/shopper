@@ -97,18 +97,11 @@ def crearTalla(request):
 def crearCategoria(request):
     if request.method == 'POST':
         form = categoriaForm(request.POST)
-        print(form)
-        print(form.is_valid())
         if form.is_valid():
-            
-            categoriaDatosForm = form.cleaned_data
 
-            categoriaDatos = categoria(
-                nombre = categoriaDatosForm['nombreCategoria']
-            )
-            
-            categoriaDatos.save()
-        print('me voys')
+            categoria = form.save()
+
+        #print('me voys')
         return redirect('verCategoria')
     else:
         form = categoriaForm()
