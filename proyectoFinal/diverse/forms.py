@@ -218,7 +218,7 @@ class tallaForm(forms.ModelForm):
         model = talla
         fields = ('id', 'nombre')
 
-    nombreTalla = forms.CharField(
+    nombre = forms.CharField(
         max_length=10,
         label="talla",
         widget=forms.TextInput(
@@ -236,13 +236,13 @@ class categoriaForm(forms.ModelForm):
         fields = ('id', 'nombre')
 #        read_only_fields = ('id', 'nombre')
     
-    nombreCategoria = forms.CharField(
+    nombre = forms.CharField(
         max_length=40,
         label = 'Categoria',
          widget= forms.TextInput(
              attrs={
                 'class':'form-control',
-                'id': 'nombreCategoria',
+                'id': 'nombre',
                 'placeholder':'Nombre de la categoria'
             }
         )
