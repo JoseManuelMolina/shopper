@@ -69,7 +69,7 @@ def crearSexo(request):
             )
 
             sexoDatos.save()
-        return redirect('ver_sexo')
+        return redirect('verSexo')
     else:
         form = sexoForm()
     
