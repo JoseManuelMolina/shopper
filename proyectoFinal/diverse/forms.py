@@ -175,13 +175,13 @@ class colorForm(forms.ModelForm):
         )
     )
 
-    def __init__(self, *args, **kwargs):
-        super(sexoForm, self).__init__(*args, **kwargs)
-        self.fields['tipo'].widget.attrs = {
-            'class':'form-control',
-            'id':'tipo',
-            'placeHolder':'Símbolo Sexo'
-        }
+#    def __init__(self, *args, **kwargs):
+#        super(sexoForm, self).__init__(*args, **kwargs)
+#        self.fields['tipo'].widget.attrs = {
+#            'class':'form-control',
+#            'id':'tipo',
+#            'placeHolder':'Símbolo Sexo'
+#        }
 
 class sexoForm(forms.ModelForm):
     
@@ -232,9 +232,9 @@ class tallaForm(forms.ModelForm):
 class categoriaForm(forms.ModelForm):
 
     class Meta:
-        model = sexo
-        fields = ('id', 'tipo')
-        read_only_fields = ('id', 'tipo')
+        model = categoria
+        fields = ('id', 'nombre')
+#        read_only_fields = ('id', 'nombre')
     
     nombreCategoria = forms.CharField(
         max_length=40,
@@ -248,18 +248,18 @@ class categoriaForm(forms.ModelForm):
         )
     ) 
 
-    sexo_id = forms.ChoiceField(
-        label='Sexo:',
-        choices=sexo.objects.values_list('id','tipo')
-    )
+#    sexo_id = forms.ChoiceField(
+#        label='Sexo:',
+#        choices=sexo.objects.values_list('id','tipo')
+#    )
 
-    def __init__(self, *args, **kwargs):
-        super(categoriaForm, self).__init__(*args, **kwargs)
-        self.fields['sexo_id'].widget.attrs = {
-            'class':'form-control',
-            'id':'tipo',
-            'placeHolder':'Símbolo Sexo'
-        }
+#    def __init__(self, *args, **kwargs):
+#        super(categoriaForm, self).__init__(*args, **kwargs)
+#        self.fields['sexo_id'].widget.attrs = {
+#            'class':'form-control',
+#            'id':'tipo',
+#            'placeHolder':'Símbolo Sexo'
+#        }
 
     #sexo_id = forms.ModelChoiceField( queryset=sexo.objects.all(), to_field_name="id", empty_label=None)
     #sexo_id = forms.ModelChoiceField()
@@ -282,8 +282,13 @@ class subcategoriaForm(forms.ModelForm):
         )
     )
 
-    categoria_id = forms.ModelChoiceField(
-        queryset=categoria.objects.all().values_list('id', flat=True), empty_label=None)
+#    categoria_id = forms.ModelChoiceField(
+#        queryset=categoria.objects.all().values_list('nombre', flat=True), empty_label=None)
+
+    categoria_id = forms.ChoiceField(
+            label='Categoria:',
+            choices=categoria.objects.values_list('id','nombre')
+        )
 
 class marcaForm(forms.ModelForm):
 

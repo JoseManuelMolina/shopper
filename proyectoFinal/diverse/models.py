@@ -26,9 +26,9 @@ class sexo(models.Model):
 
 class categoria(models.Model):
     id = models.AutoField(primary_key=True)
-    sexo = models.ForeignKey(
-        'sexo', on_delete=models.CASCADE,
-    )
+ #   sexo = models.ForeignKey(
+ #       'sexo', on_delete=models.CASCADE,
+ #   )
     nombre = models.CharField(max_length=40)
 
 class subCategoria(models.Model):
@@ -43,9 +43,9 @@ class subCategoria(models.Model):
 class marca(models.Model):
 
     id = models.AutoField(primary_key=True)
-    subCategoria = models.ForeignKey(
-        'subCategoria', on_delete=models.CASCADE,
-    )
+#    subCategoria = models.ForeignKey(
+#        'subCategoria', on_delete=models.CASCADE,
+#    )
     nombre = models.CharField(max_length=60)
 
 class modelo(models.Model):
