@@ -69,7 +69,7 @@ def crearSexo(request):
             )
 
             sexoDatos.save()
-        return redirect('ver_sexo')
+        return redirect('verSexo')
     else:
         form = sexoForm()
     
@@ -87,7 +87,7 @@ def crearTalla(request):
             )
 
             tallaDatos.save()
-        return redirect('ver_talla')
+        return redirect('verTalla')
     else:
         form = tallaForm()
     
@@ -128,7 +128,7 @@ def crearSubCategoria(request):
             )
 
             subcategoriaDatos.save()
-        return redirect('ver_subcategoria')
+        return redirect('verSubCategoria')
     else:
         form = subcategoriaForm()
 
