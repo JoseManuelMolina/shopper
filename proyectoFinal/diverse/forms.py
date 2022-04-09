@@ -270,13 +270,13 @@ class subcategoriaForm(forms.ModelForm):
         model = subCategoria
         fields = ('id', 'nombre')
 
-    nombreSubcategoria = forms.CharField(
+    nombre = forms.CharField(
         max_length=40,
         label = 'Subcategoria',
         widget = forms.TextInput(
             attrs={
                 'class' : 'form-control',
-                'id' : 'nombreSubcategoria',
+                'id' : 'nombre',
                 'placeholder' : 'Nombre de la subcategoria'
             }
         )
