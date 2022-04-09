@@ -4,19 +4,19 @@
 <div class="row">
     <div class="col-md-12">
 
-      <h3>Tabla de marcas</h3>
+      <h3>Tabla de modelo</h3>
       <table class="table">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Marca</th>
+              <th scope="col">Modelo</th>
             </tr>
           </thead>
           <tbody>
-            {% for marca in marcas %}
+            {% for modelo in modelos %}
             <tr>
-              <th scope="row">{{ marca.id }}</th>
-              <td scope="row">{{ marca.nombre }}</td>
+              <th scope="row">{{ modelo.id }}</th>
+              <td scope="row">{{ modelo.nombre }}</td>
             </tr>
             {% endfor %}
           </tbody>

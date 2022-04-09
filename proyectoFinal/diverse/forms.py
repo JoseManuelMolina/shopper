@@ -287,7 +287,7 @@ class subcategoriaForm(forms.ModelForm):
 
     categoria_id = forms.ChoiceField(
             label='Categoria:',
-            choices=categoria.objects.values_list('id','nombre')
+            choices=categoria.objects.all().values_list('id','nombre')
         )
 
 class marcaForm(forms.ModelForm):
@@ -296,7 +296,7 @@ class marcaForm(forms.ModelForm):
         model = marca
         fields = ('id', 'nombre')
 
-    nombreMarca = forms.CharField(
+    nombre = forms.CharField(
         max_length = 60,
         label = 'Marca',
         widget = forms.TextInput(
@@ -308,4 +308,25 @@ class marcaForm(forms.ModelForm):
         )
     )
 
-    subCategoria_id = forms.ModelChoiceField(queryset = subCategoria.objects.all().values_list('id', flat = True), empty_label = None)
+class modeloForm(forms.ModelForm):
+
+    class Meta:
+        model = modelo
+        fields = ('id', 'nombre')
+
+    nombre = forms.CharField(
+        max_length = 60,
+        label = 'Modelo',
+        widget = forms.TextInput(
+            attrs = {
+                'class' : 'form-control',
+                    'id' : 'nombreModelo',
+                    'placeholder' : 'Nombre del modelo'
+            }
+        )
+    )
+
+    marca_id = forms.ChoiceField(
+            label='Marca:',
+            choices=marca.objects.all().values_list('id','nombre')
+        )

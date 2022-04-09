@@ -87,7 +87,7 @@ def crearTalla(request):
             )
 
             tallaDatos.save()
-        return redirect('ver_talla')
+        return redirect('verTalla')
     else:
         form = tallaForm()
     
@@ -99,9 +99,8 @@ def crearCategoria(request):
         form = categoriaForm(request.POST)
         if form.is_valid():
 
-            categoria = form.save()
+            form.save()
 
-        #print('me voys')
         return redirect('verCategoria')
     else:
         form = categoriaForm()
@@ -116,12 +115,12 @@ def crearSubCategoria(request):
             subcategoriaDatosForm = form.cleaned_data
 
             subcategoriaDatos = subCategoria(
-                nombre = subcategoriaDatosForm['nombreSubcategoria'],
+                nombre = subcategoriaDatosForm['nombre'],
                 categoria_id = subcategoriaDatosForm['categoria_id']
             )
 
             subcategoriaDatos.save()
-        return redirect('ver_subcategoria')
+        return redirect('verSubCategoria')
     else:
         form = subcategoriaForm()
 
@@ -132,19 +131,35 @@ def crearMarca(request):
     if request.method == 'POST':
         form = marcaForm(request.POST)
         if form.is_valid():
-            marcaDatosForm = form.cleaned_data
-
-            marcaDatos = marca(
-                nombre = marcaDatosForm['nombreMarca'],
-                subCategoria_id = marcaDatosForm['subCategoria_id']
-            )
-
-            marcaDatos.save()
+            
+            form.save()
+            
         return redirect('verMarca')
     else:
         form = marcaForm()
 
     return render(request, 'diverseBackend/marca_form.html', {'form' : form})
+
+@login_required(login_url='backendLogin')
+def crearModelo(request):
+    if request.method == 'POST':
+        form = modeloForm(request.POST)
+        if form.is_valid():
+            
+            modeloDatosForm = form.cleaned_data
+
+            modeloDatos = modelo(
+                nombre = modeloDatosForm['nombre'],
+                marca_id = modeloDatosForm['marca_id']
+            )
+
+            modeloDatos.save()
+            
+        return redirect('verModelo')
+    else:
+        form = modeloForm()
+
+    return render(request, 'diverseBackend/modelo_form.html', {'form' : form})
 
 @login_required(login_url='backendLgin')
 def crearProducto(request):
@@ -176,3 +191,7 @@ def verTalla(request):
 def verMarca(request):
     marcas = marca.objects.all()
     return render(request, 'diverseBackend/ver_marca.html', {'marcas' : marcas})
+
+def verModelo(request):
+    modelos = modelo.objects.all()
+    return render(request, 'diverseBackend/ver_modelo.html', {'modelos' : modelos})
