@@ -7,12 +7,33 @@
             <form method="POST">
                 {% csrf_token %}
 
-                    <div class="form-group">
-                        <label for="{{ form.nombreCategoria.label }}">{{ form.nombreCategoria.label }}</label>
-                        {{ form.nombreCategoria }}
+                    <div class="form-group col-md-10">
+                        {{ form.num_ref }}
+                        </br>
+                        <label for="{{ form.precio.label }}">{{ form.precio.label }}</label></br>
+                        {{ form.precio }}
+                        </br>
+                        <label for="{{ form.imagen.label }}">{{ form.imagen.label }}</label></br>
+                        {{ form.imagen }}
                         </br>
                         <label for="{{ form.sexo_id.label }}">{{ form.sexo_id.label }}</label></br>
                         {{ form.sexo_id }}
+                        </br></br>
+                        <label for="{{ form.subCategoria_id.label }}">{{ form.subCategoria_id.label }}</label></br>
+                        {{ form.subCategoria_id }}
+                        </br></br> 
+                        <label for="{{ form.marca_id.label }}">{{ form.marca_id.label }}</label></br>
+                        {{ form.marca_id }}
+                        </br></br>
+                        <label for="{{ form.modelo_id.label }}">{{ form.modelo_id.label }}</label></br>
+                        {{ form.modelo_id }}
+                        </br></br>
+                        <label for="{{ form.color_id.label }}">{{ form.color_id.label }}</label></br>
+                        {{ form.color_id }}
+                        </br></br>
+                        <label for="{{ form.talla_id.label }}">{{ form.talla_id.label }}</label></br>
+                        {{ form.talla_id }}
+                        </br>
                     </div>
 
                 <button type="submit" class="btn btn-primary">Crear</button>

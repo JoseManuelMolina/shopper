@@ -320,8 +320,8 @@ class modeloForm(forms.ModelForm):
         widget = forms.TextInput(
             attrs = {
                 'class' : 'form-control',
-                    'id' : 'nombreModelo',
-                    'placeholder' : 'Nombre del modelo'
+                'id' : 'nombreModelo',
+                'placeholder' : 'Nombre del modelo'
             }
         )
     )
@@ -330,3 +330,108 @@ class modeloForm(forms.ModelForm):
             label='Marca:',
             choices=marca.objects.all().values_list('id','nombre')
         )
+
+class productoForm(forms.ModelForm):
+
+    class Meta:
+        model = producto
+        fields = ('num_ref', 'precio', 'imagen')
+
+    num_ref = forms.CharField(
+        max_length = 60,
+        widget = forms.HiddenInput(
+            attrs = {
+                'class' : 'form-control',
+                'id' : 'numrefProducto',
+            }
+        )
+    )
+
+    precio = forms.CharField(
+        max_length = 60,
+        label = 'Precio:',
+        widget = forms.NumberInput(
+            attrs = {
+                'class' : 'form-control',
+                'id' : 'precioProducto',
+                'placeholder' : 'Precio del producto'
+            }
+        )
+    )
+
+    imagen = forms.FileField(
+        max_length = 60,
+        label = 'Imagen del producto:',
+        widget = forms.FileInput(
+            attrs = {
+                'class':"custom-file-input",
+                'id' : 'imagenProducto',
+            }
+        )
+    )
+
+    sexo_id = forms.ChoiceField(
+        label='Sexo:',
+        choices=sexo.objects.all().values_list('id','tipo'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'sexoProducto',
+            }
+        )
+    )
+
+    subCategoria_id = forms.ChoiceField(
+        label='Subcategoría:',
+        choices=subCategoria.objects.all().values_list('id','nombre'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'subcategoriaProducto',
+            }
+        )
+    )
+
+    marca_id = forms.ChoiceField(
+        label='Marca:',
+        choices=marca.objects.all().values_list('id','nombre'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'marcaProducto',
+            }
+        )
+    )
+
+    modelo_id = forms.ChoiceField(
+        label='Modelo:',
+        choices=modelo.objects.filter(id=1).values_list('id','nombre'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'modeloProducto',
+            }
+        )
+    )
+
+    color_id = forms.ChoiceField(
+        label='Color:',
+        choices=color.objects.all().values_list('id','nombre'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'colorProducto',
+            }
+        )
+    )
+
+    talla_id = forms.ChoiceField(
+        label='Talla:',
+        choices=talla.objects.all().values_list('id','nombre'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'tallaProducto',
+            }
+        )
+    )

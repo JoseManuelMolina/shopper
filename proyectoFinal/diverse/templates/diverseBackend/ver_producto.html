@@ -1,0 +1,27 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+      <h3>Tabla de modelo</h3>
+      <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Modelo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for modelo in modelos %}
+            <tr>
+              <th scope="row">{{ modelo.id }}</th>
+              <td scope="row">{{ modelo.nombre }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table> 
+    </div>
+</div>
+
+{% endblock content %}

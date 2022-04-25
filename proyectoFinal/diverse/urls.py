@@ -45,6 +45,8 @@ urlpatterns = [
     path('backend/ver-marca', viewsBackend.verMarca, name= "verMarca"),
     path('backend/crear-modelo', viewsBackend.crearModelo, name="crearModelo"),
     path('backend/ver-modelo', viewsBackend.verModelo, name= "verModelo"),
+    path('backend/crear-producto', viewsBackend.crearProducto, name="crearProducto"),
+    path('backend/ver-producto', viewsBackend.verProducto, name= "verProducto"),
     
     
         

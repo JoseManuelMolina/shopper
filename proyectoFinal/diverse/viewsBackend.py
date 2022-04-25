@@ -161,10 +161,28 @@ def crearModelo(request):
 
     return render(request, 'diverseBackend/modelo_form.html', {'form' : form})
 
-@login_required(login_url='backendLgin')
+@login_required(login_url='backendLogin')
 def crearProducto(request):
+    if request.method == 'POST':
+        form = productoForm(request.POST)
+        if form.is_valid():
+            
+            productoDatosForm = form.cleaned_data
 
-    return render(request, 'diverseBackend/producto_form.html')
+            productoDatos = modelo(
+                num_ref = productoDatosForm['num_ref'],
+                precio = productoDatosForm['precio'],
+                imagen = productoDatosForm['iamgen'],
+                marca_id = productoDatosForm['marca_id']
+            )
+
+            productoDatos.save()
+            
+        return redirect('verProducto')
+    else:
+        form = productoForm()
+
+    return render(request, 'diverseBackend/producto_form.html', {'form' : form})
 
 
 #----------------------------------------------------------------------------- Ver -----------------------------------------------------------------------------
@@ -195,3 +213,7 @@ def verMarca(request):
 def verModelo(request):
     modelos = modelo.objects.all()
     return render(request, 'diverseBackend/ver_modelo.html', {'modelos' : modelos})
+
+def verProducto(request):
+    productos = producto.objects.all()
+    return render(request, 'diverseBackend/ver_producto.html', {'productos' : productos})
