@@ -364,7 +364,7 @@ class productoForm(forms.ModelForm):
         label = 'Imagen del producto:',
         widget = forms.FileInput(
             attrs = {
-                'class':"custom-file-input",
+                'class':"form-control input-form",
                 'id' : 'imagenProducto',
             }
         )
@@ -403,16 +403,19 @@ class productoForm(forms.ModelForm):
         )
     )
 
-    modelo_id = forms.ChoiceField(
-        label='Modelo:',
-        choices=modelo.objects.filter(id=1).values_list('id','nombre'),
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'modeloProducto',
-            }
-        )
-    )
+    
+
+    #modelo_id = forms.ChoiceField(
+    #    label='Modelo:',
+        #choices=modelo.objects.filter(marca=aux).values_list('id','nombre'),
+        #choices=modelo.objects.all().values_list('id','nombre'),
+        #widget = forms.Select(
+        #    attrs = {
+        #        'class':"form-control",
+        #        'id' : 'modeloProducto',
+        #    }
+        #)
+    #)
 
     color_id = forms.ChoiceField(
         label='Color:',

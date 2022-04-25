@@ -8,6 +8,8 @@ from diverse.forms import *
 from diverse.models import *
 from account.models import *
 
+from django.http import JsonResponse
+
 # Create your views here.
 
 # BACKEND
@@ -217,3 +219,15 @@ def verModelo(request):
 def verProducto(request):
     productos = producto.objects.all()
     return render(request, 'diverseBackend/ver_producto.html', {'productos' : productos})
+
+
+#--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
+def obtenerModelos(request):
+    marcaForm = request.POST.get('marca')
+    marcaForm = marca.objects.filter(id=marcaForm)
+    modelos = list(modelo.objects.filter(marca_id=marcaForm).values('id', 'nombre'))
+    response_data = {
+        "modelos":modelos
+    }
+
+    return JsonResponse(response_data)

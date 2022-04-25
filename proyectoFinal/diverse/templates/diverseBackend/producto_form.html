@@ -25,8 +25,7 @@
                         <label for="{{ form.marca_id.label }}">{{ form.marca_id.label }}</label></br>
                         {{ form.marca_id }}
                         </br></br>
-                        <label for="{{ form.modelo_id.label }}">{{ form.modelo_id.label }}</label></br>
-                        {{ form.modelo_id }}
+                        
                         </br></br>
                         <label for="{{ form.color_id.label }}">{{ form.color_id.label }}</label></br>
                         {{ form.color_id }}
@@ -41,3 +40,29 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block scriptsfooter %}
+    <script>
+        document.getElementById("marcaProducto").addEventListener("change", function(){
+            console.log('hola');
+            //document.getElementById("modeloProducto").innerHTML = "";
+            $.ajax({
+                type: 'POST',
+                url: "obtener-modelos/",
+                data: {
+                    marca: $("marcaProducto").val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    var select = document.getElementById("modeloProducto");
+                    for(var i=0; i<response.modelos.length; i++){
+                        var option = document.createElement('option');
+                        option.value = response.modelos[i]['id'];
+                        option.innerHTML = response.modelos[i]['nombre'];
+                        select.appendChild(option);
+                    }
+                },
+            });
+        });
+    </script>
+{% endblock scriptsfooter %}
