@@ -405,7 +405,7 @@ class productoForm(forms.ModelForm):
 
     modelo_id = forms.ChoiceField(
         label='Modelo:',
-        choices=modelo.objects.filter(id=1).values_list('id','nombre'),
+        choices=modelo.objects.filter(marca=1).values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
