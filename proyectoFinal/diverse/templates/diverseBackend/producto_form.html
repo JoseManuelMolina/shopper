@@ -41,3 +41,29 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block scriptsfooter %}
+    <script>
+        document.getElementById("marcaProducto").addEventListener("change", function(){
+            console.log('hola');
+            //document.getElementById("modeloProducto").innerHTML = "";
+            $.ajax({
+                type: 'POST',
+                url: "obtener-modelos/",
+                data: {
+                    marca: $("marcaProducto").val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    var select = document.getElementById("modeloProducto");
+                    for(var i=0; i<response.modelos.length; i++){
+                        var option = document.createElement('option');
+                        option.value = response.modelos[i]['id'];
+                        option.innerHTML = response.modelos[i]['nombre'];
+                        select.appendChild(option);
+                    }
+                },
+            });
+        });
+    </script>
+{% endblock scriptsfooter %}

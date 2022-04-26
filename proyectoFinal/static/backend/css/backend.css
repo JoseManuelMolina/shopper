@@ -5,3 +5,8 @@
 .main-panel{
     min-height: 100vh;
 }
+
+.form-control.input-form[type=file]{
+    opacity:1 !important;
+    position: relative !important;
+}
