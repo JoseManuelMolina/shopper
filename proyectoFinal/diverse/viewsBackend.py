@@ -214,6 +214,7 @@ def verMarca(request):
 
 def verModelo(request):
     modelos = modelo.objects.all()
+
     return render(request, 'diverseBackend/ver_modelo.html', {'modelos' : modelos})
 
 def verProducto(request):
@@ -231,3 +232,10 @@ def obtenerModelos(request):
     }
 
     return JsonResponse(response_data)
+
+# AJAX
+def load_modelos(request):
+    marca_id_form = request.GET.get('marca_id')
+    modelos = modelo.objects.filter(marca_id = marca_id_form)
+
+    return render(request, 'diverseBackend/modelos_dropdown_list_options.html', {'modelos' : modelos})

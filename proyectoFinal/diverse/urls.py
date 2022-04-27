@@ -48,7 +48,8 @@ urlpatterns = [
     path('backend/crear-producto', viewsBackend.crearProducto, name="crearProducto"),
     path('backend/ver-producto', viewsBackend.verProducto, name= "verProducto"),
 
-    path('backend/obtener-modelos', viewsBackend.obtenerModelos, name='obtenerModelos')
+    path('backend/obtener-modelos', viewsBackend.obtenerModelos, name='obtenerModelos'),
+    path('ajax/load-modelos/', viewsBackend.load_modelos, name='ajax_load_modelos'),        #AJAX
     
     
         

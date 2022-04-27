@@ -1,6 +1,7 @@
 from cProfile import label
 from dataclasses import fields
 from tkinter import FLAT
+from typing import Type
 from django import forms
 
 from django.contrib.auth.models import User
@@ -335,7 +336,21 @@ class productoForm(forms.ModelForm):
 
     class Meta:
         model = producto
-        fields = ('num_ref', 'precio', 'imagen')
+        #fields = ('num_ref', 'precio', 'imagen')
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['modelo'].queryset = modelo.objects.none()  #Coge el campo modelo y lo vacia
+
+        if 'marca' in self.data:
+            try:
+                marca_id = int(self.data.get('marca'))
+                self.fields['modelo'].queryset = modelo.objects.filter(marca_id = marca_id).order_by('name')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['modelo'].queryset = self.instance.marca.modelo_set.order_by()
 
     num_ref = forms.CharField(
         max_length = 60,
@@ -405,17 +420,17 @@ class productoForm(forms.ModelForm):
 
     
 
-    #modelo_id = forms.ChoiceField(
-    #    label='Modelo:',
+    modelo_id = forms.ChoiceField(
+        label='Modelo:',
         #choices=modelo.objects.filter(marca=aux).values_list('id','nombre'),
         #choices=modelo.objects.all().values_list('id','nombre'),
-        #widget = forms.Select(
-        #    attrs = {
-        #        'class':"form-control",
-        #        'id' : 'modeloProducto',
-        #    }
-        #)
-    #)
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'modeloProducto',
+            }
+        )
+    )
 
     color_id = forms.ChoiceField(
         label='Color:',

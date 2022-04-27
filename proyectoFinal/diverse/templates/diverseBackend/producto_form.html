@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <h3>Crear Producto</h3>
 
-            <form method="POST">
+            <form method="POST" id="productoForm" data-modelos-url="{% url 'ajax_load_modelos' %}">
                 {% csrf_token %}
 
                     <div class="form-group col-md-10">
@@ -44,26 +44,20 @@
 
 {% block scriptsfooter %}
     <script>
-        document.getElementById("marcaProducto").addEventListener("change", function(){
-            console.log('hola');
-            //document.getElementById("modeloProducto").innerHTML = "";
-            $.ajax({
-                type: 'POST',
-                url: "obtener-modelos/",
+        $('#marcaProducto').change(function(){
+            const url = $("#productoForm").attr("data-modelos-url");    // Coge la url de la vista "load_modelos"
+            const marcaId = $(this).val();                              // Recogemos la ID de la marca seleccionada
+
+            $.ajax({                                                    // Inicializamos la llamada AJAX
+                url: url,                                               // Seteamos la url de la llamada (= /diverse/ajax/load-modelos)
                 data: {
-                    marca: $("marcaProducto").val()
+                    'marca_id': marcaId                                 // Añadimos la id de la marca a los parametros
                 },
-                dataType: 'json',
-                success: function(response){
-                    var select = document.getElementById("modeloProducto");
-                    for(var i=0; i<response.modelos.length; i++){
-                        var option = document.createElement('option');
-                        option.value = response.modelos[i]['id'];
-                        option.innerHTML = response.modelos[i]['nombre'];
-                        select.appendChild(option);
-                    }
-                },
-            });
+                success: function (data){                               // 'data' es la respuesta de la funcion 'load_modelo'
+                    console.log(data);
+                    $('#modeloProducto').html(data);                    // reemplaza los contenido del input de modelos con la informacion que viene desde el servidor
+                }
+            })
         });
     </script>
 {% endblock scriptsfooter %}
