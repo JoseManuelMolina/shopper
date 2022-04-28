@@ -43,26 +43,49 @@
 {% endblock content %}
 
 {% block scriptsfooter %}
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
-        document.getElementById("marcaProducto").addEventListener("change", function(){
+        /*document.getElementById("marcaProducto").addEventListener("change", function(){
             console.log('hola');
-            //document.getElementById("modeloProducto").innerHTML = "";
+            document.getElementById("modeloProducto").innerHTML = "";
             $.ajax({
-                type: 'POST',
-                url: "obtener-modelos/",
+                type: 'post',
+                url: "crear-producto",
                 data: {
-                    marca: $("marcaProducto").val()
+                    marcaID: $("#marcaProducto").val()
                 },
                 dataType: 'json',
-                success: function(response){
-                    var select = document.getElementById("modeloProducto");
-                    for(var i=0; i<response.modelos.length; i++){
+                success: function(data){
+                    let html_data = '<option value="">--------</option>'
+                    data.forEach(function (data){
+                        html_data += `<option value="${data.id}">${data.title}</option>`
+                    });
+                    $("#modeloProducto").html(html_data);
+                    /*var select = document.getElementById("modeloProducto");
+                    for(var i=0; i<data.modelos.length; i++){
                         var option = document.createElement('option');
-                        option.value = response.modelos[i]['id'];
-                        option.innerHTML = response.modelos[i]['nombre'];
+                        option.value = data.modelos[i]['id'];
+                        option.innerHTML = data.modelos[i]['nombre'];
                         select.appendChild(option);
                     }
                 },
+            });
+        });*/
+        $("#marcaProducto").change(function () {
+            const marcaID = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+            $.ajax({                       // initialize an AJAX request
+                type: "POST",
+                url: '{% url "crearProducto" %}',
+                data: {
+                    'marcaID': marcaID,       // add the country id to the POST parameters
+                },
+                success: function (data) {   // `data` is from `get_topics_ajax` view function
+                    let html_data = '<option value="">---------</option>';
+                    data.forEach(function (data) {
+                        html_data += `<option value="${data.id}">${data.title}</option>`
+                    });
+                    $("#marcaProducto").html(html_data); // replace the contents of the topic input with the data that came from the server
+                }
             });
         });
     </script>

@@ -403,17 +403,17 @@ class productoForm(forms.ModelForm):
         )
     )
 
-    #modelo_id = forms.ChoiceField(
-    #    label='Modelo:',
+    modelo_id = forms.ChoiceField(
+        label='Modelo:',
         #choices=modelo.objects.filter(marca=aux).values_list('id','nombre'),
         #choices=modelo.objects.all().values_list('id','nombre'),
-        #widget = forms.Select(
-        #    attrs = {
-        #        'class':"form-control",
-        #        'id' : 'modeloProducto',
-        #    }
-        #)
-    #)
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'modeloProducto',
+            }
+        )
+    )
 
     color_id = forms.ChoiceField(
         label='Color:',
