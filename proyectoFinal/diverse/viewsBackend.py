@@ -85,7 +85,7 @@ def crearTalla(request):
             tallaDatosForm = form.cleaned_data
 
             tallaDatos = talla(
-                nombre = tallaDatosForm['nombreTalla'],
+                nombre = tallaDatosForm['nombre'],
             )
 
             tallaDatos.save()
@@ -166,7 +166,9 @@ def crearModelo(request):
 @login_required(login_url='backendLogin')
 def crearProducto(request):
     if request.method == 'POST':
+        print('hola')
         form = productoForm(request.POST)
+        print(form.is_valid())
         if form.is_valid():
             
             productoDatosForm = form.cleaned_data
@@ -214,6 +216,7 @@ def verMarca(request):
 
 def verModelo(request):
     modelos = modelo.objects.all()
+
     return render(request, 'diverseBackend/ver_modelo.html', {'modelos' : modelos})
 
 def verProducto(request):
@@ -222,12 +225,15 @@ def verProducto(request):
 
 
 #--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
-def obtenerModelos(request):
-    marcaForm = request.POST.get('marca')
-    marcaForm = marca.objects.filter(id=marcaForm)
-    modelos = list(modelo.objects.filter(marca_id=marcaForm).values('id', 'nombre'))
-    response_data = {
-        "modelos":modelos
-    }
+# AJAX
+def load_modelos(request):
+    marca_id_form = request.GET.get('marca_id')
+    modelos = modelo.objects.filter(marca_id = marca_id_form)
 
-    return JsonResponse(response_data)
+    return render(request, 'diverseBackend/modelos_dropdown_list_options.html', {'modelos' : modelos})
+
+def load_subcategorias(request):
+    categoria_id_form = request.GET.get('categoria_id')
+    subcategorias = subCategoria.objects.filter(categoria_id = categoria_id_form)
+
+    return render(request, 'diverseBackend/subcategorias_dropdown_list_options.html', {'subcategorias' : subcategorias})

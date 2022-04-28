@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <h3>Crear Producto</h3>
 
-            <form method="POST">
+            <form method="POST" id="productoForm" data-modelos-url="{% url 'ajax_load_modelos' %}" data-subcategoria-url="{% url 'ajax_load_subcategorias' %}">
                 {% csrf_token %}
 
                     <div class="form-group col-md-10">
@@ -19,6 +19,9 @@
                         <label for="{{ form.sexo_id.label }}">{{ form.sexo_id.label }}</label></br>
                         {{ form.sexo_id }}
                         </br></br>
+                        <label for="{{ form.categoria_id.label }}">{{ form.categoria_id.label }}</label></br>
+                        {{ form.categoria_id }}
+                        </br></br> 
                         <label for="{{ form.subCategoria_id.label }}">{{ form.subCategoria_id.label }}</label></br>
                         {{ form.subCategoria_id }}
                         </br></br> 
@@ -45,6 +48,7 @@
 {% block scriptsfooter %}
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
+<<<<<<< HEAD
         /*document.getElementById("marcaProducto").addEventListener("change", function(){
             console.log('hola');
             document.getElementById("modeloProducto").innerHTML = "";
@@ -87,6 +91,38 @@
                     $("#marcaProducto").html(html_data); // replace the contents of the topic input with the data that came from the server
                 }
             });
+=======
+        $('#marcaProducto').change(function(){
+            const url = $("#productoForm").attr("data-modelos-url");    // Coge la url de la vista "load_modelos"
+            const marcaId = $(this).val();                              // Recogemos la ID de la marca seleccionada
+
+            $.ajax({                                                    // Inicializamos la llamada AJAX
+                url: url,                                               // Seteamos la url de la llamada (= /diverse/ajax/load-modelos)
+                data: {
+                    'marca_id': marcaId                                 // Añadimos la id de la marca a los parametros
+                },
+                success: function (data){                               // 'data' es la respuesta de la funcion 'load_modelo'
+                    console.log(data);
+                    $('#modeloProducto').html(data);                    // reemplaza los contenido del input de modelos con la informacion que viene desde el servidor
+                }
+            })
+        });
+
+        $('#categoriaProducto').change(function(){
+            const url = $("#productoForm").attr("data-subcategoria-url");       // Coge la url de la vista "load_subcategorias"
+            const categoriaId = $(this).val();                                  // Recogemos la ID de la categoria seleccionada
+
+            $.ajax({                                                            // Inicializamos la llamada AJAX
+                url: url,                                                       // Seteamos la url de la llamada (= /diverse/ajax/load-subcategorias)
+                data: {
+                    'categoria_id': categoriaId                                 // Añadimos la id de la categoria a los parametros
+                },
+                success: function (data){                                       // 'data' es la respuesta de la funcion 'load_subcategoria'
+                    console.log(data);
+                    $('#subcategoriaProducto').html(data);                      // reemplaza los contenido del input de subcategorias con la informacion que viene desde el servidor
+                }
+            })
+>>>>>>> bc50e8369a3cf4671aee59119ad43c39bf93e8de
         });
     </script>
 {% endblock scriptsfooter %}

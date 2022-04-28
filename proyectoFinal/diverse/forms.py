@@ -1,6 +1,7 @@
 from cProfile import label
 from dataclasses import fields
 from tkinter import FLAT
+from typing import Type
 from django import forms
 
 from django.contrib.auth.models import User
@@ -335,7 +336,33 @@ class productoForm(forms.ModelForm):
 
     class Meta:
         model = producto
-        fields = ('num_ref', 'precio', 'imagen')
+        #fields = ('num_ref', 'precio', 'imagen')
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['modelo'].queryset = modelo.objects.none()  #Coge el campo modelo y lo vacia
+        self.fields['subCategoria'].queryset = subCategoria.objects.none()  #Coge el campo modelo y lo vacia
+
+        if 'marca' in self.data:
+            try:
+                marca_id = int(self.data.get('marca'))
+                self.fields['modelo'].queryset = modelo.objects.filter(marca_id = marca_id).order_by('name')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['modelo'].queryset = self.instance.marca.modelo_set.order_by()
+
+        if 'categoria' in self.data:
+            try:
+                categoria_id = int(self.data.get('categoria'))
+                self.fields['subCategoria'].queryset = subCategoria.objects.filter(categoria_id = categoria_id).order_by('name')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['subCategoria'].queryset = self.instance.categoria.subcategoria_set.order_by()
+
+        
 
     num_ref = forms.CharField(
         max_length = 60,
@@ -381,9 +408,20 @@ class productoForm(forms.ModelForm):
         )
     )
 
+    categoria_id = forms.ChoiceField(
+        label='Categoría:',
+        choices=categoria.objects.all().values_list('id','nombre'),
+        widget = forms.Select(
+            attrs = {
+                'class':"form-control",
+                'id' : 'categoriaProducto',
+            }
+        )
+    )
+
     subCategoria_id = forms.ChoiceField(
         label='Subcategoría:',
-        choices=subCategoria.objects.all().values_list('id','nombre'),
+        #choices=subCategoria.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -403,6 +441,11 @@ class productoForm(forms.ModelForm):
         )
     )
 
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> bc50e8369a3cf4671aee59119ad43c39bf93e8de
     modelo_id = forms.ChoiceField(
         label='Modelo:',
         #choices=modelo.objects.filter(marca=aux).values_list('id','nombre'),
