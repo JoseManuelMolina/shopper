@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <h3>Crear Producto</h3>
 
-            <form method="POST" id="productoForm" data-modelos-url="{% url 'ajax_load_modelos' %}">
+            <form method="POST" id="productoForm" data-modelos-url="{% url 'ajax_load_modelos' %}" data-subcategoria-url="{% url 'ajax_load_subcategorias' %}">
                 {% csrf_token %}
 
                     <div class="form-group col-md-10">
@@ -19,6 +19,9 @@
                         <label for="{{ form.sexo_id.label }}">{{ form.sexo_id.label }}</label></br>
                         {{ form.sexo_id }}
                         </br></br>
+                        <label for="{{ form.categoria_id.label }}">{{ form.categoria_id.label }}</label></br>
+                        {{ form.categoria_id }}
+                        </br></br> 
                         <label for="{{ form.subCategoria_id.label }}">{{ form.subCategoria_id.label }}</label></br>
                         {{ form.subCategoria_id }}
                         </br></br> 
@@ -56,6 +59,22 @@
                 success: function (data){                               // 'data' es la respuesta de la funcion 'load_modelo'
                     console.log(data);
                     $('#modeloProducto').html(data);                    // reemplaza los contenido del input de modelos con la informacion que viene desde el servidor
+                }
+            })
+        });
+
+        $('#categoriaProducto').change(function(){
+            const url = $("#productoForm").attr("data-subcategoria-url");       // Coge la url de la vista "load_subcategorias"
+            const categoriaId = $(this).val();                                  // Recogemos la ID de la categoria seleccionada
+
+            $.ajax({                                                            // Inicializamos la llamada AJAX
+                url: url,                                                       // Seteamos la url de la llamada (= /diverse/ajax/load-subcategorias)
+                data: {
+                    'categoria_id': categoriaId                                 // Añadimos la id de la categoria a los parametros
+                },
+                success: function (data){                                       // 'data' es la respuesta de la funcion 'load_subcategoria'
+                    console.log(data);
+                    $('#subcategoriaProducto').html(data);                      // reemplaza los contenido del input de subcategorias con la informacion que viene desde el servidor
                 }
             })
         });

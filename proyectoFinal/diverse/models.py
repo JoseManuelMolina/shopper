@@ -71,6 +71,9 @@ class producto(models.Model):
     sexo =  models.ForeignKey(
         'sexo', on_delete=models.CASCADE,
     )
+    categoria =  models.ForeignKey(
+        'categoria', on_delete=models.CASCADE,
+    )
     subCategoria =  models.ForeignKey(
         'subCategoria', on_delete=models.CASCADE,
     )
