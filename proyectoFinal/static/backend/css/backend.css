@@ -10,3 +10,32 @@
     opacity:1 !important;
     position: relative !important;
 }
+
+.dropdownBackend {
+    margin: 0 !important;
+}
+
+.verDropdown, .crearDropdown {
+    margin: 10px 15px !important;
+}
+
+.crearDropdown[aria-expanded="true"] #mas-crear, .verDropdown[aria-expanded="true"] #mas-ver {
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+    transform: rotate(-90deg);
+}
+
+.crearDropdownDiv,  .verDropdownDiv{
+    transform: translate3d(0px, -20px, 0px) !important;
+    width: 100% !important;
+    top: auto !important;
+    border-radius: 0 !important;
+}
+
+.dropdownBackend .dropdown-item {
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.dropdownBackend .dropdown-item:hover i {
+    color: white !important;
+}

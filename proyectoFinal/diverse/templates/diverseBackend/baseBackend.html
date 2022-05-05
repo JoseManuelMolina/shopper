@@ -49,125 +49,117 @@
                   <p>INICIO</p>
                 </a>
               </li>
-              <li>
-                <a href="javascript:;" id="botonVer" onclick="botonDropdown('ver')" class="table-dropdown">
+              <li class="nav-item btn-rotate dropdown">
+                <a class="nav-link verDropdown" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-tile-56"></i>
                   <p>VER</p>
-                  <i id="mas-ver" class="nc-icon nc-simple-add" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
-                  <i id="menos-ver" class="nc-icon nc-simple-delete display-none" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
+                  <i id="mas-ver" class="nc-icon nc-minimal-left" style="position: absolute; font-size: 15px; right: 20px; top: 12px; margin: 0;"></i>
                 </a>
-                <ul id="verDropdown" class="nav display-none">
-                  <hr>
-                  <li>
-                    <a href="{% url 'verSexo' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>SEXO</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verColor' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>COLOR</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verTalla' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>TALLA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verCategoria' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>CATEGORIA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verSubCategoria' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>SUBCATEGORIA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verMarca' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>MARCA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verModelo' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>MODELO</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'verProducto' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>PRODUCTO</p>
-                    </a>
-                  </li>
-                  <hr>
-                </ul>
+                <div class="dropdown-menu dropdown-menu-right verDropdownDiv" aria-labelledby="navbarDropdownMenuLink">
+                  <ul class="nav dropdownBackend">
+                    <li>
+                      <a href="{% url 'verSexo' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>SEXO</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verColor' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>COLOR</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verTalla' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>TALLA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verCategoria' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>CATEGORIA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verSubCategoria' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>SUBCATEGORIA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verMarca' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>MARCA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verModelo' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>MODELO</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'verProducto' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>PRODUCTO</p>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
-              <li>
-                <a href="javascript:;" id="botonCrear" onclick="botonDropdown('crear')"  class="table-dropdown">
-                  <i class="nc-icon nc-share-66"></i>
+              <li class="nav-item btn-rotate dropdown">
+                <a class="nav-link crearDropdown" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="nc-icon nc-tile-56"></i>
                   <p>CREAR</p>
-                  <i id="mas-crear" class="nc-icon nc-simple-add" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
-                  <i id="menos-crear" class="nc-icon nc-simple-delete display-none" style="position: absolute; top: 11px; right: 10px; font-size: 20px;"></i>
+                  <i id="mas-crear" class="nc-icon nc-minimal-left" style="position: absolute; font-size: 15px; right: 20px; top: 12px; margin: 0;"></i>
                 </a>
-                <ul id="crearDropdown" class="nav display-none">
-                  <hr>
-                  <li>
-                    <a href="{% url 'crearColor' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>COLOR</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearSexo' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>SEXO</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearTalla' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>TALLA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearCategoria' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>CATEGORIA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearSubCategoria' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>SUBCATEGORIA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearMarca' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>MARCA</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearModelo' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>MODELO</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'crearProducto' %}">
-                      <i class="nc-icon nc-tie-bow"></i>
-                      <p>PRODUCTO</p>
-                    </a>
-                  </li>
-                  <hr>
-                </ul>
+                <div class="dropdown-menu dropdown-menu-right crearDropdownDiv" aria-labelledby="navbarDropdownMenuLink">
+                  <ul class="nav dropdownBackend">
+                    <li>
+                      <a href="{% url 'crearColor' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>COLOR</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crearTalla' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>TALLA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crearCategoria' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>CATEGORIA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crearSubCategoria' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>SUBCATEGORIA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crearMarca' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>MARCA</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crearModelo' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>MODELO</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'crearProducto' %}" class="dropdown-item">
+                        <i class="nc-icon nc-tie-bow"></i>
+                        <p>PRODUCTO</p>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>
@@ -205,7 +197,7 @@
                 <ul class="navbar-nav">
                   {% if user.is_authenticated %}
                   <li class="nav-item btn-rotate dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="nc-icon nc-single-02"></i>
                       <p>
                         <span class="d-lg-none d-md-block">Some Actions</span>
