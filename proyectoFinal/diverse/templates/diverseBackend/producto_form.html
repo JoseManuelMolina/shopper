@@ -21,9 +21,23 @@
                             {% else  %}
                                 {{ field|add_class:'form-control' }}
                             {% endif %}
-                            {% for error in field.errors %}
-                                <span class="help-block">{{ error }}</span>
-                            {% endfor %}
+
+                            {% if 'num_ref' != field.name  %}
+                                {% for error in field.errors %}
+                                <br>
+                                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                <br>
+                                {% endfor %}
+                            {% else  %}
+                                {% for error in field.errors %}
+                                    {% if 'Ya existe Producto con este Num ref.' == error  %}
+                                        <br>
+                                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                        <br>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
                         </div>
                     {% endfor %}
                     

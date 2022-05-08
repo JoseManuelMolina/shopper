@@ -366,38 +366,12 @@ class productoForm(forms.ModelForm):
 
     class Meta:
         model = producto
-        fields = ('sexo', 'categoria', 'subCategoria', 'marca', 'modelo', 'color', 'talla',  'num_ref', 'precio', 'imagen')
+        fields = ('num_ref', 'sexo', 'categoria', 'subCategoria', 'marca', 'modelo', 'color', 'talla', 'precio', 'imagen')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['modelo'].queryset = modelo.objects.none()  #Coge el campo modelo y lo vacia
-        self.fields['subCategoria'].queryset = subCategoria.objects.none()  #Coge el campo modelo y lo vacia
-
-        """choicesSexo = [('-1', '---- Seleccione el sexo del producto ----')]
-        choicesSexo.extend([(sexo.id, sexo.tipo) for sexo in sexo.objects.all()])
-        self.fields['sexo_id'].choices = choicesSexo
-        self.fields['sexo_id'].widget.disabled_choices = [-1]
-
-        choicesCategoria = [('-1', '---- Selecciona la categoria del producto ----')]
-        choicesCategoria.extend([(categoria.id, categoria.nombre) for categoria in categoria.objects.all().order_by('nombre')])
-        self.fields['categoria_id'].choices = choicesCategoria
-        self.fields['categoria_id'].widget.disabled_choices = [-1]
-
-        choicesMarca = [('-1', '---- Selecciona la marca del producto ----')]
-        choicesMarca.extend([(marca.id, marca.nombre) for marca in marca.objects.all().order_by('nombre')])
-        self.fields['marca_id'].choices = choicesMarca
-        self.fields['marca_id'].widget.disabled_choices = [-1]
-
-        choicesColor = [('-1', '---- Seleccione el color del producto ----')]
-        choicesColor.extend([(color.id, color.nombre) for color in color.objects.all().order_by('nombre')])
-        self.fields['color_id'].choices = choicesColor
-        self.fields['color_id'].widget.disabled_choices = [-1]
-
-        choicesTalla = [('-1', '---- Selecciona la talla del producto ----')]
-        choicesTalla.extend([(talla.id, talla.nombre) for talla in talla.objects.all().order_by('nombre')])
-        self.fields['talla_id'].choices = choicesTalla
-        self.fields['talla_id'].widget.disabled_choices = [-1]"""
-        
+        self.fields['subCategoria'].queryset = subCategoria.objects.none()  #Coge el campo modelo y lo vacia        
 
         if 'marca' in self.data:
             try:
@@ -416,108 +390,3 @@ class productoForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['subCategoria'].queryset = self.instance.categoria.subcategoria_set.order_by('nombre')
-
-        
-
-    """num_ref = forms.CharField(
-        max_length = 60,
-        widget = forms.HiddenInput(
-            attrs = {
-                'class' : 'form-control',
-                'id' : 'numrefProducto',
-            }
-        )
-    )
-
-    precio = forms.CharField(
-        max_length = 60,
-        label = 'Precio:',
-        widget = forms.NumberInput(
-            attrs = {
-                'class' : 'form-control',
-                'id' : 'precioProducto',
-                'placeholder' : 'Precio del producto'
-            }
-        )
-    )
-
-    imagen = forms.FileField(
-        max_length = 60,
-        label = 'Imagen del producto:',
-        widget = forms.FileInput(
-            attrs = {
-                'class':"form-control input-form",
-                'id' : 'imagenProducto',
-            }
-        )
-    )
-
-    sexo_id = forms.ChoiceField(
-        label='Sexo:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'sexoProducto',
-            }
-        )
-    )
-
-    categoria_id = forms.ChoiceField(
-        label='Categoría:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'categoriaProducto',
-            }
-        )
-    )
-
-    subCategoria_id = forms.ChoiceField(
-        label='Subcategoría:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'subcategoriaProducto',
-            }
-        )
-    )
-
-    marca_id = forms.ChoiceField(
-        label='Marca:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'marcaProducto',
-            }
-        )
-    )
-
-    modelo_id = forms.ChoiceField(
-        label='Modelo:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'modeloProducto',
-            }
-        )
-    )
-
-    color_id = forms.ChoiceField(
-        label='Color:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'colorProducto',
-            }
-        )
-    )
-
-    talla_id = forms.ChoiceField(
-        label='Talla:',
-        widget = forms.Select(
-            attrs = {
-                'class':"form-control",
-                'id' : 'tallaProducto',
-            }
-        )
-    )"""
