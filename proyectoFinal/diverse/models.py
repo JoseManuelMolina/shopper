@@ -7,6 +7,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
+def get_producto_imagenes_filepath(self, filename):
+    return f'{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/{self.num_ref+".png"}'
+
+def get_default_imagen_producto():
+    return f'imagen_producto_default.png'
+
+
 class sexo(models.Model):
 
     HOMBRE = 'H'
@@ -24,12 +31,26 @@ class sexo(models.Model):
     id = models.AutoField(primary_key=True)
     tipo = models.CharField(max_length=2, choices=OPCIONES_SEXO)
 
+    def __str__(self):
+        return self.tipo
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_sexo'
+
 class categoria(models.Model):
     id = models.AutoField(primary_key=True)
  #   sexo = models.ForeignKey(
  #       'sexo', on_delete=models.CASCADE,
  #   )
     nombre = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_categoria'
 
 class subCategoria(models.Model):
 
@@ -40,6 +61,13 @@ class subCategoria(models.Model):
     )
     nombre = models.CharField(max_length=40, default='default categoria')
 
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_subcategoria'
+
 class marca(models.Model):
 
     id = models.AutoField(primary_key=True)
@@ -47,6 +75,13 @@ class marca(models.Model):
 #        'subCategoria', on_delete=models.CASCADE,
 #    )
     nombre = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_marca'
 
 class modelo(models.Model):
 
@@ -56,42 +91,73 @@ class modelo(models.Model):
     )
     nombre = models.CharField(max_length=60)
 
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_modelo'
+
 class color(models.Model):
 
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_color'
 
 class talla(models.Model):
 
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=10)
 
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_talla'
+
 class producto(models.Model):
 
     sexo =  models.ForeignKey(
-        'sexo', on_delete=models.CASCADE,
+        'sexo', on_delete=models.SET_NULL, null=True
     )
     categoria =  models.ForeignKey(
-        'categoria', on_delete=models.CASCADE,
+        'categoria', on_delete=models.SET_NULL, null=True
     )
     subCategoria =  models.ForeignKey(
-        'subCategoria', on_delete=models.CASCADE,
+        'subCategoria', on_delete=models.SET_NULL, null=True
     )
     marca =  models.ForeignKey(
-        'marca', on_delete=models.CASCADE,
+        'marca', on_delete=models.SET_NULL, null=True
     )
     modelo =  models.ForeignKey(
-        'modelo', on_delete=models.CASCADE,
+        'modelo', on_delete=models.SET_NULL, null=True
     )
     color =  models.ForeignKey(
-        'color', on_delete=models.CASCADE,
+        'color', on_delete=models.SET_NULL, null=True
     )
     talla =  models.ForeignKey(
-        'talla', on_delete=models.CASCADE,
+        'talla', on_delete=models.SET_NULL, null=True
     )
-    num_ref = models.PositiveBigIntegerField(primary_key=True)
+    num_ref = models.PositiveBigIntegerField(primary_key=True, null=False, blank=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
-    imagen = models.ImageField(upload_to = 'media/productos', blank=True, null=True)
+    imagen = models.ImageField(max_length=255, upload_to=get_producto_imagenes_filepath, null=True, blank=True, default=get_default_imagen_producto())
+
+    def __str__(self):
+        return self.num_ref
+
+    class Meta:
+        # managed = True
+        db_table = 'diverse_producto'
+
+    def get_imagen_producto_filename(self):
+        return str(self.imagen)[str(self.imagen).index(f'media/imagen/{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/'):]
 
 class stock(models.Model):
     

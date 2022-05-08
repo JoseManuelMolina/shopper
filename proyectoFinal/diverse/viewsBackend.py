@@ -1,12 +1,18 @@
-from mailbox import NoSuchMailboxError
-import re
+from math import prod
+from pyexpat import model
 from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
 
-from diverse.forms import *
+from django.views.generic import ListView, CreateView
+from django.contrib.auth.decorators import login_required
 
 from diverse.models import *
 from account.models import *
+from diverse.forms import *
+
+from mailbox import NoSuchMailboxError
+from re import template
+from sre_constants import SUCCESS
+from django.urls import reverse_lazy
 
 from django.http import JsonResponse
 
@@ -163,31 +169,17 @@ def crearModelo(request):
 
     return render(request, 'diverseBackend/modelo_form.html', {'form' : form})
 
-@login_required(login_url='backendLogin')
-def crearProducto(request):
-    if request.method == 'POST':
-        print('hola')
-        form = productoForm(request.POST)
-        print(form.is_valid())
-        if form.is_valid():
-            
-            productoDatosForm = form.cleaned_data
+class crearProducto(CreateView):
 
-            productoDatos = modelo(
-                num_ref = productoDatosForm['num_ref'],
-                precio = productoDatosForm['precio'],
-                imagen = productoDatosForm['iamgen'],
-                marca_id = productoDatosForm['marca_id']
-            )
+    model = producto
+    form_class = productoForm
+    template_name = 'diverseBackend/producto_form.html'
+    success_url = reverse_lazy('verProducto')
 
-            productoDatos.save()
-            
-        return redirect('verProducto')
-    else:
-        form = productoForm()
-
-    return render(request, 'diverseBackend/producto_form.html', {'form' : form})
-
+    def form_valid(self, form):
+        form.save()
+        return super(crearProducto, self).form_valid(form)
+        
 
 #----------------------------------------------------------------------------- Ver -----------------------------------------------------------------------------
 def verColor(request):
@@ -237,3 +229,5 @@ def load_subcategorias(request):
     subcategorias = subCategoria.objects.filter(categoria_id = categoria_id_form)
 
     return render(request, 'diverseBackend/subcategorias_dropdown_list_options.html', {'subcategorias' : subcategorias})
+
+

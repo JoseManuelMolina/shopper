@@ -20,6 +20,20 @@ class usuarioForm(forms.ModelForm):
         model = Account
         fields = ('email', 'username', 'nombre', 'apellidos','direccion','pais','provincia','localidad','codigoPostal','telefono','imagen_perfil')
 
+    def __init__(self, usuario, *args, **kwargs):
+        super(usuarioForm, self).__init__(*args, **kwargs)
+        
+        self.fields['email'].initial = usuario.email
+        self.fields['username'].initial = usuario.username
+        self.fields['nombre'].initial = usuario.nombre
+        self.fields['apellidos'].initial = usuario.apellidos
+        self.fields['direccion'].initial = usuario.direccion
+        self.fields['pais'].initial = usuario.pais
+        self.fields['provincia'].initial = usuario.provincia
+        self.fields['localidad'].initial = usuario.localidad
+        self.fields['codigoPostal'].initial = usuario.codigoPostal
+        self.fields['telefono'].initial = usuario.telefono
+
     email = forms.CharField(
         max_length=100,
         label='email',
@@ -145,20 +159,6 @@ class usuarioForm(forms.ModelForm):
         )
     )
 
-    def __init__(self, usuario, *args, **kwargs):
-        super(usuarioForm, self).__init__(*args, **kwargs)
-        
-        self.fields['email'].initial = usuario.email
-        self.fields['username'].initial = usuario.username
-        self.fields['nombre'].initial = usuario.nombre
-        self.fields['apellidos'].initial = usuario.apellidos
-        self.fields['direccion'].initial = usuario.direccion
-        self.fields['pais'].initial = usuario.pais
-        self.fields['provincia'].initial = usuario.provincia
-        self.fields['localidad'].initial = usuario.localidad
-        self.fields['codigoPostal'].initial = usuario.codigoPostal
-        self.fields['telefono'].initial = usuario.telefono
-
 class colorForm(forms.ModelForm):
 
     class Meta:
@@ -271,6 +271,15 @@ class subcategoriaForm(forms.ModelForm):
         model = subCategoria
         fields = ('id', 'nombre')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        choicesCategoria = [('-1', '---- Selecciona la categoria del producto ----')]
+        choicesCategoria.extend([(categoria.id, categoria.nombre) for categoria in categoria.objects.all().order_by('nombre')])
+        self.fields['categoria_id'].choices = choicesCategoria
+        self.fields['categoria_id'].widget.disabled_choices = [-1]
+        self.initial['categoria_id'] = -1
+
     nombre = forms.CharField(
         max_length=40,
         label = 'Subcategoria',
@@ -288,8 +297,14 @@ class subcategoriaForm(forms.ModelForm):
 
     categoria_id = forms.ChoiceField(
             label='Categoria:',
-            choices=categoria.objects.all().values_list('id','nombre')
+            choices=categoria.objects.all().values_list('id','nombre'),
+            widget = forms.Select(
+            attrs = {
+                'class' : 'form-control',
+                'id' : 'categoriaID'
+            }
         )
+    )
 
 class marcaForm(forms.ModelForm):
 
@@ -315,6 +330,15 @@ class modeloForm(forms.ModelForm):
         model = modelo
         fields = ('id', 'nombre')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        choicesMarca = [('-1', '---- Selecciona la marca del producto ----')]
+        choicesMarca.extend([(marca.id, marca.nombre) for marca in marca.objects.all().order_by('nombre')])
+        self.fields['marca_id'].choices = choicesMarca
+        self.fields['marca_id'].widget.disabled_choices = [-1]
+        self.initial['marca_id'] = -1
+
     nombre = forms.CharField(
         max_length = 60,
         label = 'Modelo',
@@ -329,42 +353,73 @@ class modeloForm(forms.ModelForm):
 
     marca_id = forms.ChoiceField(
             label='Marca:',
-            choices=marca.objects.all().values_list('id','nombre')
+            choices=marca.objects.all().values_list('id','nombre'),
+            widget = forms.Select(
+            attrs = {
+                'class' : 'form-control',
+                'id' : 'nombreMarca'
+            }
         )
+    )
 
 class productoForm(forms.ModelForm):
 
     class Meta:
         model = producto
-        #fields = ('num_ref', 'precio', 'imagen')
-        fields = '__all__'
+        fields = ('sexo', 'categoria', 'subCategoria', 'marca', 'modelo', 'color', 'talla',  'num_ref', 'precio', 'imagen')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['modelo'].queryset = modelo.objects.none()  #Coge el campo modelo y lo vacia
         self.fields['subCategoria'].queryset = subCategoria.objects.none()  #Coge el campo modelo y lo vacia
 
+        """choicesSexo = [('-1', '---- Seleccione el sexo del producto ----')]
+        choicesSexo.extend([(sexo.id, sexo.tipo) for sexo in sexo.objects.all()])
+        self.fields['sexo_id'].choices = choicesSexo
+        self.fields['sexo_id'].widget.disabled_choices = [-1]
+
+        choicesCategoria = [('-1', '---- Selecciona la categoria del producto ----')]
+        choicesCategoria.extend([(categoria.id, categoria.nombre) for categoria in categoria.objects.all().order_by('nombre')])
+        self.fields['categoria_id'].choices = choicesCategoria
+        self.fields['categoria_id'].widget.disabled_choices = [-1]
+
+        choicesMarca = [('-1', '---- Selecciona la marca del producto ----')]
+        choicesMarca.extend([(marca.id, marca.nombre) for marca in marca.objects.all().order_by('nombre')])
+        self.fields['marca_id'].choices = choicesMarca
+        self.fields['marca_id'].widget.disabled_choices = [-1]
+
+        choicesColor = [('-1', '---- Seleccione el color del producto ----')]
+        choicesColor.extend([(color.id, color.nombre) for color in color.objects.all().order_by('nombre')])
+        self.fields['color_id'].choices = choicesColor
+        self.fields['color_id'].widget.disabled_choices = [-1]
+
+        choicesTalla = [('-1', '---- Selecciona la talla del producto ----')]
+        choicesTalla.extend([(talla.id, talla.nombre) for talla in talla.objects.all().order_by('nombre')])
+        self.fields['talla_id'].choices = choicesTalla
+        self.fields['talla_id'].widget.disabled_choices = [-1]"""
+        
+
         if 'marca' in self.data:
             try:
                 marca_id = int(self.data.get('marca'))
-                self.fields['modelo'].queryset = modelo.objects.filter(marca_id = marca_id).order_by('name')
+                self.fields['modelo'].queryset = modelo.objects.filter(marca_id = marca_id).order_by('nombre')
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
-            self.fields['modelo'].queryset = self.instance.marca.modelo_set.order_by()
+            self.fields['modelo'].queryset = self.instance.marca.modelo_set.order_by('nombre')
 
         if 'categoria' in self.data:
             try:
                 categoria_id = int(self.data.get('categoria'))
-                self.fields['subCategoria'].queryset = subCategoria.objects.filter(categoria_id = categoria_id).order_by('name')
+                self.fields['subCategoria'].queryset = subCategoria.objects.filter(categoria_id = categoria_id).order_by('nombre')
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
-            self.fields['subCategoria'].queryset = self.instance.categoria.subcategoria_set.order_by()
+            self.fields['subCategoria'].queryset = self.instance.categoria.subcategoria_set.order_by('nombre')
 
         
 
-    num_ref = forms.CharField(
+    """num_ref = forms.CharField(
         max_length = 60,
         widget = forms.HiddenInput(
             attrs = {
@@ -399,7 +454,6 @@ class productoForm(forms.ModelForm):
 
     sexo_id = forms.ChoiceField(
         label='Sexo:',
-        choices=sexo.objects.all().values_list('id','tipo'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -410,7 +464,6 @@ class productoForm(forms.ModelForm):
 
     categoria_id = forms.ChoiceField(
         label='Categoría:',
-        choices=categoria.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -421,7 +474,6 @@ class productoForm(forms.ModelForm):
 
     subCategoria_id = forms.ChoiceField(
         label='Subcategoría:',
-        #choices=subCategoria.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -432,7 +484,6 @@ class productoForm(forms.ModelForm):
 
     marca_id = forms.ChoiceField(
         label='Marca:',
-        choices=marca.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -441,15 +492,8 @@ class productoForm(forms.ModelForm):
         )
     )
 
-<<<<<<< HEAD
-=======
-    
-
->>>>>>> bc50e8369a3cf4671aee59119ad43c39bf93e8de
     modelo_id = forms.ChoiceField(
         label='Modelo:',
-        #choices=modelo.objects.filter(marca=aux).values_list('id','nombre'),
-        #choices=modelo.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -460,7 +504,6 @@ class productoForm(forms.ModelForm):
 
     color_id = forms.ChoiceField(
         label='Color:',
-        choices=color.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
@@ -471,11 +514,10 @@ class productoForm(forms.ModelForm):
 
     talla_id = forms.ChoiceField(
         label='Talla:',
-        choices=talla.objects.all().values_list('id','nombre'),
         widget = forms.Select(
             attrs = {
                 'class':"form-control",
                 'id' : 'tallaProducto',
             }
         )
-    )
+    )"""

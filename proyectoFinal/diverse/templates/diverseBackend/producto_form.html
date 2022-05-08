@@ -1,45 +1,33 @@
 {% extends 'diverseBackend/baseBackend.html' %}
 {% block content %}
+{% load widget_tweaks %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12 col-md-10">
             <h3>Crear Producto</h3>
 
-            <form method="POST" id="productoForm" data-modelos-url="{% url 'ajax_load_modelos' %}" data-subcategoria-url="{% url 'ajax_load_subcategorias' %}">
+            <form method="POST" id="productoForm" data-modelos-url="{% url 'ajax_load_modelos' %}" data-subcategoria-url="{% url 'ajax_load_subcategorias' %}" novalidate>
                 {% csrf_token %}
 
-                    <div class="form-group col-md-10">
-                        {{ form.num_ref }}
-                        </br>
-                        <label for="{{ form.precio.label }}">{{ form.precio.label }}</label></br>
-                        {{ form.precio }}
-                        </br>
-                        <label for="{{ form.imagen.label }}">{{ form.imagen.label }}</label></br>
-                        {{ form.imagen }}
-                        </br>
-                        <label for="{{ form.sexo_id.label }}">{{ form.sexo_id.label }}</label></br>
-                        {{ form.sexo_id }}
-                        </br></br>
-                        <label for="{{ form.categoria_id.label }}">{{ form.categoria_id.label }}</label></br>
-                        {{ form.categoria_id }}
-                        </br></br> 
-                        <label for="{{ form.subCategoria_id.label }}">{{ form.subCategoria_id.label }}</label></br>
-                        {{ form.subCategoria_id }}
-                        </br></br> 
-                        <label for="{{ form.marca_id.label }}">{{ form.marca_id.label }}</label></br>
-                        {{ form.marca_id }}
-                        </br></br>
-                        <label for="{{ form.modelo_id.label }}">{{ form.modelo_id.label }}</label></br>
-                        {{ form.modelo_id }}
-                        </br></br>
-                        <label for="{{ form.color_id.label }}">{{ form.color_id.label }}</label></br>
-                        {{ form.color_id }}
-                        </br></br>
-                        <label for="{{ form.talla_id.label }}">{{ form.talla_id.label }}</label></br>
-                        {{ form.talla_id }}
-                        </br>
-                    </div>
+                    {% for field in form.visible_fields %}
+                        <div class="form-group col-md-10">
+                            {% if 'num_ref' != field.name  %}
+                                <label form="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {% endif %}
 
-                <button type="submit" class="btn btn-primary">Crear</button>
+                            {% if 'num_ref' == field.name  %}
+                                {{ field.as_hidden }}
+                            {% elif 'imagen' == field.name %}
+                                {{ field|add_class:'form-control input-form' }}
+                            {% else  %}
+                                {{ field|add_class:'form-control' }}
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    
+                <button type="submit" class="btn btn-primary" id="guardarProducto">Crear</button>
             </form>
         </div>
     </div>
@@ -48,51 +36,7 @@
 {% block scriptsfooter %}
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
-<<<<<<< HEAD
-        /*document.getElementById("marcaProducto").addEventListener("change", function(){
-            console.log('hola');
-            document.getElementById("modeloProducto").innerHTML = "";
-            $.ajax({
-                type: 'post',
-                url: "crear-producto",
-                data: {
-                    marcaID: $("#marcaProducto").val()
-                },
-                dataType: 'json',
-                success: function(data){
-                    let html_data = '<option value="">--------</option>'
-                    data.forEach(function (data){
-                        html_data += `<option value="${data.id}">${data.title}</option>`
-                    });
-                    $("#modeloProducto").html(html_data);
-                    /*var select = document.getElementById("modeloProducto");
-                    for(var i=0; i<data.modelos.length; i++){
-                        var option = document.createElement('option');
-                        option.value = data.modelos[i]['id'];
-                        option.innerHTML = data.modelos[i]['nombre'];
-                        select.appendChild(option);
-                    }
-                },
-            });
-        });*/
-        $("#marcaProducto").change(function () {
-            const marcaID = $(this).val();  // get the selected subject ID from the HTML dropdown list 
-            $.ajax({                       // initialize an AJAX request
-                type: "POST",
-                url: '{% url "crearProducto" %}',
-                data: {
-                    'marcaID': marcaID,       // add the country id to the POST parameters
-                },
-                success: function (data) {   // `data` is from `get_topics_ajax` view function
-                    let html_data = '<option value="">---------</option>';
-                    data.forEach(function (data) {
-                        html_data += `<option value="${data.id}">${data.title}</option>`
-                    });
-                    $("#marcaProducto").html(html_data); // replace the contents of the topic input with the data that came from the server
-                }
-            });
-=======
-        $('#marcaProducto').change(function(){
+        $('#id_marca').change(function(){
             const url = $("#productoForm").attr("data-modelos-url");    // Coge la url de la vista "load_modelos"
             const marcaId = $(this).val();                              // Recogemos la ID de la marca seleccionada
 
@@ -103,12 +47,12 @@
                 },
                 success: function (data){                               // 'data' es la respuesta de la funcion 'load_modelo'
                     console.log(data);
-                    $('#modeloProducto').html(data);                    // reemplaza los contenido del input de modelos con la informacion que viene desde el servidor
+                    $('#id_modelo').html(data);                    // reemplaza los contenido del input de modelos con la informacion que viene desde el servidor
                 }
             })
         });
 
-        $('#categoriaProducto').change(function(){
+        $('#id_categoria').change(function(){
             const url = $("#productoForm").attr("data-subcategoria-url");       // Coge la url de la vista "load_subcategorias"
             const categoriaId = $(this).val();                                  // Recogemos la ID de la categoria seleccionada
 
@@ -119,10 +63,25 @@
                 },
                 success: function (data){                                       // 'data' es la respuesta de la funcion 'load_subcategoria'
                     console.log(data);
-                    $('#subcategoriaProducto').html(data);                      // reemplaza los contenido del input de subcategorias con la informacion que viene desde el servidor
+                    $('#id_subCategoria').html(data);                      // reemplaza los contenido del input de subcategorias con la informacion que viene desde el servidor
                 }
             })
->>>>>>> bc50e8369a3cf4671aee59119ad43c39bf93e8de
+        });
+
+        $('#guardarProducto').click(function(){
+            var sexo = $('#id_sexo').val();
+            var categoria = $('#id_categoria').val(); 
+            var subcategoria = $('#id_subCategoria').val();
+            var marca = $('#id_marca').val();
+            var modelo = $('#id_modelo').val();
+            var color = $('#id_color').val();
+            var talla = $('#id_categoria').val();
+
+            numRef = ""+sexo+categoria+subcategoria+marca+modelo+color+talla;
+            console.log(numRef);
+            console.log(parseInt(numRef));
+
+            $('#id_num_ref').val(parseInt(numRef));
         });
     </script>
 {% endblock scriptsfooter %}
