@@ -8,15 +8,36 @@
       <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Producto</th>
+              <th scope="col">num_ref</th>
+              <th scope="col">Sexo</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Subcategoria</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Color</th>
+              <th scope="col">Talla</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Imagen</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Borrar</th>
             </tr>
           </thead>
           <tbody>
             {% for producto in productos %}
             <tr>
-              <th scope="row">{{ producto.id }}</th>
-              <td scope="row">{{ producto.nombre }}</td>
+              <th scope="row">{{ producto.num_ref }}</th>
+              <th scope="row">{{ producto.sexo.tipo }}</th>
+              <td scope="row">{{ producto.categoria.nombre }}</td>
+              <th scope="row">{{ producto.subCategoria.nombre }}</th>
+              <td scope="row">{{ producto.marca.nombre }}</td>
+              <th scope="row">{{ producto.modelo.nombre }}</th>
+              <td scope="row">{{ producto.color.nombre }}</td>
+              <th scope="row">{{ producto.talla.nombre }}</th>
+              <td scope="row">{{ producto.precio }}</td>
+              <th scope="row">{{ producto.imagen }}</th>
+              <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></th>
+              <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button></th>
+              
             </tr>
             {% endfor %}
           </tbody>

@@ -211,9 +211,10 @@ def verModelo(request):
 
     return render(request, 'diverseBackend/ver_modelo.html', {'modelos' : modelos})
 
-def verProducto(request):
-    productos = producto.objects.all()
-    return render(request, 'diverseBackend/ver_producto.html', {'productos' : productos})
+class verProducto(ListView):
+    model = producto
+    context_object_name = 'productos'
+    template_name = 'diverseBackend/ver_producto.html'
 
 
 #--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
