@@ -1,9 +1,12 @@
+from audioop import reverse
 from math import prod
 from pyexpat import model
+import re
 from django.shortcuts import redirect, render
 
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from diverse.models import *
 from account.models import *
@@ -14,13 +17,11 @@ from re import template
 from sre_constants import SUCCESS
 from django.urls import reverse_lazy
 
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 
 # Create your views here.
 
-# BACKEND
-
-# class indexListView(ListView):
+# class indexListView(ListView):WWW
 #    model = color
 #    template_name = 'index.html'
 #    content_object_name = 'indexList'
@@ -34,16 +35,25 @@ def indexList(request):
 
 @login_required(login_url='backendLogin')
 def perfil(request):
+    usuario = request.user
+    formUsuario = usuarioForm(instance=usuario)
+    formImagenUsuario = imagenUsuario(instance=usuario)
+
     if request.method == 'POST':
-        form = usuarioForm(request.POST, request.FILES, request.user)
-        if form.is_valid():
-            form.save()
+        formUsuario = usuarioForm(request.POST, instance=usuario)
+        formImagenUsuario = imagenUsuario(request.POST, request.FILES, instance=usuario)
+
+        if formUsuario.is_valid() and formImagenUsuario.is_valid():
+            print(formImagenUsuario)
+            formUsuario.save()
+            formImagenUsuario.save()
             return redirect('backendPerfil')
+
     else:
-        usuario = request.user
-        form = usuarioForm(usuario)
+        formUsuario = usuarioForm(instance=request.user)
+        formImagenUsuario = imagenUsuario(instance=request.user)
     
-    return render(request, 'diverseBackend/perfil.html', {'form':form, 'usuario':usuario})
+    return render(request, 'diverseBackend/perfil.html', {'form':formUsuario, 'formImagen':formImagenUsuario, 'usuario':request.user})
 
 #----------------------------------------------------------------------------- Crear -----------------------------------------------------------------------------
 
@@ -169,7 +179,7 @@ def crearModelo(request):
 
     return render(request, 'diverseBackend/modelo_form.html', {'form' : form})
 
-class crearProducto(CreateView):
+class crearProducto(LoginRequiredMixin, CreateView):
 
     model = producto
     form_class = productoForm

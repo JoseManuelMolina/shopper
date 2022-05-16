@@ -1,5 +1,6 @@
 from unicodedata import name
-from django.urls import path, include
+
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, logout_then_login
 
@@ -14,7 +15,10 @@ from django.conf import settings
 
 urlpatterns = [
     #Deja la cadena vacía para usar la url base (/)
+
+    #FRONTEND
     path('', views.index, name="index"),
+    path('perfil/', views.perfil, name="perfil"),
     path('cart/', views.cart, name="cart"),
     path('catalogo/h', views.catalogoH, name="catalogoH"),
     path('catalogo/m', views.catalogoM, name="catalogoM"),
@@ -27,6 +31,8 @@ urlpatterns = [
     path('envios-devoluciones', views.enviosDevoluciones, name="envios-devoluciones"),
     path('nosotros', views.nosotros, name="nosotros"),
 
+
+    #BACKEND
     path('backend/', viewsBackend.indexList, name="indexBackend"),
     path('backend/login', LoginView.as_view(template_name='diverseBackend/login.html'),name="backendLogin"),
     path('backend/logout', logout_then_login,name="backendCerrarSesion"),

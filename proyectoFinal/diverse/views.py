@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from .models import *
+from django.shortcuts import redirect, render
+
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from diverse.models import *
+from account.models import *
+from diverse.forms import *
+
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -8,10 +16,27 @@ from diverse.models import *
 def page_not_found_view(request, exception):
     return render(request, 'diverse/404.html', status=404)
 
-
 def index(request):
     context = {}
     return render(request, 'diverse/index.html', context)
+
+@login_required(login_url='login')
+def perfil(request):
+    usuario = request.user
+    form = infoPersonal(instance=usuario)
+
+    if request.method == 'POST':
+        form = infoPersonal(request.POST, instance=usuario)
+
+        if form.is_valid():
+            form.save()
+            return redirect('perfil')
+
+    else:
+        form = infoPersonal(instance=request.user)
+    
+    return render(request, 'diverse/perfil.html', {'form':form, 'usuario':request.user})
+   
 
 def cart(request):
     context = {}

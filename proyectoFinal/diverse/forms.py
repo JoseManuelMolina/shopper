@@ -14,26 +14,23 @@ from django.db import models
 from django.forms import ModelChoiceField, ModelForm
 
 
+# FORM FRONTEND
+
+class infoPersonal(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('nombre', 'apellidos', 'email', 'username')
+
+
+# FORM BACKEND
+
 class usuarioForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('email', 'username', 'nombre', 'apellidos','direccion','pais','provincia','localidad','codigoPostal','telefono','imagen_perfil')
-
-    def __init__(self, usuario, *args, **kwargs):
-        super(usuarioForm, self).__init__(*args, **kwargs)
+        fields = ('email', 'username', 'nombre', 'apellidos','direccion','pais','provincia','localidad','codigoPostal','telefono')
         
-        self.fields['email'].initial = usuario.email
-        self.fields['username'].initial = usuario.username
-        self.fields['nombre'].initial = usuario.nombre
-        self.fields['apellidos'].initial = usuario.apellidos
-        self.fields['direccion'].initial = usuario.direccion
-        self.fields['pais'].initial = usuario.pais
-        self.fields['provincia'].initial = usuario.provincia
-        self.fields['localidad'].initial = usuario.localidad
-        self.fields['codigoPostal'].initial = usuario.codigoPostal
-        self.fields['telefono'].initial = usuario.telefono
-
     email = forms.CharField(
         max_length=100,
         label='email',
@@ -150,14 +147,20 @@ class usuarioForm(forms.ModelForm):
         )
     )
 
-    imagenPerfil = forms.ImageField(
-        label='imagenPerfil',
+class imagenUsuario(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('imagen_perfil',)
+        
+    imagen_perfil = forms.ImageField(
         widget=forms.FileInput(
             attrs={
-                'class':'form-control-file', 
-                'id':'imagenPerfil'}
+                'class': 'form-control',
+                'enctype':'multipart/form-data'
+                }
+            )
         )
-    )
 
 class colorForm(forms.ModelForm):
 

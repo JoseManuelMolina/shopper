@@ -1,0 +1,264 @@
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+    
+    <!-- BREADCRUMB -->
+    <nav class="py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+  
+              <!-- Breadcrumb -->
+              <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                <li class="breadcrumb-item">
+                  <a class="text-gray-400" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active">
+                  Mi Cuenta
+                </li>
+              </ol>
+  
+            </div>
+          </div>
+        </div>
+    </nav>
+  
+    <!-- CONTENT -->
+    <section class="pt-7 pb-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+  
+              <!-- Heading -->
+              <h3 class="mb-10">Mi Cuenta</h3>
+  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+  
+              <!-- Nav -->
+              <nav class="mb-10 mb-md-0">
+                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="account-orders.html">
+                    Pedidos
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="account-wishlist.html">
+                    Lista de deseos
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle active" href="account-personal-info.html">
+                    Datos Personales
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="account-address.html">
+                    Direcciones
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="account-payment.html">
+                    Metodos de pago
+                  </a>
+                  <a class="list-group-item list-group-item-action" href="#!">
+                    Cerrar Sesion
+                  </a>
+                </div>
+              </nav>
+  
+  
+            </div>
+            <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+  
+              <!-- Form -->
+              <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+
+                {% for field in form.visible_fields %}
+                  {% if 'nombre' == field.name  %}
+                  <div class="col-12 col-md-6">
+
+                        <!-- Nombre -->
+                        <div class="form-group">
+                        <label for="accountFirstName">
+                            Nombre *
+                        </label>
+                        {{ field|add_class:'form-control form-control-sm' }}
+                        </div>
+                  </div>
+                  {% endif %}
+
+                  {% if 'apellidos' == field.name  %}
+                  <div class="col-12 col-md-6">
+  
+                    <!-- Email -->
+                    <div class="form-group">
+                      <label for="accountLastName">
+                        Apellidos *
+                      </label>
+                      {{ field|add_class:'form-control form-control-sm' }}
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'email' == field.name  %}
+                  <div class="col-12">
+  
+                    <!-- Email -->
+                    <div class="form-group">
+                      <label for="accountEmail">
+                        Dirección Email *
+                      </label>
+                      {{ field|add_class:'form-control form-control-sm' }}
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'username' == field.name  %}
+                  <div class="col-12 col-md-6">
+  
+                    <!-- Password -->
+                    <div class="form-group">
+                      <label for="accountPassword">
+                        Nombre Usuario *
+                      </label>
+                      {{ field|add_class:'form-control form-control-sm' }}
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'contraseñaActual' == field.name  %}
+                  <div class="col-12 col-md-6">
+  
+                    <!-- Password -->
+                    <div class="form-group">
+                      <label for="accountPassword">
+                        Contraseña Actual *
+                      </label>
+                      <input class="form-control form-control-sm" id="accountPassword" type="password" placeholder="Current Password *" required>
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'contraseñaNueva' == field.name  %}
+                  <div class="col-12 col-md-6">
+  
+                    <!-- Password -->
+                    <div class="form-group">
+                      <label for="AccountNewPassword">
+                        Nueva Contraseña *
+                      </label>
+                      <input class="form-control form-control-sm" id="AccountNewPassword" type="password" placeholder="New Password *" required>
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'repetirContraseña' == field.name  %}
+                  <div class="col-12 col-md-6">
+  
+                    <!-- Password -->
+                    <div class="form-group">
+                      <label for="AccountNewPassword">
+                        Nueva Contraseña *
+                      </label>
+                      <input class="form-control form-control-sm" id="AccountNewPassword" type="password" placeholder="New Password *" required>
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'fechaNacimiento' == field.name  %}
+                  <div class="col-12 col-lg-6">
+  
+                    <!-- Birthday -->
+                    <div class="form-group">
+  
+                      <!-- Label -->
+                      <label>Fecha de Nacimiento</label>
+  
+                      <!-- Inputs -->
+                      <div class="form-row">
+                        <div class="col-auto">
+  
+                          <!-- Date -->
+                          <label class="sr-only" for="accountDate">
+                            Date
+                          </label>
+                          <select class="custom-select custom-select-sm" id="accountDate">
+                            <option>10</option>
+                            <option>11</option>
+                            <option selected>12</option>
+                          </select>
+  
+                        </div>
+                        <div class="col">
+  
+                          <!-- Date -->
+                          <label class="sr-only" for="accountMonth">
+                            Month
+                          </label>
+                          <select class="custom-select custom-select-sm" id="accountMonth">
+                            <option>January</option>
+                            <option selected>February</option>
+                            <option>March</option>
+                          </select>
+  
+                        </div>
+                        <div class="col-auto">
+  
+                          <!-- Date -->
+                          <label class="sr-only" for="accountYear">
+                            Year
+                          </label>
+                          <select class="custom-select custom-select-sm" id="accountYear">
+                            <option>1990</option>
+                            <option selected>1991</option>
+                            <option>1992</option>
+                          </select>
+  
+                        </div>
+                      </div>
+  
+                    </div>
+  
+                  </div>
+                  {% endif %}
+
+                  {% if 'genero' == field.name  %}
+                  <div class="col-12 col-lg-6">
+  
+                    <!-- Gender -->
+                    <div class="form-group mb-8">
+                      <label>Genero</label>
+                      <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-sm btn-outline-border active">
+                          <input type="radio" name="gender" checked> Hombre
+                        </label>
+                        <label class="btn btn-sm btn-outline-border">
+                          <input type="radio" name="gender"> Mujer
+                        </label>
+                      </div>
+                    </div>
+  
+                  </div>
+                  {% endif %}
+                {% endfor %}
+                  <div class="col-12">
+                
+                
+  
+                    <!-- Button -->
+                    <button class="btn btn-dark" type="submit">Guardar Cambios</button>
+  
+                  </div>
+                </div>
+              </form>
+  
+            </div>
+          </div>
+        </div>
+    </section>
+
+{% endblock content %}
