@@ -19,6 +19,10 @@ urlpatterns = [
     #FRONTEND
     path('', views.index, name="index"),
     path('perfil/', views.perfil, name="perfil"),
+    path('perfil/direcciones', views.direcciones.as_view(), name="direcciones"),
+    #path('perfil/direcciones/añadir', views.crearDireccion.as_view(), name="añadirDireccion"),
+    path('perfil/direcciones/añadir', views.crearDireccion, name="añadirDireccion"),
+    path('perfil/direcciones/<int:pk>', views.editarDireccion, name="editarDireccion"),
     path('cart/', views.cart, name="cart"),
     path('catalogo/h', views.catalogoH, name="catalogoH"),
     path('catalogo/m', views.catalogoM, name="catalogoM"),

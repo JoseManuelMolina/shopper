@@ -36,7 +36,64 @@ def perfil(request):
         form = infoPersonal(instance=request.user)
     
     return render(request, 'diverse/perfil.html', {'form':form, 'usuario':request.user})
-   
+
+class direcciones(LoginRequiredMixin, ListView):
+    model = direccion
+    context_object_name = 'direcciones'
+    template_name = 'diverse/direcciones.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(usuario=self.request.user.id)
+
+#class crearDireccion(LoginRequiredMixin, CreateView):
+
+#    model = direccion
+#    form_class = direcciones
+#    template_name = 'diverse/editarDirecciones.html'
+#    success_url = reverse_lazy('direcciones')
+
+#    def form_valid(self, form):
+        #form = form.save(commit=False)
+        #form.usuario = self.request.user.id
+#        form.save()
+#        return super(crearDireccion, self).form_valid(form)
+
+@login_required(login_url='login')
+def crearDireccion(request):
+    if request.method == 'POST':
+        form = direcciones(request.POST)
+        if form.is_valid():
+
+            direccionesDatos = direcciones(
+                usuario = request.user,
+            )
+
+            direccionesDatos.save()
+            form.save()
+        return redirect('direcciones')
+    else:
+        form = direcciones()
+
+    return render(request, 'diverse/crearDireccion.html', {'form' : form})
+
+@login_required(login_url='login')
+def editarDireccion(request):
+    usuario = request.user
+    form = direcciones(instance=usuario)
+
+    if request.method == 'POST':
+        form = direcciones(request.POST, instance=usuario)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.usuario = request.user
+            form.save()
+            return redirect('direcciones')
+
+    else:
+        form = direcciones(instance=request.user)
+    
+    return render(request, 'diverse/editarDirecciones.html', {'form':form, 'usuario':request.user})
 
 def cart(request):
     context = {}

@@ -43,14 +43,11 @@ def get_default_imagen_perfil():
 
 class Account(AbstractBaseUser):
 
+    id                  = models.AutoField(primary_key=True)
     email               = models.EmailField(verbose_name="email", max_length=100, unique=True)
     username            = models.CharField(max_length=50, unique=True)
     nombre              = models.CharField(max_length=20, null=True, blank=True)
     apellidos           = models.CharField(max_length=60, null=True, blank=True)
-    direccion           = models.CharField(max_length=100, null=True, blank=True)
-    pais                = models.CharField(max_length=40, null=True, blank=True)
-    provincia           = models.CharField(max_length=40, null=True, blank=True)
-    localidad           = models.CharField(max_length=40, null=True, blank=True)
     codigoPostal        = models.PositiveIntegerField(null=True, blank=True)
     telefono            = models.PositiveIntegerField(null=True, blank=True)
     fecha_union         = models.DateTimeField(verbose_name="fecha union", auto_now_add=True)
@@ -78,3 +75,36 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+
+class direccion(models.Model):
+
+    id                  = models.AutoField(primary_key=True)
+    usuario             = models.ForeignKey(
+                            'Account', on_delete=models.CASCADE
+                        )
+    nombre              = models.CharField(max_length=20)
+    apellidos           = models.CharField(max_length=60)
+    direccion           = models.CharField(max_length=100)
+    direccion2          = models.CharField(max_length=50, null=True, blank=True)
+    pais                = models.CharField(max_length=60)
+    provincia           = models.CharField(max_length=60)
+    localidad           = models.CharField(max_length=60)
+    codigoPostal        = models.PositiveIntegerField()
+    direccion_pref      = models.BooleanField(default=False)
+
+    REQUIRED_FIELDS = ['id', 'usuario', 'nombre', 'apellidos', 'direccion', 'pais', 'provincia', 'localidad', 'codigoPostal']
+
+    def __str__(self):
+        return self.id
+
+class metodosPago(models.Model):
+
+    id                  = models.AutoField(primary_key=True)
+    usuario             = models.ForeignKey(
+                            'Account', on_delete=models.CASCADE
+                        )
+    metodo_pref         = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.id

@@ -22,6 +22,12 @@ class infoPersonal(forms.ModelForm):
         model = Account
         fields = ('nombre', 'apellidos', 'email', 'username')
 
+class direcciones(forms.ModelForm):
+
+    class Meta:
+        model = direccion
+        fields = '__all__'
+
 
 # FORM BACKEND
 

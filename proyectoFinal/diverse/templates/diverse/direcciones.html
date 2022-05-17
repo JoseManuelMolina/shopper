@@ -1,0 +1,129 @@
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+    
+    <!-- BREADCRUMB -->
+    <nav class="py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+  
+              <!-- Breadcrumb -->
+              <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                <li class="breadcrumb-item">
+                  <a class="text-gray-400" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active">
+                  Mis Direcciones
+                </li>
+              </ol>
+  
+            </div>
+          </div>
+        </div>
+    </nav>
+  
+    <!-- CONTENT -->
+    <section class="pt-7 pb-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+  
+              <!-- Heading -->
+              <h3 class="mb-10">Mi Cuenta</h3>
+  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+  
+              <!-- Nav -->
+              <nav class="mb-10 mb-md-0">
+                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Pedidos
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Lista de deseos
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle" href="{% url 'perfil' %}">
+                    Datos Personales
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle active" href="{% url 'direcciones' %}">
+                    Direcciones
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Metodos de pago
+                  </a>
+                  <a class="list-group-item list-group-item-action" href="#!">
+                    Cerrar Sesion
+                  </a>
+                </div>
+              </nav>
+  
+  
+            </div>
+            <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+              <div class="row">
+
+                {% for direccion in direcciones %}
+                <div class="col-12 col-lg-6">
+  
+                  <!-- Card -->
+                  <div class="card card-lg bg-light mb-8">
+                    <div class="card-body">
+  
+                      <!-- Heading -->
+                      <h6 class="mb-6">
+                        Dirección {{ direccion.id }}
+                      </h6>
+  
+                      <!-- Text -->
+                      <p class="text-muted mb-0">
+                        {{ direccion.nombre }} {{ direccion.apellidos }} <br>
+                        {{ direccion.direccion }} <br>
+                        {% if direccion.direccion2 != '' %}
+                          {{ direccion.direccion2 }} <br>
+                        {% endif %}
+                        {{ direccion.provincia }} {{ direccion.localidad }}<br>
+                        {{ direccion.codigoPostal }} <br>
+                        {{ direccion.pais }} <br>
+                      </p>
+  
+                      <!-- Action -->
+                      <div class="card-action card-action-right">
+  
+                        <!-- Button -->
+                        <a class="btn btn-xs btn-circle btn-white-primary" href="account-address-edit.html">
+                          <i class="fe fe-edit-2"></i>
+                        </a>
+  
+                        <!-- Button -->
+                        <button class="btn btn-xs btn-circle btn-white-primary">
+                          <i class="fe fe-x"></i>
+                        </button>
+  
+                      </div>
+  
+                    </div>
+                  </div>
+  
+                </div>
+                {% endfor %}
+
+                <div class="col-12">
+  
+                  <!-- Button -->
+                  <a class="btn btn-block btn-lg btn-outline-border" href="{% url 'añadirDireccion' %}">
+                    Añadir Dirección <i class="fe fe-plus"></i>
+                  </a>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+{% endblock content %}

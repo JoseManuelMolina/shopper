@@ -1,0 +1,93 @@
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+    
+    <!-- BREADCRUMB -->
+    <nav class="py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+  
+              <!-- Breadcrumb -->
+              <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+                <li class="breadcrumb-item">
+                  <a class="text-gray-400" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="breadcrumb-item active">
+                  Mi Cuenta
+                </li>
+              </ol>
+  
+            </div>
+          </div>
+        </div>
+    </nav>
+  
+    <!-- CONTENT -->
+    <section class="pt-7 pb-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+  
+              <!-- Heading -->
+              <h3 class="mb-10">Mi Cuenta</h3>
+  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+  
+              <!-- Nav -->
+              <nav class="mb-10 mb-md-0">
+                <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Pedidos
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Lista de deseos
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle active" href="{% url 'perfil' %}">
+                    Datos Personales
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Direcciones
+                  </a>
+                  <a class="list-group-item list-group-item-action dropright-toggle " href="{% url 'perfil' %}">
+                    Metodos de pago
+                  </a>
+                  <a class="list-group-item list-group-item-action" href="#!">
+                    Cerrar Sesion
+                  </a>
+                </div>
+              </nav>
+  
+  
+            </div>
+            <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+
+              <!-- Heading -->
+              <h6 class="mb-7">
+                Añadir Dirección
+              </h6>
+  
+              <!-- Form -->
+              <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                  {{ form.as_p }}
+                </div>
+  
+                <!-- Button -->
+                <button class="btn btn-dark" type="submit">
+                  Añadir dirección
+                </button>
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+    </section>
+
+{% endblock content %}
