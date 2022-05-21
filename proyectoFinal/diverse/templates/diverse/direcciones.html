@@ -83,19 +83,22 @@
                       <p class="text-muted mb-0">
                         {{ direccion.nombre }} {{ direccion.apellidos }} <br>
                         {{ direccion.direccion }} <br>
-                        {% if direccion.direccion2 != '' %}
+                        {% if direccion.direccion2 != null %}
                           {{ direccion.direccion2 }} <br>
-                        {% endif %}
-                        {{ direccion.provincia }} {{ direccion.localidad }}<br>
-                        {{ direccion.codigoPostal }} <br>
+                        {% endif %} 
+                        {{ direccion.pais }} {{ direccion.provincia }} <br>
+                        {{ direccion.localidad }} {{ direccion.codigoPostal }} <br>
                         {{ direccion.pais }} <br>
+                        {% if direccion.direccion_pref %}
+                          <i>Dirección elegida como preferida</i>
+                        {% endif %}
                       </p>
   
                       <!-- Action -->
                       <div class="card-action card-action-right">
   
                         <!-- Button -->
-                        <a class="btn btn-xs btn-circle btn-white-primary" href="account-address-edit.html">
+                        <a class="btn btn-xs btn-circle btn-white-primary" href="{% url 'editarDireccion' direccion.id  %}">
                           <i class="fe fe-edit-2"></i>
                         </a>
   

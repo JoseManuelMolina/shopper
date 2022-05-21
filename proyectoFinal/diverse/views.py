@@ -61,23 +61,19 @@ class direcciones(LoginRequiredMixin, ListView):
 @login_required(login_url='login')
 def crearDireccion(request):
     if request.method == 'POST':
-        form = direcciones(request.POST)
+        form = direccionesForm(request.POST)
         if form.is_valid():
-
-            direccionesDatos = direcciones(
-                usuario = request.user,
-            )
-
-            direccionesDatos.save()
+            form = form.save(commit=False)
+            form.usuario = request.user
             form.save()
         return redirect('direcciones')
     else:
-        form = direcciones()
+        form = direccionesForm(initial={'usuario': request.user.id})
 
     return render(request, 'diverse/crearDireccion.html', {'form' : form})
 
 @login_required(login_url='login')
-def editarDireccion(request):
+def editarDireccion2(request):
     usuario = request.user
     form = direcciones(instance=usuario)
 
@@ -94,6 +90,14 @@ def editarDireccion(request):
         form = direcciones(instance=request.user)
     
     return render(request, 'diverse/editarDirecciones.html', {'form':form, 'usuario':request.user})
+
+class editarDireccion(LoginRequiredMixin, UpdateView):
+    model = direccion
+    fields = '__all__'
+    exclude = ['usuario', ]
+    template_name = 'diverse/editarDirecciones.html'
+    success_url = reverse_lazy('direcciones')
+
 
 def cart(request):
     context = {}
