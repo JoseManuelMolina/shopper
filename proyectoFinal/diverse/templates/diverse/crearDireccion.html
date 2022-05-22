@@ -75,7 +75,86 @@
               <form method="POST">
                 {% csrf_token %}
                 <div class="row">
-                  {{ form.as_p }}
+                  {% for field in form.visible_fields %}
+                    {% if 'usuario' == field.name  %}
+                      {{ field.as_hidden }}
+                    {% endif %}
+                    {% if 'nombre' == field.name  %}
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="firstName">Nombre *</label>
+                          <!--{% render_field field class="form-control" placeholder=form.nombre.label %}-->
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:Nombre" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'apellidos' == field.name  %}
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="lastName">Apellido *</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:Apellidos" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'direccion' == field.name  %}
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="addressLineOne">Dirección *</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:Dirección" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'direccion2' == field.name  %}
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="addressLineTwo">Dirección 2 (Bloque/Piso/Letra/etc)</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:Dirección complementaria" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'pais' == field.name  %}
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="townCity">País *</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:País" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'provincia' == field.name  %}
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="townCity">Provincia *</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:Provincia" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'localidad' == field.name  %}
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="townCity">Localidad *</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:Localidad" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'codigoPostal' == field.name  %}
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label for="zipPostcode">ZIP / Código Postal *</label>
+                          {{ field|add_class:'form-control'|append_attr:"placeholder:ZIP / Código Postal" }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if 'direccion_pref' == field.name  %}
+                      <div class="col-12">
+                        <div class="form-group">
+                          <div class="custom-control custom-checkbox mb-0">
+                            {% render_field field class="custom-control-input" id="defaultShippingAddress" %}
+                            <label class="custom-control-label" for="defaultShippingAddress">Elegir como dirección por defecto</label>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
   
                 <!-- Button -->

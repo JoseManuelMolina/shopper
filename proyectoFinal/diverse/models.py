@@ -8,10 +8,10 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
 def get_producto_imagenes_filepath(self, filename):
-    return f'{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/{self.num_ref+".png"}'
+    return f'imagenes_producto/{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/{self.num_ref+".png"}'
 
 def get_default_imagen_producto():
-    return f'imagen_producto_default.png'
+    return f'imagenes_producto/imagen_producto_default.png'
 
 
 class sexo(models.Model):
