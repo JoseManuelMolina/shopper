@@ -448,40 +448,39 @@
             </div>
           </div>
 
-          <!-- Tags -->
+          <!-- Tags 
           <div class="row mb-7">
             <div class="col-12">
 
-                <!--
+                
               <span class="btn btn-xs btn-light font-weight-normal text-muted mr-3 mb-3">
                 Tag de prueba <a class="text-reset ml-2" href="#!" role="button">
                   <i class="fe fe-x"></i>
                 </a>
-              </span>-->
+              </span> 
               
 
             </div>
           </div>
 
+          -->
+
           <!-- Products -->
           <div class="row">
+            
+            {% for producto in productos %}
             <div class="col-6 col-md-4">
 
               <!-- Card -->
               <div class="card mb-7">
 
-                <!-- Badge -->
-                <div class="badge badge-white card-badge card-badge-left text-uppercase">
-                  New
-                </div>
-
                 <!-- Image -->
                 <div class="card-img">
 
                   <!-- Image -->
-                  <a class="card-img-hover" href="product.html">
-                    <img class="card-img-top card-img-back" src="assets/img/products/product-120.jpg" alt="...">
-                    <img class="card-img-top card-img-front" src="assets/img/products/product-5.jpg" alt="...">
+                  <a class="card-img-hover" href="#">
+                    <img class="card-img-top card-img-back" src="{{ producto.imagen.url }}" alt="...">
+                    <img class="card-img-top card-img-front" src="{{ producto.imagen.url }}" alt="...">
                   </a>
 
                   <!-- Actions -->
@@ -510,19 +509,21 @@
 
                   <!-- Category -->
                   <div class="font-size-xs">
-                    <a class="text-muted" href="shop.html">Shoes</a>
+                    <a class="text-muted" href="shop.html">{{ producto.categoria }}</a>
+                    <br>
+                    <a class="text-muted" href="shop.html">{{ producto.subCategoria }}</a>
                   </div>
 
                   <!-- Title -->
                   <div class="font-weight-bold">
                     <a class="text-body" href="product.html">
-                      Leather mid-heel Sandals
+                      {{ producto.modelo }}
                     </a>
                   </div>
 
                   <!-- Price -->
                   <div class="font-weight-bold text-muted">
-                    $129.00
+                    {{ producto.precio }} €
                   </div>
 
                 </div>
@@ -530,316 +531,8 @@
               </div>
 
             </div>
-            <div class="col-6 col-md-4">
+            {% endfor %}
 
-              <!-- Card -->
-              <div class="card mb-7">
-
-                <!-- Image -->
-                <div class="card-img">
-
-                  <!-- Image -->
-                  <a class="card-img-hover" href="product.html">
-                    <img class="card-img-top card-img-back" src="assets/img/products/product-121.jpg" alt="...">
-                    <img class="card-img-top card-img-front" src="assets/img/products/product-6.jpg" alt="...">
-                  </a>
-
-                  <!-- Actions -->
-                  <div class="card-actions">
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="modal" data-target="#modalProduct">
-                        <i class="fe fe-eye"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-shopping-cart"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-heart"></i>
-                      </button>
-                    </span>
-                  </div>
-
-                </div>
-
-                <!-- Body -->
-                <div class="card-body px-0">
-
-                  <!-- Category -->
-                  <div class="font-size-xs">
-                    <a class="text-muted" href="shop.html">Dresses</a>
-                  </div>
-
-                  <!-- Title -->
-                  <div class="font-weight-bold">
-                    <a class="text-body" href="product.html">
-                      Cotton floral print Dress
-                    </a>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="font-weight-bold text-muted">
-                    $40.00
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-            <div class="col-6 col-md-4">
-
-              <!-- Card -->
-              <div class="card mb-7">
-
-                <!-- Badge -->
-                <div class="badge badge-dark card-badge card-badge-left text-uppercase">
-                  Sale
-                </div>
-
-                <!-- Image -->
-                <div class="card-img">
-
-                  <!-- Image -->
-                  <a class="card-img-hover" href="product.html">
-                    <img class="card-img-top card-img-back" src="assets/img/products/product-122.jpg" alt="...">
-                    <img class="card-img-top card-img-front" src="assets/img/products/product-7.jpg" alt="...">
-                  </a>
-
-                  <!-- Actions -->
-                  <div class="card-actions">
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="modal" data-target="#modalProduct">
-                        <i class="fe fe-eye"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-shopping-cart"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-heart"></i>
-                      </button>
-                    </span>
-                  </div>
-
-                </div>
-
-                <!-- Body -->
-                <div class="card-body px-0">
-
-                  <!-- Category -->
-                  <div class="font-size-xs">
-                    <a class="text-muted" href="shop.html">Shoes</a>
-                  </div>
-
-                  <!-- Title -->
-                  <div class="font-weight-bold">
-                    <a class="text-body" href="product.html">
-                      Leather Sneakers
-                    </a>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="font-weight-bold">
-                    <span class="font-size-xs text-gray-350 text-decoration-line-through">$85.00</span>
-                    <span class="text-primary">$85.00</span>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-            <div class="col-6 col-md-4">
-
-              <!-- Card -->
-              <div class="card mb-7">
-
-                <!-- Image -->
-                <div class="card-img">
-
-                  <!-- Image -->
-                  <a href="#!">
-                    <img class="card-img-top card-img-front" src="assets/img/products/product-8.jpg" alt="...">
-                  </a>
-
-                  <!-- Actions -->
-                  <div class="card-actions">
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="modal" data-target="#modalProduct">
-                        <i class="fe fe-eye"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-shopping-cart"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-heart"></i>
-                      </button>
-                    </span>
-                  </div>
-
-                </div>
-
-                <!-- Body -->
-                <div class="card-body px-0">
-
-                  <!-- Category -->
-                  <div class="font-size-xs">
-                    <a class="text-muted" href="shop.html">Tops</a>
-                  </div>
-
-                  <!-- Title -->
-                  <div class="font-weight-bold">
-                    <a class="text-body" href="product.html">
-                      Cropped cotton Top
-                    </a>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="font-weight-bold text-muted">
-                    $29.00
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-            <div class="col-6 col-md-4">
-
-              <!-- Card -->
-              <div class="card mb-7">
-
-                <!-- Image -->
-                <div class="card-img">
-
-                  <!-- Image -->
-                  <a href="#!">
-                    <img class="card-img-top card-img-front" src="assets/img/products/product-9.jpg" alt="...">
-                  </a>
-
-                  <!-- Actions -->
-                  <div class="card-actions">
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="modal" data-target="#modalProduct">
-                        <i class="fe fe-eye"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-shopping-cart"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-heart"></i>
-                      </button>
-                    </span>
-                  </div>
-
-                </div>
-
-                <!-- Body -->
-                <div class="card-body px-0">
-
-                  <!-- Category -->
-                  <div class="font-size-xs">
-                    <a class="text-muted" href="shop.html">Dresses</a>
-                  </div>
-
-                  <!-- Title -->
-                  <div class="font-weight-bold">
-                    <a class="text-body" href="product.html">
-                      Floral print midi Dress
-                    </a>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="font-weight-bold text-muted">
-                    $50.00
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-            <div class="col-6 col-md-4">
-
-              <!-- Card -->
-              <div class="card mb-7">
-
-                <!-- Badge -->
-                <div class="badge badge-dark card-badge card-badge-left text-uppercase">
-                  Sale
-                </div>
-
-                <!-- Image -->
-                <div class="card-img">
-
-                  <!-- Image -->
-                  <a class="card-img-hover" href="product.html">
-                    <img class="card-img-top card-img-back" src="assets/img/products/product-123.jpg" alt="...">
-                    <img class="card-img-top card-img-front" src="assets/img/products/product-10.jpg" alt="...">
-                  </a>
-
-                  <!-- Actions -->
-                  <div class="card-actions">
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="modal" data-target="#modalProduct">
-                        <i class="fe fe-eye"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-shopping-cart"></i>
-                      </button>
-                    </span>
-                    <span class="card-action">
-                      <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
-                        <i class="fe fe-heart"></i>
-                      </button>
-                    </span>
-                  </div>
-
-                </div>
-
-                <!-- Body -->
-                <div class="card-body px-0">
-
-                  <!-- Category -->
-                  <div class="font-size-xs">
-                    <a class="text-muted" href="shop.html">Bags</a>
-                  </div>
-
-                  <!-- Title -->
-                  <div class="font-weight-bold">
-                    <a class="text-body" href="product.html">
-                      Suede cross body Bag
-                    </a>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="font-weight-bold">
-                    <span class="font-size-xs text-gray-350 text-decoration-line-through">$79.00</span>
-                    <span class="text-primary">$49.00</span>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
             <div class="col-6 col-md-4">
 
               <!-- Card -->
@@ -900,6 +593,7 @@
               </div>
 
             </div>
+
             <div class="col-6 col-md-4">
 
               <!-- Card -->

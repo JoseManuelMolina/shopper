@@ -187,6 +187,8 @@ class crearProducto(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('verProducto')
 
     def form_valid(self, form):
+        #print(form)
+        #return 
         form.save()
         return super(crearProducto, self).form_valid(form)
         

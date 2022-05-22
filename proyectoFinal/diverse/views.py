@@ -1,3 +1,4 @@
+from itertools import product
 from django.shortcuts import redirect, render
 
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
@@ -104,8 +105,13 @@ def checkout(request):
     return render(request, 'diverse/checkout.html', context)
 
 def catalogoH(request):
+
+    productosH = producto.objects.filter(sexo_id=1)
+
     context = {
-        "sexo" : "hombre"
+        "sexo" : "hombre",
+        "productos" : productosH,
+
     }
     return render(request, 'diverse/catalogo.html', context)
 
