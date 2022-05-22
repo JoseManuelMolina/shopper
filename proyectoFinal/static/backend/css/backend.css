@@ -39,3 +39,7 @@
 .dropdownBackend .dropdown-item:hover i {
     color: white !important;
 }
+
+.imgProducto{
+    max-width: 100px;
+}
