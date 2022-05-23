@@ -1,5 +1,6 @@
 from itertools import product
 from django.shortcuts import redirect, render
+from django.core.paginator import Paginator
 
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from django.contrib.auth.decorators import login_required
@@ -110,30 +111,86 @@ def checkout(request):
 
 def catalogoH(request):
 
-    productosH = producto.objects.filter(sexo_id=1)
+    marcas = marca.objects.all()
+    colores = color.objects.all()
+    tallas = talla.objects.all()
+    categorias = categoria.objects.all()
+    subcategorias = subCategoria.objects.all()
+    productosH = producto.objects.filter(sexo=1)
+    
 
     context = {
         "sexo" : "hombre",
         "productos" : productosH,
+        "marcas" : marcas,
+        "colores" : colores,
+        "tallas" : tallas,
+        "categorias" : categorias,
+        "subcategorias" : subcategorias,
 
     }
+
+
     return render(request, 'diverse/catalogo.html', context)
 
 def catalogoM(request):
+    marcas = marca.objects.all()
+    colores = color.objects.all()
+    tallas = talla.objects.all()
+    categorias = categoria.objects.all()
+    subcategorias = subCategoria.objects.all()
+    productosH = producto.objects.filter(sexo=1)
+
     context = {
-        "sexo" : "mujer"
+        "sexo" : "mujer",
+        "productos" : productosH,
+        "marcas" : marcas,
+        "colores" : colores,
+        "tallas" : tallas,
+        "categorias" : categorias,
+        "subcategorias" : subcategorias,
+
     }
+
     return render(request, 'diverse/catalogo.html', context)
 
 def catalogoNo(request):
+    marcas = marca.objects.all()
+    colores = color.objects.all()
+    tallas = talla.objects.all()
+    categorias = categoria.objects.all()
+    subcategorias = subCategoria.objects.all()
+    productosH = producto.objects.filter(sexo=1)
+
     context = {
-        "sexo" : "niño"
+        "sexo" : "niño",
+        "productos" : productosH,
+        "marcas" : marcas,
+        "colores" : colores,
+        "tallas" : tallas,
+        "categorias" : categorias,
+        "subcategorias" : subcategorias,
+
     }
     return render(request, 'diverse/catalogo.html', context)
 
 def catalogoNa(request):
+    marcas = marca.objects.all()
+    colores = color.objects.all()
+    tallas = talla.objects.all()
+    categorias = categoria.objects.all()
+    subcategorias = subCategoria.objects.all()
+    productosH = producto.objects.filter(sexo=1)
+
     context = {
-        "sexo" : "niña"
+        "sexo" : "niña",
+        "productos" : productosH,
+        "marcas" : marcas,
+        "colores" : colores,
+        "tallas" : tallas,
+        "categorias" : categorias,
+        "subcategorias" : subcategorias,
+
     }
     return render(request, 'diverse/catalogo.html', context)
 

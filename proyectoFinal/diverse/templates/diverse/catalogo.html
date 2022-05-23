@@ -2,6 +2,8 @@
 {% load static %}
 {% block content %}
 
+{% load subcategoria %}
+
 <!-- CONTENT -->
 <section class="py-11">
     <div class="container">
@@ -27,114 +29,35 @@
                           Todos los productos
                         </a>
                       </li>
+
+                      {% for categoria in categorias %}
                       <li class="list-styled-item">
 
                         <!-- Toggle -->
-                        <a class="list-styled-link" data-toggle="collapse" href="#blousesCollapse">
-                          Categoria 1
+                        <a class="list-styled-link" data-toggle="collapse" href="#cateogira{{categoria.id}}Collapse">
+                          {{categoria.nombre}}
                         </a>
 
                         <!-- Collapse -->
-                        <div class="collapse" id="blousesCollapse" data-parent="#productsNav">
+                        <div class="collapse" id="cateogira{{categoria.id}}Collapse" data-parent="#productsNav">
                           <div class="py-4 pl-5">
+
+                            {% for subcategoria in subcategorias|in_categoria:categoria %}
                             <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="blousesOne" type="checkbox">
-                              <label class="custom-control-label" for="blousesOne">
-                                Categoria 1 Subcategoria 1
+                              <input class="custom-control-input" id="sc{{subcategoria.id}}" type="checkbox">
+                              <label class="custom-control-label" for="sc{{subcategoria.id}}">
+                                {{subcategoria.nombre}}
                               </label>
                             </div>
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="blousesTwo" type="checkbox">
-                              <label class="custom-control-label" for="blousesTwo">
-                                Categoria 1 Subcategoria 2
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="blousesThree" type="checkbox">
-                              <label class="custom-control-label" for="blousesThree">
-                                Categoria 1 Subcategoria 3
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                              <input class="custom-control-input" id="blousesFour" type="checkbox">
-                              <label class="custom-control-label" for="blousesFour">
-                                Categoria 1 Subcategoria 4
-                              </label>
-                            </div>
+                            {% endfor %}
+
                           </div>
                         </div>
 
                       </li>
-                      <li class="list-styled-item">
+                      {% endfor %}
 
-                        <!-- Toggle -->
-                        <a class="list-styled-link" data-toggle="collapse" href="#coatsCollapse">
-                            Categoria 2
-                        </a>
 
-                        <!-- Collapse -->
-                        <div class="collapse" id="coatsCollapse" data-parent="#productsNav">
-                          <div class="py-4 pl-5">
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="coatsOne" type="checkbox">
-                              <label class="custom-control-label" for="coatsOne">
-                                Categoria 2 Subcategoria 1
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="coatsTwo" type="checkbox">
-                              <label class="custom-control-label" for="coatsTwo">
-                                Categoria 2 Subcategoria 2
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                              <input class="custom-control-input" id="coatsThree" type="checkbox">
-                              <label class="custom-control-label" for="coatsThree">
-                                Categoria 2 Subcategoria 3
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-                      </li>
-                      <li class="list-styled-item">
-
-                        <!-- Toggle -->
-                        <a class="list-styled-link" data-toggle="collapse" href="#dressesCollapse" aria-expanded="true">
-                            Categoria 3
-                        </a>
-
-                        <!-- Collapse -->
-                        <div class="collapse show" id="dressesCollapse" data-parent="#productsNav">
-                          <div class="py-4 pl-5">
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="dressesOne" type="checkbox">
-                              <label class="custom-control-label" for="dressesOne">
-                                Categoria 3 Subcategoria 1
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="dressesTwo" type="checkbox" checked>
-                              <label class="custom-control-label" for="dressesTwo">
-                                Categoria 3 Subcategoria 2
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="dressesThree" type="checkbox">
-                              <label class="custom-control-label" for="dressesThree">
-                                Categoria 3 Subcategoria 3
-                              </label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                              <input class="custom-control-input" id="dressesFour" type="checkbox">
-                              <label class="custom-control-label" for="dressesFour">
-                                Categoria 3 Subcategoria 4
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-                      </li>
                     </ul>
                   </div>
                 </div>
@@ -151,54 +74,16 @@
                 <!-- Collapse -->
                 <div class="collapse" id="sizeCollapse" data-toggle="simplebar" data-target="#sizeGroup">
                   <div class="form-group form-group-overlow mb-6" id="sizeGroup">
+
+                    {% for talla in tallas %}
                     <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeOne" type="checkbox">
-                      <label class="custom-control-label" for="sizeOne">
-                        XS
+                      <input class="custom-control-input" id="talla{{talla.id}}" type="checkbox">
+                      <label class="custom-control-label" for="talla{{talla.id}}">
+                        {{talla.nombre}}
                       </label>
                     </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeTwo" type="checkbox" disabled>
-                      <label class="custom-control-label" for="sizeTwo">
-                        S
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeThree" type="checkbox">
-                      <label class="custom-control-label" for="sizeThree">
-                        M
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeFour" type="checkbox">
-                      <label class="custom-control-label" for="sizeFour">
-                        L
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeFive" type="checkbox" checked>
-                      <label class="custom-control-label" for="sizeFive">
-                        XL
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeSix" type="checkbox">
-                      <label class="custom-control-label" for="sizeSix">
-                        2XL
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeSeven" type="checkbox">
-                      <label class="custom-control-label" for="sizeSeven">
-                        3XL
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="sizeEight" type="checkbox" disabled>
-                      <label class="custom-control-label" for="sizeEight">
-                        Talla única
-                      </label>
-                    </div>
+                    {% endfor %}
+                    
                   </div>
                 </div>
 
@@ -213,54 +98,17 @@
                 <!-- Collapse -->
                 <div class="collapse" id="colorCollapse" data-toggle="simplebar" data-target="#colorGroup">
                   <div class="form-group form-group-overflow mb-6" id="colorGroup">
+
+                    {% for color in colores%}
                     <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorOne" type="checkbox">
-                      <label class="custom-control-label text-dark" for="colorOne">
-                        <span class="text-body">Negro</span>
+                      <input class="custom-control-input" id="color{{color.id}}" type="checkbox">
+                      <label class="custom-control-label text-dark" for="color{{color.id}}">
+                        <span class="text-body">{{color.nombre}}</span>
                       </label>
                     </div>
-                    <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorTwo" type="checkbox" checked>
-                      <label class="custom-control-label" style="color: #f9f9f9;" for="colorTwo">
-                        <span class="text-body">Blanco</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorThree" type="checkbox">
-                      <label class="custom-control-label text-info" for="colorThree">
-                        <span class="text-body">Azul</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorFour" type="checkbox">
-                      <label class="custom-control-label text-primary" for="colorFour">
-                        <span class="text-body">Rojo</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorFive" type="checkbox" disabled>
-                      <label class="custom-control-label" for="colorFive" style="color: #795548">
-                        <span class="text-body">Marrón</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorSix" type="checkbox">
-                      <label class="custom-control-label text-gray-300" for="colorSix">
-                        <span class="text-body">Gris</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="colorSeven" type="checkbox">
-                      <label class="custom-control-label" for="colorSeven" style="color: #17a2b8;">
-                        <span class="text-body">Cian</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-control-color">
-                      <input class="custom-control-input" id="colorEight" type="checkbox">
-                      <label class="custom-control-label" for="colorEight" style="color: #e83e8c;">
-                        <span class="text-body">Rosa</span>
-                      </label>
-                    </div>
+                    {% endfor %}
+
+                   
                   </div>
                 </div>
 
@@ -294,12 +142,7 @@
                     <!-- Form group -->
                     <div class="form-group form-group-overflow mb-6" id="brandGroup">
                       <div class="list">
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandOne" type="checkbox">
-                          <label class="custom-control-label name" for="brandOne">
-                            Nike
-                          </label>
-                        </div>
+                        <!--
                         <div class="custom-control custom-checkbox mb-3">
                           <input class="custom-control-input" id="brandTwo" type="checkbox" disabled>
                           <label class="custom-control-label name" for="brandTwo">
@@ -307,47 +150,21 @@
                           </label>
                         </div>
                         <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandThree" type="checkbox">
+                          <input class="custom-control-input" id="brandThree" type="checkbox" checked>
                           <label class="custom-control-label name" for="brandThree">
                             Balenciaga
                           </label>
                         </div>
+                        -->
+                        {% for marca in marcas %}
                         <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandFour" type="checkbox" checked>
-                          <label class="custom-control-label name" for="brandFour">
-                            Adidas
+                          <input class="custom-control-input" id="marca{{marca.id}}" type="checkbox">
+                          <label class="custom-control-label name" for="marca{{marca.id}}">
+                            {{ marca.nombre }}
                           </label>
                         </div>
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandFive" type="checkbox">
-                          <label class="custom-control-label name" for="brandFive">
-                            Reebok
-                          </label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandSix" type="checkbox">
-                          <label class="custom-control-label name" for="brandSix">
-                            Boss
-                          </label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandSeven" type="checkbox">
-                          <label class="custom-control-label name" for="brandSeven">
-                            Calvin Klein
-                          </label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="brandEight" type="checkbox">
-                          <label class="custom-control-label name" for="brandEight">
-                            Kenzo
-                          </label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                          <input class="custom-control-input" id="brandNine" type="checkbox">
-                          <label class="custom-control-label name" for="brandNine">
-                            Givenchy
-                          </label>
-                        </div>
+
+                        {% endfor %}
                       </div>
                     </div>
 
