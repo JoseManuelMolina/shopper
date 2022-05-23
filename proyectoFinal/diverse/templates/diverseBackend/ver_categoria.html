@@ -4,23 +4,40 @@
 <div class="row">
     <div class="col-md-12">
 
-      <h3>Tabla de categorias</h3>
-      <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Categoria</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for categoria in categorias %}
-            <tr>
-              <th scope="row">{{ categoria.id }}</th>
-              <td scope="row">{{ categoria.nombre }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-      </table> 
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h4 class="card-title"> Tabla de categorias</h4>
+          <button type="submit" class="btn btn-primary btn-round"><a href="{% url 'crearCategoria' %}" style="text-decoration: none; color: #fff">Crear Categoria</a></button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th scope="col">#</th>
+                <th scope="col">Categoria</th>
+                <th scope="col" class="text-center">Editar</th>
+                <th scope="col" class="text-center">Borrar</th>
+              </tr></thead>
+              <tbody>
+                {% for categoria in categorias %}
+                <tr>
+                  <th scope="row">{{ categoria.id }}</th>
+                  <td scope="row">{{ categoria.nombre }}</td>
+                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></th>
+                  <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button></th>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="update text-right">
+            <button type="submit" class="btn btn-primary btn-round"><a href="{% url 'crearCategoria' %}" style="text-decoration: none; color: #fff">Crear Categoria</a></button>
+          </div>
+        </div>
+      </div>
+
     </div>
 </div>
 
