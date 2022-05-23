@@ -116,12 +116,17 @@ def catalogoH(request):
     tallas = talla.objects.all()
     categorias = categoria.objects.all()
     subcategorias = subCategoria.objects.all()
-    productosH = producto.objects.filter(sexo=1)
+    productos = producto.objects.filter(sexo=1)
     
+    paginator = Paginator(productos, 1)
+
+    page_number = request.GET.get('page')
+    productos_pagina = paginator.get_page(page_number)
 
     context = {
         "sexo" : "hombre",
-        "productos" : productosH,
+        #"productos" : productosH,
+        "productos" : productos_pagina,
         "marcas" : marcas,
         "colores" : colores,
         "tallas" : tallas,
@@ -139,11 +144,19 @@ def catalogoM(request):
     tallas = talla.objects.all()
     categorias = categoria.objects.all()
     subcategorias = subCategoria.objects.all()
-    productosH = producto.objects.filter(sexo=1)
+    productos = producto.objects.filter(sexo=1)
+
+    paginator = Paginator(productos, 1)
+
+    page_number = request.GET.get('page')
+    productos_pagina = paginator.get_page(page_number)
+
+
 
     context = {
         "sexo" : "mujer",
-        "productos" : productosH,
+        #"productos" : productosH,
+        "productos" : productos_pagina,
         "marcas" : marcas,
         "colores" : colores,
         "tallas" : tallas,
@@ -160,11 +173,17 @@ def catalogoNo(request):
     tallas = talla.objects.all()
     categorias = categoria.objects.all()
     subcategorias = subCategoria.objects.all()
-    productosH = producto.objects.filter(sexo=1)
+    productos = producto.objects.filter(sexo=1)
+
+    paginator = Paginator(productos, 1)
+
+    page_number = request.GET.get('page')
+    productos_pagina = paginator.get_page(page_number)
 
     context = {
         "sexo" : "niño",
-        "productos" : productosH,
+        #"productos" : productosH,
+        "productos" : productos_pagina,
         "marcas" : marcas,
         "colores" : colores,
         "tallas" : tallas,
@@ -180,11 +199,17 @@ def catalogoNa(request):
     tallas = talla.objects.all()
     categorias = categoria.objects.all()
     subcategorias = subCategoria.objects.all()
-    productosH = producto.objects.filter(sexo=1)
+    productos = producto.objects.filter(sexo=1)
+
+    paginator = Paginator(productos, 1)
+
+    page_number = request.GET.get('page')
+    productos_pagina = paginator.get_page(page_number)
 
     context = {
         "sexo" : "niña",
-        "productos" : productosH,
+        #"productos" : productosH,
+        "productos" : productos_pagina,
         "marcas" : marcas,
         "colores" : colores,
         "tallas" : tallas,
