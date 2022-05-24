@@ -1,5 +1,6 @@
 {% extends 'diverseBackend/baseBackend.html' %}
 {% block content %}
+{% load widget_tweaks %}
     <div class="row">
         <div class="col-xs-12 col-md-10">
             <h3>Crear Categoria</h3>
@@ -7,10 +8,25 @@
             <form method="POST">
                 {% csrf_token %}
 
-                    <div class="form-group">
-                        <label for="{{ form.nombreCategoria.label }}">{{ form.nombreCategoria.label }}</label>
-                        {{ form.nombre }}
-                    </div>
+                {% for field in form.visible_fields %}
+                    {% if 'id' == field.name  %}
+                        {{ field.as_hidden }}
+                    {% else %}
+                        <div class="form-group">
+                            <label for="{{ field.name }}">Categoría</label>
+                            {{ field|add_class:'form-control'|append_attr:"placeholder:Nombre de la categoría" }}
+                        </div><br>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <br>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="nc-icon nc-simple-remove"></i>
+                            </button>
+                            <span><b> {{ field.label }} - </b>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
 
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>

@@ -174,17 +174,6 @@ class colorForm(forms.ModelForm):
         model = color
         fields = ('id', 'nombre')
 
-    nombreColor = forms.CharField(
-        max_length=60,
-        label='nombreColor',
-        widget=forms.TextInput(
-            attrs={
-                'class':'form-control', 
-                'id':'nombreColor', 
-                'placeholder':'Nombre Color'}
-        )
-    )
-
 #    def __init__(self, *args, **kwargs):
 #        super(sexoForm, self).__init__(*args, **kwargs)
 #        self.fields['tipo'].widget.attrs = {
@@ -198,11 +187,6 @@ class sexoForm(forms.ModelForm):
     class Meta:
         model = sexo
         fields = ('id', 'tipo')
-
-    tipo = forms.ChoiceField(
-        label='Sexo:',
-        choices=sexo.OPCIONES_SEXO,
-    )
 
     def __init__(self, *args, **kwargs):
         super(sexoForm, self).__init__(*args, **kwargs)
@@ -228,35 +212,12 @@ class tallaForm(forms.ModelForm):
         model = talla
         fields = ('id', 'nombre')
 
-    nombre = forms.CharField(
-        max_length=10,
-        label="talla",
-        widget=forms.TextInput(
-            attrs={
-                'class' : 'form-control',
-                'id':'talla',
-                'placeholder':'Talla'}
-        )
-    )
-
 class categoriaForm(forms.ModelForm):
 
     class Meta:
         model = categoria
         fields = ('id', 'nombre')
 #        read_only_fields = ('id', 'nombre')
-    
-    nombre = forms.CharField(
-        max_length=40,
-        label = 'Categoria',
-         widget= forms.TextInput(
-             attrs={
-                'class':'form-control',
-                'id': 'nombre',
-                'placeholder':'Nombre de la categoria'
-            }
-        )
-    ) 
 
 #    sexo_id = forms.ChoiceField(
 #        label='Sexo:',
@@ -289,20 +250,21 @@ class subcategoriaForm(forms.ModelForm):
         self.fields['categoria_id'].widget.disabled_choices = [-1]
         self.initial['categoria_id'] = -1
 
-    nombre = forms.CharField(
-        max_length=40,
-        label = 'Subcategoria',
-        widget = forms.TextInput(
-            attrs={
-                'class' : 'form-control',
-                'id' : 'nombre',
-                'placeholder' : 'Nombre de la subcategoria'
-            }
-        )
-    )
 
 #    categoria_id = forms.ModelChoiceField(
 #        queryset=categoria.objects.all().values_list('nombre', flat=True), empty_label=None)
+
+    nombre = forms.CharField(
+        max_length = 60,
+        label = 'SubCategoria',
+        widget = forms.TextInput(
+            attrs = {
+                'class' : 'form-control',
+                'id' : 'nombreSubCategoria',
+                'placeholder' : 'Nombre de la SubCategoria'
+            }
+        )
+    )
 
     categoria_id = forms.ChoiceField(
             label='Categoria:',
@@ -320,18 +282,6 @@ class marcaForm(forms.ModelForm):
     class Meta:
         model = marca
         fields = ('id', 'nombre')
-
-    nombre = forms.CharField(
-        max_length = 60,
-        label = 'Marca',
-        widget = forms.TextInput(
-            attrs = {
-                'class' : 'form-control',
-                'id' : 'nombreMarca',
-                'placeholder' : 'Nombre de la marca'
-            }
-        )
-    )
 
 class modeloForm(forms.ModelForm):
 

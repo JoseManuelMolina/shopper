@@ -7,7 +7,7 @@
       <div class="card">
         <div class="card-header d-flex justify-content-between">
           <h4 class="card-title"> Tabla de tallas</h4>
-          <button type="submit" class="btn btn-primary btn-round"><a href="{% url 'crearTalla' %}" style="text-decoration: none; color: #fff">Crear Talla</a></button>
+          <button type="submit" class="btn btn-primary btn-round" onclick="window.location.href='/backend/crear-talla'"><a href="{% url 'crearTalla' %}" style="text-decoration: none; color: #fff">Crear Talla</a></button>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -23,8 +23,8 @@
                 <tr>
                   <th scope="row">{{ talla.id }}</th>
                   <td>{{ talla.nombre }}</td>
-                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></th>
-                  <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button></th>
+                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit" onclick="window.location.href='/backend/editar-talla/{{ talla.id }}'"><i class="fa fa-edit"></i></button></th>
+                  <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" onclick="window.location.href=''"><i class="fa fa-trash"></i></button></th>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -33,7 +33,7 @@
         </div>
         <div class="card-footer">
           <div class="update text-right">
-            <button type="submit" class="btn btn-primary btn-round"><a href="{% url 'crearTalla' %}" style="text-decoration: none; color: #fff">Crear Talla</a></button>
+            <button type="submit" class="btn btn-primary btn-round" onclick="window.location.href='/backend/crear-talla'"><a href="{% url 'crearTalla' %}" style="text-decoration: none; color: #fff">Crear Talla</a></button>
           </div>
         </div>
       </div>

@@ -73,30 +73,11 @@ def crearDireccion(request):
 
     return render(request, 'diverse/crearDireccion.html', {'form' : form})
 
-@login_required(login_url='login')
-def editarDireccion2(request):
-    usuario = request.user
-    form = direcciones(instance=usuario)
-
-    if request.method == 'POST':
-        form = direcciones(request.POST, instance=usuario)
-
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.usuario = request.user
-            form.save()
-            return redirect('direcciones')
-
-    else:
-        form = direcciones(instance=request.user)
-    
-    return render(request, 'diverse/editarDirecciones.html', {'form':form, 'usuario':request.user})
-
 class editarDireccion(LoginRequiredMixin, UpdateView):
     model = direccion
     fields = '__all__'
     exclude = ['usuario', ]
-    template_name = 'diverse/editarDirecciones.html'
+    template_name = 'diverse/crearDireccion.html'
     success_url = reverse_lazy('direcciones')
 
 

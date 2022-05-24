@@ -14,16 +14,12 @@
               <thead class=" text-primary">
                 <th scope="col">#</th>
                 <th scope="col">sexo</th>
-                <th scope="col" class="text-center">Editar</th>
-                <th scope="col" class="text-center">Borrar</th>
               </tr></thead>
               <tbody>
                 {% for sexo in sexos %}
                 <tr>
                   <th scope="row">{{ sexo.id }}</th>
                   <td>{{ sexo.tipo }}</td>
-                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></th>
-                  <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button></th>
                 </tr>
                 {% endfor %}
               </tbody>

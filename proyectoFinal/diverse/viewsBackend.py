@@ -55,20 +55,16 @@ def perfil(request):
     
     return render(request, 'diverseBackend/perfil.html', {'form':formUsuario, 'formImagen':formImagenUsuario, 'usuario':request.user})
 
-#----------------------------------------------------------------------------- Crear -----------------------------------------------------------------------------
+#----------------------------------------------------------------------------- CREAR -----------------------------------------------------------------------------
 
 @login_required(login_url='backendLogin')
 def crearColor(request):
     if request.method == 'POST':
         form = colorForm(request.POST)
         if form.is_valid():
-            colorDatosForm = form.cleaned_data
 
-            colorDatos = color(
-                nombre = colorDatosForm['nombreColor'],
-            )
-
-            colorDatos.save()
+            form.save()
+            
         return redirect('verColor')
     else:
         form = colorForm()
@@ -80,13 +76,9 @@ def crearSexo(request):
     if request.method == 'POST':
         form = sexoForm(request.POST)
         if form.is_valid():
-            sexoDatosForm = form.cleaned_data
 
-            sexoDatos = sexo(
-                tipo = sexoDatosForm['tipo'],
-            )
-
-            sexoDatos.save()
+            form.save()
+            
         return redirect('verSexo')
     else:
         form = sexoForm()
@@ -98,13 +90,9 @@ def crearTalla(request):
     if request.method == 'POST':
         form = tallaForm(request.POST)
         if form.is_valid():
-            tallaDatosForm = form.cleaned_data
 
-            tallaDatos = talla(
-                nombre = tallaDatosForm['nombre'],
-            )
+            form.save()
 
-            tallaDatos.save()
         return redirect('verTalla')
     else:
         form = tallaForm()
@@ -193,7 +181,7 @@ class crearProducto(LoginRequiredMixin, CreateView):
         return super(crearProducto, self).form_valid(form)
         
 
-#----------------------------------------------------------------------------- Ver -----------------------------------------------------------------------------
+#----------------------------------------------------------------------------- VER -----------------------------------------------------------------------------
 def verColor(request):
     colores = color.objects.all()
     return render(request, 'diverseBackend/ver_color.html', {'colores' : colores})
@@ -228,6 +216,49 @@ class verProducto(ListView):
     context_object_name = 'productos'
     template_name = 'diverseBackend/ver_producto.html'
 
+
+#----------------------------------------------------------------------------- EDITAR -----------------------------------------------------------------------------
+class editarColor(LoginRequiredMixin, UpdateView):
+    model = color
+    fields = '__all__'
+    template_name = 'diverseBackend/modelo_form.html'
+    success_url = reverse_lazy('verColor')
+
+class editarCategoria(LoginRequiredMixin, UpdateView):
+    model = categoria
+    fields = '__all__'
+    template_name = 'diverseBackend/categoria_form.html'
+    success_url = reverse_lazy('verCategoria')
+
+class editarSubCategoria(LoginRequiredMixin, UpdateView):
+    model = subCategoria
+    fields = '__all__'
+    template_name = 'diverseBackend/subCategoria_form.html'
+    success_url = reverse_lazy('verSubCategoria')
+
+class editarTalla(LoginRequiredMixin, UpdateView):
+    model = talla
+    fields = '__all__'
+    template_name = 'diverseBackend/talla_form.html'
+    success_url = reverse_lazy('verTalla')
+
+class editarMarca(LoginRequiredMixin, UpdateView):
+    model = marca
+    fields = '__all__'
+    template_name = 'diverseBackend/marca_form.html'
+    success_url = reverse_lazy('verMarca')
+
+class editarModelo(LoginRequiredMixin, UpdateView):
+    model = modelo
+    fields = '__all__'
+    template_name = 'diverseBackend/modelo_form.html'
+    success_url = reverse_lazy('verModelo')
+
+class editarProducto(LoginRequiredMixin, UpdateView):
+    model = producto
+    fields = '__all__'
+    template_name = 'diverseBackend/producto_form.html'
+    success_url = reverse_lazy('verProducto')
 
 #--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
 # AJAX
