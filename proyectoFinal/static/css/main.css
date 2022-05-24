@@ -79,3 +79,11 @@
 .nosotros8{
     background-image: url();
 }
+
+.seeMore{
+    color: #000;
+}
+
+.seeMore:hover{
+    color: #fff;
+}

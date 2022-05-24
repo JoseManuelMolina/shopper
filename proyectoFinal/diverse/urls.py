@@ -34,6 +34,7 @@ urlpatterns = [
     path('faq', views.faq, name="faq"),
     path('envios-devoluciones', views.enviosDevoluciones, name="envios-devoluciones"),
     path('nosotros', views.nosotros, name="nosotros"),
+    path('producto/<int:pk>',views.productoSingle.as_view(), name="productoSingle"),
 
 
     #BACKEND

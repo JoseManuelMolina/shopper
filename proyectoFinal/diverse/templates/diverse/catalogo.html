@@ -295,7 +295,7 @@
                 <div class="card-img">
 
                   <!-- Image -->
-                  <a class="card-img-hover" href="#">
+                  <a class="card-img-hover" href="/producto/{{ producto.num_ref }}">
                     <img class="card-img-top card-img-back" src="{{ producto.imagen.url }}" alt="...">
                     <img class="card-img-top card-img-front" src="{{ producto.imagen.url }}" alt="...">
                   </a>
@@ -304,7 +304,9 @@
                   <div class="card-actions">
                     <span class="card-action">
                       <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="modal" data-target="#modalProduct">
-                        <i class="fe fe-eye"></i>
+                        <a href="/producto/{{ producto.num_ref }}" style="text-decoration: none;" class="seeMore">
+                          <i class="fe fe-eye"></i>
+                        </a>
                       </button>
                     </span>
                     <span class="card-action">

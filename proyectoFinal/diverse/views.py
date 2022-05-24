@@ -216,3 +216,11 @@ def nosotros(request):
     context = {}
     return render(request, 'diverse/nosotros.html', context)
 
+class productoSingle(ListView):
+    model = producto
+    #context_object_name = 'productos'
+    template_name: 'diverse/producto_list.html'
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(num_ref = self.kwargs['pk'])
