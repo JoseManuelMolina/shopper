@@ -20,7 +20,7 @@ class infoPersonal(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('nombre', 'apellidos', 'email', 'username')
+        fields = ('nombre', 'apellidos', 'username', 'telefono', 'email', 'password', 'fechaNacimiento', 'genero')
 
 class direccionesForm(forms.ModelForm):
 

@@ -72,35 +72,8 @@
                 <div class="row">
 
                 {% for field in form.visible_fields %}
-                  {% if 'nombre' == field.name  %}
-                  <div class="col-12 col-md-6">
-
-                        <!-- Nombre -->
-                        <div class="form-group">
-                        <label for="accountFirstName">
-                            Nombre *
-                        </label>
-                        {{ field|add_class:'form-control form-control-sm' }}
-                        </div>
-                  </div>
-                  {% endif %}
-
-                  {% if 'apellidos' == field.name  %}
-                  <div class="col-12 col-md-6">
-  
-                    <!-- Email -->
-                    <div class="form-group">
-                      <label for="accountLastName">
-                        Apellidos *
-                      </label>
-                      {{ field|add_class:'form-control form-control-sm' }}
-                    </div>
-  
-                  </div>
-                  {% endif %}
-
                   {% if 'email' == field.name  %}
-                  <div class="col-12">
+                  <div class="col-12">   
   
                     <!-- Email -->
                     <div class="form-group">
@@ -114,7 +87,7 @@
                   {% endif %}
 
                   {% if 'username' == field.name  %}
-                  <div class="col-12 col-md-6">
+                  <div class="col-6 col-md-6">
   
                     <!-- Password -->
                     <div class="form-group">
@@ -127,43 +100,67 @@
                   </div>
                   {% endif %}
 
-                  {% if 'contraseñaActual' == field.name  %}
-                  <div class="col-12 col-md-6">
+                  {% if 'telefono' == field.name  %}
+                  <div class="col-6 col-md-6">
   
                     <!-- Password -->
                     <div class="form-group">
                       <label for="accountPassword">
-                        Contraseña Actual *
+                        Teléfono
                       </label>
-                      <input class="form-control form-control-sm" id="accountPassword" type="password" placeholder="Current Password *" required>
+                      {% render_field field type="text" class="form-control" %}
                     </div>
   
                   </div>
                   {% endif %}
 
-                  {% if 'contraseñaNueva' == field.name  %}
+                  {% if 'nombre' == field.name  %}
+                  <div class="col-12 col-md-6">
+
+                        <!-- Nombre -->
+                        <div class="form-group">
+                        <label for="accountFirstName">
+                            Nombre
+                        </label>
+                        {{ field|add_class:'form-control form-control-sm' }}
+                        </div>
+                  </div>
+                  {% endif %}
+
+                  {% if 'apellidos' == field.name  %}
                   <div class="col-12 col-md-6">
   
-                    <!-- Password -->
+                    <!-- Email -->
                     <div class="form-group">
-                      <label for="AccountNewPassword">
-                        Nueva Contraseña *
+                      <label for="accountLastName">
+                        Apellidos
                       </label>
-                      <input class="form-control form-control-sm" id="AccountNewPassword" type="password" placeholder="New Password *" required>
+                      {{ field|add_class:'form-control form-control-sm' }}
                     </div>
   
                   </div>
                   {% endif %}
 
-                  {% if 'repetirContraseña' == field.name  %}
-                  <div class="col-12 col-md-6">
+                  {% if 'password' == field.name  %}
+                  <div class="col-6 col-md-6">
+                    {{ field.as_hidden }}
+                    <!-- Password -->
+                    <div class="form-group">
+                      <label for="accountPassword">
+                        Contraseña Nueva
+                      </label>
+                      <input class="form-control form-control-sm" id="contraseñaNueva" type="password" placeholder="Nueva Contraseña">
+                    </div>
+  
+                  </div>
+                  <div class="col-6 col-md-6">
   
                     <!-- Password -->
                     <div class="form-group">
                       <label for="AccountNewPassword">
-                        Nueva Contraseña *
+                        Repetir Contraseña
                       </label>
-                      <input class="form-control form-control-sm" id="AccountNewPassword" type="password" placeholder="New Password *" required>
+                      <input class="form-control form-control-sm" id="repetirContraseña" type="password" placeholder="Repetir contraseña">
                     </div>
   
                   </div>
@@ -171,22 +168,22 @@
 
                   {% if 'fechaNacimiento' == field.name  %}
                   <div class="col-12 col-lg-6">
-  
+                    {% render_field field class="form-control" value="user.fechaNacimiento" %}
                     <!-- Birthday -->
                     <div class="form-group">
   
                       <!-- Label -->
-                      <label>Fecha de Nacimiento</label>
+                      <label>Fecha de Nacimiento *</label>
   
                       <!-- Inputs -->
                       <div class="form-row">
                         <div class="col-auto">
   
                           <!-- Date -->
-                          <label class="sr-only" for="accountDate">
-                            Date
+                          <label class="sr-only" for="cuentaDiaNacimiento">
+                            Día
                           </label>
-                          <select class="custom-select custom-select-sm" id="accountDate">
+                          <select class="custom-select custom-select-sm" id="cuentaDiaNacimiento">
                             <option>10</option>
                             <option>11</option>
                             <option selected>12</option>
@@ -228,20 +225,28 @@
 
                   {% if 'genero' == field.name  %}
                   <div class="col-12 col-lg-6">
-  
+                    {{ field.as_hidden }}
                     <!-- Gender -->
                     <div class="form-group mb-8">
-                      <label>Genero</label>
+                      <label>Genero *</label>
                       <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-sm btn-outline-border active">
-                          <input type="radio" name="gender" checked> Hombre
-                        </label>
-                        <label class="btn btn-sm btn-outline-border">
-                          <input type="radio" name="gender"> Mujer
-                        </label>
+                          {% if user.genero == 0  %}
+                            <label class="btn btn-sm btn-outline-border active">
+                              <input type="radio" name="generoHombre" id="generoHombre" checked> Hombre
+                            </label>
+                            <label class="btn btn-sm btn-outline-border">
+                              <input type="radio" name="generoMujer" id="generoMujer"> Mujer
+                            </label> 
+                          {% else  %}
+                            <label class="btn btn-sm btn-outline-border active">
+                              <input type="radio" name="generoHombre" id="generoHombre"> Hombre
+                            </label>
+                            <label class="btn btn-sm btn-outline-border">
+                              <input type="radio" name="generoMujer" id="generoMujer" checked> Mujer
+                            </label> 
+                          {% endif  %}
                       </div>
                     </div>
-  
                   </div>
                   {% endif %}
                 {% endfor %}
@@ -250,7 +255,7 @@
                 
   
                     <!-- Button -->
-                    <button class="btn btn-dark" type="submit">Guardar Cambios</button>
+                    <button class="btn btn-dark" type="submit" id="guardarPerfil">Guardar Cambios</button>
   
                   </div>
                 </div>
@@ -262,3 +267,7 @@
     </section>
 
 {% endblock content %}
+
+{% block scriptsfooter %}
+  <script src="{% static 'js/scriptPerfil.js' %}"></script>
+{% endblock scriptsfooter %}

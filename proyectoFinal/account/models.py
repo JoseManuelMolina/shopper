@@ -2,6 +2,8 @@ from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+import datetime
+
 # Crear nuevo usuario.
 
 # Crear nuevo superusuario
@@ -43,13 +45,18 @@ def get_default_imagen_perfil():
 
 class Account(AbstractBaseUser):
 
+    GENERO_HOMBRE = 0
+    GENERO_MUJER = 1
+    GENERO_OPCIONES = [(GENERO_HOMBRE, 'Hombre'), (GENERO_MUJER, 'Mujer')]
+
     id                  = models.AutoField(primary_key=True)
     email               = models.EmailField(verbose_name="email", max_length=100, unique=True)
     username            = models.CharField(max_length=50, unique=True)
+    telefono            = models.PositiveIntegerField(null=True, blank=True)
     nombre              = models.CharField(max_length=20, null=True, blank=True)
     apellidos           = models.CharField(max_length=60, null=True, blank=True)
-    codigoPostal        = models.PositiveIntegerField(null=True, blank=True)
-    telefono            = models.PositiveIntegerField(null=True, blank=True)
+    fechaNacimiento     = models.DateField(null=False, blank=False, default=datetime.date.today)
+    genero              = models.IntegerField(choices=GENERO_OPCIONES, null=False, blank=False, default=0)
     fecha_union         = models.DateTimeField(verbose_name="fecha union", auto_now_add=True)
     ultima_conexion     = models.DateTimeField(verbose_name="ultima conexion", auto_now=True)
     is_admin            = models.BooleanField(default=False)

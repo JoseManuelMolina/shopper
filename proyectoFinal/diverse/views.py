@@ -30,7 +30,9 @@ def perfil(request):
     if request.method == 'POST':
         form = infoPersonal(request.POST, instance=usuario)
 
+        print(form.is_valid())
         if form.is_valid():
+            print(form)
             form.save()
             return redirect('perfil')
 
