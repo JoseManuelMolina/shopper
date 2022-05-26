@@ -167,6 +167,7 @@ def crearModelo(request):
 
     return render(request, 'diverseBackend/modelo_form.html', {'form' : form})
 
+
 class crearProducto(LoginRequiredMixin, CreateView):
 
     model = producto

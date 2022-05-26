@@ -87,3 +87,17 @@
 .seeMore:hover{
     color: #fff;
 }
+
+.colorCircle{
+    left: 0;
+    top: calc((1em * 1.5 - 1.375rem)/ 2);
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 50%;
+    background-color: #000;
+    margin-right: 14px;
+}
+
+.custom-control-color label{
+    display: inline-flex;
+}

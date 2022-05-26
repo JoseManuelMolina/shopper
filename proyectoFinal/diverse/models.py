@@ -8,7 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
 def get_producto_imagenes_filepath(self, filename):
-    return f'imagenes_producto/{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/{self.num_ref+".png"}'
+    return f'imagenes_producto/{self.sexo.tipo}/{self.categoria.nombre}/{self.subCategoria.nombre}/{self.marca.nombre}/{self.modelo.nombre}/{self.color.nombre}/'+str({self.num_ref})+'.png'
 
 def get_default_imagen_producto():
     return f'imagenes_producto/imagen_producto_default.png'
@@ -102,6 +102,7 @@ class color(models.Model):
 
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=60)
+    hexcolor = models.CharField(max_length=6, blank=True, null=True)
 
     def __str__(self):
         return self.nombre

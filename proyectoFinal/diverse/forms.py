@@ -172,7 +172,7 @@ class colorForm(forms.ModelForm):
 
     class Meta:
         model = color
-        fields = ('id', 'nombre')
+        fields = ('id', 'nombre', 'hexcolor')
 
 #    def __init__(self, *args, **kwargs):
 #        super(sexoForm, self).__init__(*args, **kwargs)

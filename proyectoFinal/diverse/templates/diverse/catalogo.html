@@ -102,7 +102,8 @@
                     {% for color in colores%}
                     <div class="custom-control custom-control-color mb-3">
                       <input class="custom-control-input" id="color{{color.id}}" type="checkbox">
-                      <label class="custom-control-label text-dark" for="color{{color.id}}">
+                      <label class="text-dark" for="color{{color.id}}">
+                        <div class="colorCircle" style="background-color:#{{ color.hexcolor }} ;"></div>
                         <span class="text-body">{{color.nombre}}</span>
                       </label>
                     </div>
