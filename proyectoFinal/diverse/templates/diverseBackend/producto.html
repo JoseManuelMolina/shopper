@@ -1,0 +1,33 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+    
+    {% for product in producto %}
+        <div class="imagenPrincipal">
+            <h3>Imagen Principal</h3>
+            <img src="{{ product.imagen.url }}" height= "500px">
+        </div>
+        <br>
+        <div class="informacion">
+            <h3>Información Básica</h3>
+            <span><b>Número de referencia: </b>{{product.num_ref}}</span><br>
+            <span><b>Categoría: </b>{{product.categoria}}</span><br>
+            <span><b>Subcategoría: </b>{{product.subCategoria}}</span><br>
+            <span><b>Marca: </b>{{product.marca}}</span><br>
+            <span><b>Modelo: </b>{{product.modelo}}</span><br>
+            <span><b>Talla: </b>{{product.talla}}</span><br>
+            <span><b>Color: </b>{{product.color}}</span><br>
+            <span><b>Precio: </b>{{product.precio}}€</span>
+        </div>
+        <br>
+        <div class="extra-images">
+            <h3>Imágenes Extra</h3>
+            {% for imagen in imagenes %}
+            <div class="imagen-extra">
+                <img src="{{imagen.imagen.url}}" height="300px">
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endblock content %}

@@ -1,14 +1,20 @@
+from distutils.command.upload import upload
 from email.policy import default
 from operator import mod
 from django.db import models
 from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from colorfield.fields import ColorField
 
 # Create your models here.
 
 def get_producto_imagenes_filepath(self, filename):
     return f'imagenes_producto/{self.sexo.tipo}/{self.categoria.nombre}/{self.subCategoria.nombre}/{self.marca.nombre}/{self.modelo.nombre}/{self.color.nombre}/'+str({self.num_ref})+'.png'
+
+def get_more_product_images_filepath(self,filename):
+    #return f'imagenes_producto/{self.producto.sexo.tipo}/{self.producto.categoria.nombre}/{self.producto.subCategoria.nombre}/{self.producto.marca.nombre}/{self.producto.modelo.nombre}/{self.producto.color.nombre}/extraimages/'
+    return f'imagenes_producto/extraimages/{self.producto_numref_id}/' + filename
 
 def get_default_imagen_producto():
     return f'imagenes_producto/imagen_producto_default.png'
@@ -100,9 +106,15 @@ class modelo(models.Model):
 
 class color(models.Model):
 
+    COLOR_PALETTE = [
+        ("#FFFFFF", "white", ),
+        ("#000000", "black", ),
+    ]
+
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=60)
-    hexcolor = models.CharField(max_length=6, blank=True, null=True)
+    #hexcolor = models.CharField(max_length=6, blank=True, null=True)
+    hexcolor = ColorField(samples=COLOR_PALETTE)
 
     def __str__(self):
         return self.nombre
@@ -159,6 +171,10 @@ class producto(models.Model):
 
     def get_imagen_producto_filename(self):
         return str(self.imagen)[str(self.imagen).index(f'media/imagen/{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/'):]
+
+class ImagenProducto(models.Model):
+    producto_numref = models.ForeignKey(producto , related_name='imagenes', on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to=get_more_product_images_filepath, blank=True, null=True)
 
 class stock(models.Model):
     

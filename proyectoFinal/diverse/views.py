@@ -101,7 +101,7 @@ def catalogoH(request):
     subcategorias = subCategoria.objects.all()
     productos = producto.objects.filter(sexo=1)
     
-    paginator = Paginator(productos, 2)
+    paginator = Paginator(productos, 5)
 
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
@@ -129,7 +129,7 @@ def catalogoM(request):
     subcategorias = subCategoria.objects.all()
     productos = producto.objects.filter(sexo=2)
 
-    paginator = Paginator(productos, 2)
+    paginator = Paginator(productos, 5)
 
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
@@ -158,7 +158,7 @@ def catalogoNo(request):
     subcategorias = subCategoria.objects.all()
     productos = producto.objects.filter(sexo=3)
 
-    paginator = Paginator(productos, 2)
+    paginator = Paginator(productos, 5)
 
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
@@ -184,7 +184,7 @@ def catalogoNa(request):
     subcategorias = subCategoria.objects.all()
     productos = producto.objects.filter(sexo=4)
 
-    paginator = Paginator(productos, 2)
+    paginator = Paginator(productos, 5)
 
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
@@ -226,3 +226,5 @@ class productoSingle(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(num_ref = self.kwargs['pk'])
+
+   

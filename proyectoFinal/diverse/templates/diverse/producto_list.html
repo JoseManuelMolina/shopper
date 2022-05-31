@@ -53,9 +53,9 @@
                   <div class="card">
   
                     <!-- Badge -->
-                    <div class="badge badge-primary card-badge text-uppercase">
+                    <!--<div class="badge badge-primary card-badge text-uppercase">
                       Sale
-                    </div>
+                    </div>-->
   
                     <!-- Slider -->
                     <div class="mb-4" data-flickity='{"draggable": false, "fade": true}' id="productSlider">
@@ -144,10 +144,12 @@
                     <div class="form-group">
   
                       <!-- Label -->
-                      <p class="mb-5">
-                        Color: <strong id="colorCaption">White</strong>
-                      </p>
-  
+                      {% for producto in object_list %}
+                        <p class="mb-5">
+                          Color: <strong id="colorCaption">{{ producto.color }}</strong>
+                        </p>
+                      {% endfor %}
+
                       <!-- Radio -->
                       <div class="mb-8 ml-n1">
                         <div class="custom-control custom-control-inline custom-control-img">
