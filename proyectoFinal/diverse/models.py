@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from account.models import *
+
 # Create your models here.
 
 def get_producto_imagenes_filepath(self, filename):
@@ -166,6 +168,23 @@ class stock(models.Model):
         'producto', on_delete=models.CASCADE,
     )
     cantidad = models.PositiveIntegerField()
+
+class carrito(models.Model):
+    id = models.AutoField(primary_key=True)
+    cliente = models.ForeignKey(
+                settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
+            )
+    cantidad = models.PositiveIntegerField(default=0)
+    precio = models.PositiveIntegerField(default=0)
+
+class productoCarrito(models.Model):
+    carrito = models.ForeignKey(
+                'carrito', on_delete=models.CASCADE
+            )
+    producto = models.ForeignKey(
+                'producto', on_delete=models.CASCADE
+            )
+    totalPrecio = models.PositiveIntegerField(default=0)
 
 class pedido(models.Model):
     

@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
 
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -25,15 +27,24 @@ def index(request):
 @login_required(login_url='login')
 def perfil(request):
     usuario = request.user
+    contraseñaAntigua = usuario.password
     form = infoPersonal(instance=usuario)
 
     if request.method == 'POST':
         form = infoPersonal(request.POST, instance=usuario)
 
-        print(form.is_valid())
         if form.is_valid():
-            print(form)
+
+            if(request.POST['password'] == usuario.password):
+                contraseñaEncriptada=make_password(request.POST['password'])
+                usuario.password = contraseñaEncriptada
+                update_session_auth_hash(request, request.user)
+                
             form.save()
+
+            if(contraseñaAntigua != usuario.password):
+                update_session_auth_hash(request, request.user)
+
             return redirect('perfil')
 
     else:
@@ -48,19 +59,6 @@ class direcciones(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(usuario=self.request.user.id)
-
-#class crearDireccion(LoginRequiredMixin, CreateView):
-
-#    model = direccion
-#    form_class = direcciones
-#    template_name = 'diverse/editarDirecciones.html'
-#    success_url = reverse_lazy('direcciones')
-
-#    def form_valid(self, form):
-        #form = form.save(commit=False)
-        #form.usuario = self.request.user.id
-#        form.save()
-#        return super(crearDireccion, self).form_valid(form)
 
 @login_required(login_url='login')
 def crearDireccion(request):

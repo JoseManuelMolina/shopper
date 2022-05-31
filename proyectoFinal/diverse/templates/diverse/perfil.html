@@ -67,7 +67,7 @@
             <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
   
               <!-- Form -->
-              <form method="POST">
+              <form method="POST" onsubmit="return validarFormulario()">
                 {% csrf_token %}
                 <div class="row">
 
@@ -168,7 +168,7 @@
 
                   {% if 'fechaNacimiento' == field.name  %}
                   <div class="col-12 col-lg-6">
-                    {% render_field field class="form-control" value="user.fechaNacimiento" %}
+                    {{ field.as_hidden }}
                     <!-- Birthday -->
                     <div class="form-group">
   
@@ -180,39 +180,30 @@
                         <div class="col-auto">
   
                           <!-- Date -->
-                          <label class="sr-only" for="cuentaDiaNacimiento">
+                          <label class="sr-only" for="diaNacimiento">
                             Día
                           </label>
-                          <select class="custom-select custom-select-sm" id="cuentaDiaNacimiento">
-                            <option>10</option>
-                            <option>11</option>
-                            <option selected>12</option>
+                          <select class="custom-select custom-select-sm" id="diaNacimiento">
                           </select>
   
                         </div>
                         <div class="col">
   
                           <!-- Date -->
-                          <label class="sr-only" for="accountMonth">
-                            Month
+                          <label class="sr-only" for="mesNacimiento">
+                            Mes
                           </label>
-                          <select class="custom-select custom-select-sm" id="accountMonth">
-                            <option>January</option>
-                            <option selected>February</option>
-                            <option>March</option>
+                          <select class="custom-select custom-select-sm" id="mesNacimiento">
                           </select>
   
                         </div>
                         <div class="col-auto">
   
                           <!-- Date -->
-                          <label class="sr-only" for="accountYear">
-                            Year
+                          <label class="sr-only" for="añoNacimiento">
+                            Año
                           </label>
-                          <select class="custom-select custom-select-sm" id="accountYear">
-                            <option>1990</option>
-                            <option selected>1991</option>
-                            <option>1992</option>
+                          <select class="custom-select custom-select-sm" id="añoNacimiento">
                           </select>
   
                         </div>
@@ -226,22 +217,22 @@
                   {% if 'genero' == field.name  %}
                   <div class="col-12 col-lg-6">
                     {{ field.as_hidden }}
-                    <!-- Gender -->
+                     <!-- Gender -->
                     <div class="form-group mb-8">
                       <label>Genero *</label>
                       <div class="btn-group-toggle" data-toggle="buttons">
                           {% if user.genero == 0  %}
-                            <label class="btn btn-sm btn-outline-border active">
+                            <label class="btn btn-sm btn-outline-border active" id="generoHombreLabel">
                               <input type="radio" name="generoHombre" id="generoHombre" checked> Hombre
                             </label>
-                            <label class="btn btn-sm btn-outline-border">
+                            <label class="btn btn-sm btn-outline-border" id="generoMujerLabel">
                               <input type="radio" name="generoMujer" id="generoMujer"> Mujer
                             </label> 
-                          {% else  %}
-                            <label class="btn btn-sm btn-outline-border active">
+                          {% else %}
+                            <label class="btn btn-sm btn-outline-border" id="generoHombreLabel">
                               <input type="radio" name="generoHombre" id="generoHombre"> Hombre
                             </label>
-                            <label class="btn btn-sm btn-outline-border">
+                            <label class="btn btn-sm btn-outline-border active" id="generoMujerLabel">
                               <input type="radio" name="generoMujer" id="generoMujer" checked> Mujer
                             </label> 
                           {% endif  %}
@@ -250,14 +241,12 @@
                   </div>
                   {% endif %}
                 {% endfor %}
+
                   <div class="col-12">
-                
-                
-  
                     <!-- Button -->
                     <button class="btn btn-dark" type="submit" id="guardarPerfil">Guardar Cambios</button>
-  
                   </div>
+                  
                 </div>
               </form>
   

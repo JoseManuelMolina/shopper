@@ -27,7 +27,7 @@ class direccionesForm(forms.ModelForm):
     class Meta:
         model = direccion
         fields = '__all__'
-
+        
 
 # FORM BACKEND
 
