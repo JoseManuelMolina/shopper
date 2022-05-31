@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'colorfield',
+
 ]
 
 MIDDLEWARE = [
@@ -86,7 +88,7 @@ DATABASES = {
         'NAME': 'proyectoFinal', 
         'USER': 'postgres', 
         'PASSWORD': 'usuario',
-#        'HOST': '47.62.176.129', 
+#        'HOST': '62.83.213.204', 
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

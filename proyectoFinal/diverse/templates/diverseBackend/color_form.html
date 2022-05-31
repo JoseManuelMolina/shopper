@@ -11,11 +11,16 @@
                     {% for field in form.visible_fields %}
                         {% if 'id' == field.name  %}
                             {{ field.as_hidden }}
+                        {% elif field.name == 'nombre' %}
+                        <div class="form-group">
+                            <label for="{{ field.name }}">Color</label>
+                            {{ field|add_class:'form-control'|append_attr:"placeholder:Nombre del color" }}
+                        </div><br>
                         {% else %}
-                            <div class="form-group">
-                                <label for="{{ field.name }}">Color</label>
-                                {{ field|add_class:'form-control'|append_attr:"placeholder:Nombre del color" }}
-                            </div><br>
+                        <div class="form-group">
+                            <label for="{{ field.name }}">Código hexadecimal</label>
+                            {{ field|add_class:'form-control'|append_attr:"placeholder:Código Hexadecimal" }}
+                        </div><br>
                         {% endif %}
                         {% for error in field.errors %}
                         <br>

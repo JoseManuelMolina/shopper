@@ -167,6 +167,7 @@ def crearModelo(request):
 
     return render(request, 'diverseBackend/modelo_form.html', {'form' : form})
 
+
 class crearProducto(LoginRequiredMixin, CreateView):
 
     model = producto
@@ -216,6 +217,16 @@ class verProducto(ListView):
     context_object_name = 'productos'
     template_name = 'diverseBackend/ver_producto.html'
 
+def verProductoSimple(request, pk):
+    productoSimple = producto.objects.filter(num_ref = pk)
+    imagenesExtra = ImagenProducto.objects.filter(producto_numref_id = pk)
+    context = {
+        'producto' : productoSimple,
+        'imagenes' : imagenesExtra,
+    }
+    
+
+    return render(request, 'diverseBackend/producto.html', context)
 
 #----------------------------------------------------------------------------- EDITAR -----------------------------------------------------------------------------
 class editarColor(LoginRequiredMixin, UpdateView):
@@ -260,6 +271,38 @@ class editarProducto(LoginRequiredMixin, UpdateView):
     template_name = 'diverseBackend/producto_form.html'
     success_url = reverse_lazy('verProducto')
 
+
+
+
+@login_required  
+def agregarFotos(request, pk):
+    if request.method == 'POST':
+        product = producto.objects.filter(num_ref = pk)
+        form = ImagenProductoForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+
+            imagenDatosForm = form.cleaned_data
+
+            print(imagenDatosForm)
+            imagenDatos = ImagenProducto(
+                imagen = imagenDatosForm['imagen'],
+                producto_numref_id = pk
+            ) 
+
+            print(request.FILES)
+
+            imagenDatos.save()
+            
+        return redirect('verProducto')
+        
+        
+    else:
+        form = ImagenProductoForm()
+        
+
+    return render(request, 'diverseBackend/imagenProducto.html', {'form' : form})
+
 #--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
 # AJAX
 def load_modelos(request):
@@ -273,5 +316,3 @@ def load_subcategorias(request):
     subcategorias = subCategoria.objects.filter(categoria_id = categoria_id_form)
 
     return render(request, 'diverseBackend/subcategorias_dropdown_list_options.html', {'subcategorias' : subcategorias})
-
-

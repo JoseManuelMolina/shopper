@@ -172,7 +172,7 @@ class colorForm(forms.ModelForm):
 
     class Meta:
         model = color
-        fields = ('id', 'nombre')
+        fields = ('id', 'nombre', 'hexcolor')
 
 #    def __init__(self, *args, **kwargs):
 #        super(sexoForm, self).__init__(*args, **kwargs)
@@ -349,3 +349,10 @@ class productoForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['subCategoria'].queryset = self.instance.categoria.subcategoria_set.order_by('nombre')
+
+class ImagenProductoForm(ModelForm):
+    class Meta:
+        model = ImagenProducto
+        fields = ['imagen'] 
+
+    

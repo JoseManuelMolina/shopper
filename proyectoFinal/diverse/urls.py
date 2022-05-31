@@ -65,6 +65,10 @@ urlpatterns = [
     path('backend/editar-modelo/<int:pk>', viewsBackend.editarModelo.as_view(), name="editarModelo"),
     path('backend/editar-producto/<int:pk>', viewsBackend.editarProducto.as_view(), name="editarProducto"),
 
+    path('backend/producto/<int:pk>', viewsBackend.verProductoSimple, name="verProductoSimple"),
+    path('backend/imagenProducto/<int:pk>', viewsBackend.agregarFotos, name="agregarImagen"),
+
+
 
     path('ajax/load-modelos/', viewsBackend.load_modelos, name='ajax_load_modelos'),                            # AJAX
     path('ajax/load-subcategorias/', viewsBackend.load_subcategorias, name='ajax_load_subcategorias'),          # AJAX

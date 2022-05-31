@@ -102,7 +102,10 @@
                     {% for color in colores%}
                     <div class="custom-control custom-control-color mb-3">
                       <input class="custom-control-input" id="color{{color.id}}" type="checkbox">
-                      <label class="custom-control-label text-dark" for="color{{color.id}}">
+                      <label class="text-dark colores" for="color{{color.id}}">
+                        <div class="colorCircle" data-color="{{color.hexcolor}}">
+                          <i class="fas fa-check check-color" id="checkColor{{color.id}}"></i>
+                        </div>                        
                         <span class="text-body">{{color.nombre}}</span>
                       </label>
                     </div>
@@ -396,3 +399,7 @@
   </section>
 
 {% endblock content %}
+
+{% block scriptsfooter%}
+  <script src="{% static 'js/scriptColores.js' %}"></script>
+{% endblock scriptsfooter%}

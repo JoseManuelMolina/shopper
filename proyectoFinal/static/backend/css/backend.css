@@ -43,3 +43,7 @@
 .imgProducto{
     max-width: 100px;
 }
+
+.form-group input[type=file]{
+    opacity: 1;
+}
