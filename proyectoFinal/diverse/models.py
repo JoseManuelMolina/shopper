@@ -5,7 +5,6 @@ from django.db import models
 from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from colorfield.fields import ColorField
 
 # Create your models here.
 
@@ -105,16 +104,9 @@ class modelo(models.Model):
         db_table = 'diverse_modelo'
 
 class color(models.Model):
-
-    COLOR_PALETTE = [
-        ("#FFFFFF", "white", ),
-        ("#000000", "black", ),
-    ]
-
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=60)
-    #hexcolor = models.CharField(max_length=6, blank=True, null=True)
-    hexcolor = ColorField(samples=COLOR_PALETTE)
+    hexcolor = models.CharField(max_length=7, blank=True, null=True)
 
     def __str__(self):
         return self.nombre
