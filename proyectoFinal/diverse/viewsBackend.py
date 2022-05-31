@@ -219,7 +219,7 @@ class verProducto(ListView):
 
 def verProductoSimple(request, pk):
     productoSimple = producto.objects.filter(num_ref = pk)
-    imagenesExtra = ImagenProducto.objects.filter(producto_numref_id = pk)
+    imagenesExtra = imagenesProductos.objects.filter(producto_numref_id = pk)
     context = {
         'producto' : productoSimple,
         'imagenes' : imagenesExtra,
@@ -278,14 +278,14 @@ class editarProducto(LoginRequiredMixin, UpdateView):
 def agregarFotos(request, pk):
     if request.method == 'POST':
         product = producto.objects.filter(num_ref = pk)
-        form = ImagenProductoForm(request.POST, request.FILES)
+        form = imagenProductoForm(request.POST, request.FILES)
         
         if form.is_valid():
 
             imagenDatosForm = form.cleaned_data
 
             print(imagenDatosForm)
-            imagenDatos = ImagenProducto(
+            imagenDatos = imagenesProductos(
                 imagen = imagenDatosForm['imagen'],
                 producto_numref_id = pk
             ) 
@@ -298,7 +298,7 @@ def agregarFotos(request, pk):
         
         
     else:
-        form = ImagenProductoForm()
+        form = imagenProductoForm()
         
 
     return render(request, 'diverseBackend/imagenProducto.html', {'form' : form})
