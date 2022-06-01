@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
 
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
+from django.views.generic.base import View
+
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.decorators import login_required
@@ -81,10 +83,28 @@ class editarDireccion(LoginRequiredMixin, UpdateView):
     template_name = 'diverse/crearDireccion.html'
     success_url = reverse_lazy('direcciones')
 
+class carrito(View):
+    def get(self, request, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # obtiene el numRef del producto por la requested url
+        producto_numRef = self.kwargs['num_ref']
+        # obtener el producto
+        producto_obj = producto.objects.get(num_ref=producto_numRef)
 
-def cart(request):
-    context = {}
-    return render(request, 'diverse/cart.html', context)
+        # chequea si existe el carrito
+        carrito_id = self.request.session.get('carrito_id', None)
+        if carrito_id:
+            carrito_obj = carrito.objects.get(id=carrito_id)
+            print("Carrito antiguo")
+        else:
+            carrito_obj = carrito.objects.create(cantidad=0)
+            self.request.session['carrito_id'] = carrito_obj.id
+            print("Carrito nuevo")
+
+        # comprueba si el producto existen en el carrito
+        
+        return context
+        return render(request, "index.html", context=context)
 
 def checkout(request):
     context = {}
