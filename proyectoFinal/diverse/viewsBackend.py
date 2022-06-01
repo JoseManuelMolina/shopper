@@ -219,7 +219,7 @@ class verProducto(ListView):
 
 def verProductoSimple(request, pk):
     productoSimple = producto.objects.filter(num_ref = pk)
-    imagenesExtra = ImagenProducto.objects.filter(producto_numref_id = pk)
+    imagenesExtra = imagenesProductos.objects.filter(producto_numref_id = pk)
     context = {
         'producto' : productoSimple,
         'imagenes' : imagenesExtra,
@@ -284,7 +284,7 @@ def agregarFotos(request, primarykey):
             imagenDatosForm = form.cleaned_data
 
             print(imagenDatosForm)
-            imagenDatos = ImagenProducto(
+            imagenDatos = imagenesProductos(
                 imagen = imagenDatosForm['imagen'],
                 producto_numref_id = primarykey
             ) 
@@ -297,7 +297,7 @@ def agregarFotos(request, primarykey):
         
         
     else:
-        form = ImagenProductoForm()
+        form = imagenProductoForm()
         
 
     return render(request, 'diverseBackend/imagenProducto.html', {'form' : form})
