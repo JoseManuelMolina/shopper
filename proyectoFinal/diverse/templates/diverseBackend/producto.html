@@ -25,9 +25,12 @@
             {% for imagen in imagenes %}
             <div class="imagen-extra">
                 <img src="{{imagen.imagen.url}}" height="300px">
+                <button type="button" class="btn btn-danger"><a href="/backend/borrarImagenProducto/{{product.num_ref}}/{{imagen.id}}" style="text-decoration:none; color: #fff;">Eliminar Imagen</a></button>
             </div>
             {% endfor %}
+            <div class="botonMasImagenes">
+                <button type="button" class="btn btn-primary"><a href="/backend/imagenProducto/{{product.num_ref}}" style="text-decoration:none; color: #fff;">Añadir Imágenes</a></button>
+            </div>
         </div>
     {% endfor %}
-
 {% endblock content %}

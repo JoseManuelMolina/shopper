@@ -170,6 +170,10 @@ class imagenesProductos(models.Model):
     producto_numref = models.ForeignKey(producto , related_name='imagenes', on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to=get_more_product_images_filepath, blank=True, null=True)
 
+    class Meta:
+        # managed = True
+        db_table = 'diverse_imagenproducto'
+
 class stock(models.Model):
     
     id = models.AutoField(primary_key=True)
