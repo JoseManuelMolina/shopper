@@ -66,7 +66,8 @@ urlpatterns = [
     path('backend/editar-producto/<int:pk>', viewsBackend.editarProducto.as_view(), name="editarProducto"),
 
     path('backend/producto/<int:pk>', viewsBackend.verProductoSimple, name="verProductoSimple"),
-    path('backend/imagenProducto/<int:pk>', viewsBackend.agregarFotos, name="agregarImagen"),
+    path('backend/imagenProducto/<int:primarykey>', viewsBackend.agregarFotos, name="agregarImagen"),
+    path('backend/borrarImagenProducto/<int:pkproducto>/<int:pkfoto>', viewsBackend.eliminarFoto, name="borrarImagen"),
 
 
 

@@ -275,9 +275,8 @@ class editarProducto(LoginRequiredMixin, UpdateView):
 
 
 @login_required  
-def agregarFotos(request, pk):
+def agregarFotos(request, primarykey):
     if request.method == 'POST':
-        product = producto.objects.filter(num_ref = pk)
         form = ImagenProductoForm(request.POST, request.FILES)
         
         if form.is_valid():
@@ -287,14 +286,14 @@ def agregarFotos(request, pk):
             print(imagenDatosForm)
             imagenDatos = ImagenProducto(
                 imagen = imagenDatosForm['imagen'],
-                producto_numref_id = pk
+                producto_numref_id = primarykey
             ) 
 
             print(request.FILES)
 
             imagenDatos.save()
             
-        return redirect('verProducto')
+        return redirect('verProductoSimple', pk=primarykey)
         
         
     else:
@@ -302,6 +301,14 @@ def agregarFotos(request, pk):
         
 
     return render(request, 'diverseBackend/imagenProducto.html', {'form' : form})
+
+@login_required
+def eliminarFoto(request, pkproducto ,pkfoto):
+    imagen = ImagenProducto.objects.filter(id=pkfoto)
+    product = producto.objects.filter(num_ref = pkproducto)
+    imagen.delete()
+    
+    return redirect('verProductoSimple', pk=pkproducto)
 
 #--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
 # AJAX
