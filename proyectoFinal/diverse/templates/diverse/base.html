@@ -329,7 +329,7 @@
                                 <!-- Links -->
                                 <ul class="list-styled mb-0 font-size-sm">
                                   <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo>Clothing</a>
+                                    <a class="list-styled-link" href="/catalogo>Clothing"></a>
                                   </li>
                                   <li class="list-styled-item">
                                     <a class="list-styled-link" href="/catalogo">Shoes</a>
@@ -783,12 +783,18 @@
                     </a>
                   </li>
                   <li class="nav-item ml-lg-n4">
-                    <a class="nav-link" data-toggle="modal" href="/carrito">
-                      <span data-cart-items="1"> <!--Número de items en el carrito-->
-                        <i class="fe fe-shopping-cart"></i>
-                      </span>
+                    <a class="nav-link" href="{% url 'verCarrito' %}">
+                      <i class="fe fe-shopping-cart"></i>
                     </a>
                   </li>
+                  <!--
+                  <li class="nav-item ml-lg-n4">
+                    <a class="nav-link" data-toggle="modal" href="/carrito">
+                      <span data-cart-items="1"> Número de items en el carrito-->
+                        <!--<i class="fe fe-shopping-cart"></i>
+                      </span>
+                    </a>
+                  </li>-->
                 </ul>
       
               </div>
