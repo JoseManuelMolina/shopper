@@ -83,28 +83,95 @@ class editarDireccion(LoginRequiredMixin, UpdateView):
     template_name = 'diverse/crearDireccion.html'
     success_url = reverse_lazy('direcciones')
 
-class carrito(View):
-    def get(self, request, *args, **kwargs):
+class verCarrito(LoginRequiredMixin, TemplateView):
+    template_name = 'diverse/carrito.html'
+
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        carritos_usuario = carrito.objects.filter(cliente_id = self.request.user.id)
+        if carritos_usuario.count() > 0:
+            ultimoCarrito = carritos_usuario[carritos_usuario.count()-1]
+            if ultimoCarrito.estado == 0:
+                carrito_obj = carrito.objects.get(id = ultimoCarrito.id)
+            else:
+                carrito_obj = None
+        else:
+            carrito_obj = None
+
+        context['carrito'] = carrito_obj
+
+        return context
+
+class añadirCarrito(LoginRequiredMixin, TemplateView):
+    template_name = 'diverse/carrito.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         # obtiene el numRef del producto por la requested url
-        producto_numRef = self.kwargs['num_ref']
+        producto_numRef = self.kwargs['pk']
         # obtener el producto
         producto_obj = producto.objects.get(num_ref=producto_numRef)
+        # obtiene los carritos del cliente
+        carritos_usuario = carrito.objects.filter(cliente_id = self.request.user.id)
 
-        # chequea si existe el carrito
-        carrito_id = self.request.session.get('carrito_id', None)
-        if carrito_id:
-            carrito_obj = carrito.objects.get(id=carrito_id)
-            print("Carrito antiguo")
+        # chequea si el usuario tiene algun carrito
+        if carritos_usuario.count() > 0:
+            # obtiene el ultimo carrito existente del cliente
+            ultimoCarrito = carritos_usuario[carritos_usuario.count()-1]
+
+            # comprueba si el ultimo carrito esta en proceso de compra o ya esta comprado
+            if ultimoCarrito.estado == 0:
+                carrito_obj = carrito.objects.get(id=ultimoCarrito.id)
+                producto_en_carrito = carrito_obj.productocarrito_set.filter(producto=producto_obj)
+                
+                # producto ya existente en el carrito
+                if producto_en_carrito.exists():
+                    productocarrito = producto_en_carrito.last()
+                    productocarrito.cantidad += 1
+                    productocarrito.precioTotal += producto_obj.precio
+                    productocarrito.save()
+                    carrito_obj.precio += producto_obj.precio
+                    if carrito_obj.precio > 60:
+                        carrito_obj.gastosEnvio = 0
+                    carrito_obj.precioTotal = carrito_obj.precio + carrito_obj.gastosEnvio
+                    carrito_obj.save()
+
+                # nuevo producto añadido en el carrito
+                else:
+                    productocarrito = productoCarrito.objects.create(carrito_id = carrito_obj.id, producto_id = producto_obj.num_ref, precio = producto_obj.precio, cantidad = 1, precioTotal = producto_obj.precio)
+                    carrito_obj.precio += producto_obj.precio
+                    if carrito_obj.precio > 60:
+                        carrito_obj.gastosEnvio = 0
+                    carrito_obj.precioTotal = carrito_obj.precio + carrito_obj.gastosEnvio
+                    carrito_obj.save()
+
+            # si esta comprado, crea un carrito nuevo
+            else:
+                carrito_obj = carrito.objects.create(precio=0, cliente_id=self.request.user.id, estado = 0)
+                self.request.session['carrito_id'] = carrito_obj.id
+                productocarrito = productoCarrito.objects.create(carrito_id = carrito_obj.id, producto_id = producto_obj.num_ref, precio = producto_obj.precio, cantidad = 1, precioTotal = producto_obj.precio)
+                carrito_obj.precio += producto_obj.precio
+                if carrito_obj.precio > 60:
+                    carrito_obj.gastosEnvio = 0
+                carrito_obj.precioTotal = carrito_obj.precio + carrito_obj.gastosEnvio
+                carrito_obj.save()
+
+        # si no tiene carritos lo crea
         else:
-            carrito_obj = carrito.objects.create(cantidad=0)
+            carrito_obj = carrito.objects.create(precio=0, cliente_id=self.request.user.id, estado = 0)
             self.request.session['carrito_id'] = carrito_obj.id
-            print("Carrito nuevo")
+            productocarrito = productoCarrito.objects.create(carrito_id = carrito_obj.id, producto_id = producto_obj.num_ref, precio = producto_obj.precio, cantidad = 1, precioTotal = producto_obj.precio)
+            carrito_obj.precio += producto_obj.precio
+            if carrito_obj.precio > 60:
+                carrito_obj.gastosEnvio = 0
+            carrito_obj.precioTotal = carrito_obj.precio + carrito_obj.gastosEnvio
+            carrito_obj.save()
+    
+        context['carrito'] = carrito_obj
 
-        # comprueba si el producto existen en el carrito
-        
         return context
-        return render(request, "index.html", context=context)
 
 def checkout(request):
     context = {}

@@ -47,9 +47,6 @@ class sexo(models.Model):
 
 class categoria(models.Model):
     id = models.AutoField(primary_key=True)
- #   sexo = models.ForeignKey(
- #       'sexo', on_delete=models.CASCADE,
- #   )
     nombre = models.CharField(max_length=40)
 
     def __str__(self):
@@ -166,7 +163,7 @@ class producto(models.Model):
     def get_imagen_producto_filename(self):
         return str(self.imagen)[str(self.imagen).index(f'media/imagen/{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/'):]
 
-class imagenesProductos(models.Model):
+class imagenProducto(models.Model):
     producto_numref = models.ForeignKey(producto , related_name='imagenes', on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to=get_more_product_images_filepath, blank=True, null=True)
 
@@ -183,12 +180,20 @@ class stock(models.Model):
     cantidad = models.PositiveIntegerField()
 
 class carrito(models.Model):
+
+    OPCIONES_ESTADO = [
+        (0, 'En proceso'),
+        (1, 'Completo')
+    ]
+
     id = models.AutoField(primary_key=True)
     cliente = models.ForeignKey(
                 settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
             )
-    cantidad = models.PositiveIntegerField(default=0)
+    gastosEnvio = models.PositiveIntegerField(default=10)
     precio = models.PositiveIntegerField(default=0)
+    precioTotal = models.PositiveIntegerField(default=0)
+    estado = models.PositiveIntegerField(choices=OPCIONES_ESTADO, default=0)
 
 class productoCarrito(models.Model):
     carrito = models.ForeignKey(
@@ -197,7 +202,9 @@ class productoCarrito(models.Model):
     producto = models.ForeignKey(
                 'producto', on_delete=models.CASCADE
             )
-    totalPrecio = models.PositiveIntegerField(default=0)
+    cantidad = models.PositiveIntegerField(default=0)
+    precio = models.PositiveIntegerField(default=0)
+    precioTotal = models.PositiveIntegerField(default=0)
 
 class pedido(models.Model):
     
