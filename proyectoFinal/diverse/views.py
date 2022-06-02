@@ -219,7 +219,7 @@ def nosotros(request):
 class productoSingle2(ListView):
     model = producto
     #context_object_name = 'productos'
-    template_name: 'diverse/producto_list.html'
+    template_name: 'diverse/producto_list_v2.html'
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -237,4 +237,4 @@ def productoSingle(request, pk):
         'imagenesextra' : imagenesExtra,
     }
 
-    return render(request, 'diverse/producto_list_v2.html', context)
+    return render(request, 'diverse/producto_list.html', context)

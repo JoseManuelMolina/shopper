@@ -14,24 +14,24 @@
                   <a class="text-gray-400" href="/">Inicio</a>
                 </li>
                 <li class="breadcrumb-item">
-                  {% for producto in object_list %}
-                    {% if producto.sexo.id == 1 %}
+                  {% for product in producto %}
+                    {% if product.sexo.id == 1 %}
                     <a class="text-gray-400" href="/catalogo/h">Hombre</a>
                     {%endif%}
-                    {% if producto.sexo.id == 2 %}
+                    {% if product.sexo.id == 2 %}
                     <a class="text-gray-400" href="/catalogo/m>Mujer</a>
                     {%endif%}
-                    {% if producto.sexo.id == 3 %}
+                    {% if product.sexo.id == 3 %}
                     <a class="text-gray-400" href="/catalogo/no">Niño</a>
                     {%endif%}
-                    {% if producto.sexo.id == 4 %}
+                    {% if product.sexo.id == 4 %}
                     <a class="text-gray-400" href="/catalogo/na">Niña</a>
                     {%endif%}
                   {% endfor %}
                 </li>
                 <li class="breadcrumb-item active">
-                  {% for producto in object_list %}
-                  {{ producto.categoria }}
+                  {% for product in producto %}
+                  {{ product.categoria }}
                   {% endfor %}
                 </li>
               </ol>
@@ -60,23 +60,21 @@
                     <!-- Slider -->
                     <div class="mb-4" data-flickity='{"draggable": false, "fade": true}' id="productSlider">
   
-                      {% for producto in object_list %}
-                      <!-- Item -->
-                      <a href="{{ producto.imagen.url }}" data-fancybox>
-                        <img src="{{ producto.imagen.url }}" alt="..." class="card-img-top">
-                      </a>
-  
-                      <!-- Item -->
-                      <a href="{{ producto.imagen.url }}" data-fancybox>
-                        <img src="{{ producto.imagen.url }}" alt="..." class="card-img-top">
-                      </a>
-  
-                      <!-- Item -->
-                      <a href="{{ producto.imagen.url }}" data-fancybox>
-                        <img src="{{ producto.imagen.url }}" alt="..." class="card-img-top">
-                      </a>
-                      
+                      {% for product in producto %}
+                        <!-- Item -->
+                        <a href="{{ product.imagen.url }}" data-fancybox>
+                          <img src="{{ product.imagen.url }}" alt="..." class="card-img-top">
+                        </a>
                       {% endfor %}
+
+                      {% for imagen in imagenesextra %}
+                      <!-- Item -->
+                      <a href="{{ imagen.imagen.url }}" data-fancybox>
+                        <img src="{{ imagen.imagen.url }}"" alt="..." class="card-img-top">
+                      </a>
+                      {% endfor %}
+                      
+                      
                     </div>
   
                   </div>
@@ -84,29 +82,29 @@
                   <!-- Slider -->
                   <div class="flickity-nav mx-n2 mb-10 mb-md-0" data-flickity='{"asNavFor": "#productSlider", "contain": true, "wrapAround": false}'>
   
+
+                    {% for product in producto %}
+                    <!-- Item -->
+                    <div class="col-12 px-2 is-selected is-nav-selected" style="max-width: 113px;">
+  
+                      <!-- Image -->
+                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{product.imagen.url}});">
+                      </div>
+  
+                    </div>
+
+                    {% endfor %}
+
+                    {% for imagen in imagenesextra %}
                     <!-- Item -->
                     <div class="col-12 px-2" style="max-width: 113px;">
   
                       <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-7.jpg);"></div>
+                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{imagen.imagen.url}});">
+                      </div>
   
                     </div>
-  
-                    <!-- Item -->
-                    <div class="col-12 px-2" style="max-width: 113px;">
-  
-                      <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-122.jpg);"></div>
-  
-                    </div>
-  
-                    <!-- Item -->
-                    <div class="col-12 px-2" style="max-width: 113px;">
-  
-                      <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-146.jpg);"></div>
-  
-                    </div>
+                    {% endfor %}
   
                   </div>
   
@@ -118,23 +116,24 @@
                     <div class="col">
   
                       <!-- Preheading -->
-                      {% for producto in object_list %}
-                        <a class="text-muted" href="shop.html">{{ producto.categoria }}</a>
+                      {% for product in producto %}
+                        <a class="text-muted" href="shop.html">{{ product.categoria }}</a>
                       {% endfor %}
                     </div>
                     
                   </div>
   
                   <!-- Heading -->
-                  {% for producto in object_list %}
-                    <h3 class="mb-2">{{ producto.modelo }} </h3>
+                  {% for product in producto %}
+                    <h3 class="mb-2">{{ product.modelo }} </h3>
+                    <h6 class="mb-2">{{ product.marca }} </h6>
                   {% endfor %}
   
                   <!-- Price -->
                   <div class="mb-7">
                     <!--<span class="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through">$115.00</span>-->
-                    {% for producto in object_list %}
-                      <span class="ml-1 font-size-h5 font-weight-bolder text-primary">{{ producto.precio }}€</span>
+                    {% for product in producto %}
+                      <span class="ml-1 font-size-h5 font-weight-bolder text-primary">{{ product.precio }}€</span>
                     {% endfor %}
                     <span class="font-size-sm ml-1">(In Stock)</span>
                   </div>
@@ -144,9 +143,9 @@
                     <div class="form-group">
   
                       <!-- Label -->
-                      {% for producto in object_list %}
+                      {% for product in producto %}
                         <p class="mb-5">
-                          Color: <strong id="colorCaption">{{ producto.color }}</strong>
+                          Color: <strong id="colorCaption">{{ product.color }}</strong>
                         </p>
                       {% endfor %}
 
