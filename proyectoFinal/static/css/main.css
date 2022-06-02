@@ -118,7 +118,16 @@
     display: block;
 }
 
-.card-img-top{
+.imagen-catalogo{
     max-height:256px;
     object-fit: cover;
+}
+
+.productoRelacionadoLink{
+    text-decoration:none;
+    color: #000 !important;
+}
+
+.productoRelacionadoLink:hover{
+    color: #fff !important;
 }
