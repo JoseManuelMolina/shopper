@@ -118,3 +118,7 @@
     display: block;
 }
 
+.card-img-top{
+    max-height:256px;
+    object-fit: cover;
+}
