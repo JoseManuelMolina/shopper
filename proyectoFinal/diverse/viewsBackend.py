@@ -272,6 +272,14 @@ class editarProducto(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('verProducto')
 
 
+@login_required
+def eliminarProducto(request, pk):
+    product = producto.objects.filter(num_ref = pk)
+    product.delete()
+    
+    return redirect('verProducto')
+
+
 
 
 @login_required  

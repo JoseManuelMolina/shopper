@@ -65,6 +65,9 @@ urlpatterns = [
     path('backend/editar-marca/<int:pk>', viewsBackend.editarMarca.as_view(), name="editarMarca"),
     path('backend/editar-modelo/<int:pk>', viewsBackend.editarModelo.as_view(), name="editarModelo"),
     path('backend/editar-producto/<int:pk>', viewsBackend.editarProducto.as_view(), name="editarProducto"),
+    path('backend/eliminar-producto/<int:pk>', viewsBackend.eliminarProducto, name="eliminarProducto"),
+
+    
 
     path('backend/producto/<int:pk>', viewsBackend.verProductoSimple, name="verProductoSimple"),
     path('backend/imagenProducto/<int:primarykey>', viewsBackend.agregarFotos, name="agregarImagen"),
