@@ -226,15 +226,22 @@ class productoSingle2(ListView):
         return qs.filter(num_ref = self.kwargs['pk'])
 
 def productoSingle(request, pk):
-    
+    #numRef = ""+sexo+categoria+subcategoria+marca+modelo+color+talla;
+    productoSimpleDatos = producto.objects.get(num_ref = pk)
     productoSimple = producto.objects.filter(num_ref = pk)
     imagenesExtra = imagenProducto.objects.filter( producto_numref_id = pk)
 
-    print(imagenesExtra)
+    productosColor = producto.objects.filter(sexo_id = productoSimpleDatos.sexo_id, 
+        categoria_id = productoSimpleDatos.categoria_id,
+        subCategoria_id = productoSimpleDatos.subCategoria_id,
+        marca_id = productoSimpleDatos.marca_id,
+        modelo_id = productoSimpleDatos.modelo_id)
+
 
     context = {
         'producto' : productoSimple,
         'imagenesextra' : imagenesExtra,
+        'productoscolor' : productosColor,
     }
 
     return render(request, 'diverse/producto_list.html', context)

@@ -151,6 +151,7 @@
 
                       <!-- Radio -->
                       <div class="mb-8 ml-n1">
+                        <!--
                         <div class="custom-control custom-control-inline custom-control-img">
                           <input type="radio" class="custom-control-input" id="imgRadioOne" name="imgRadio" data-toggle="form-caption" data-target="#colorCaption" value="White" checked>
                           <label class="custom-control-label" for="imgRadioOne">
@@ -162,7 +163,17 @@
                           <label class="custom-control-label" for="imgRadioTwo">
                             <span class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-49.jpg);"></span>
                           </label>
-                        </div>
+                        </div>-->
+                          {% for productocolor in productoscolor %}
+                          <div class="custom-control custom-control-inline custom-control-img">
+                            <input type="radio" class="custom-control-input" id="producto{{ productocolor.num_ref }}" name="imgRadio" data-toggle="form-caption" data-target="#colorCaption" value="{{productocolor.color}}">
+                            <label class="custom-control-label" for="producto{{ productocolor.num_ref }}">
+                              <a href="/producto/{{ productocolor.num_ref }}">
+                                <span class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{ productocolor.imagen.url }});"></span>
+                              </a>
+                            </label>
+                          </div>
+                          {% endfor %}
                       </div>
   
                     </div>
