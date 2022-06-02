@@ -271,6 +271,16 @@ class editarProducto(LoginRequiredMixin, UpdateView):
     template_name = 'diverseBackend/producto_form.html'
     success_url = reverse_lazy('verProducto')
 
+    def form_valid(self, form, **kwargs):
+        pk = self.kwargs.get('pk')
+        numRef_nuevo = producto.objects.filter(num_ref = form['num_ref'].value())
+
+        if numRef_nuevo.count() == 0:
+            producto_obj = producto.objects.get(num_ref = pk)
+            producto_obj.delete()
+
+        return super(editarProducto, self).form_valid(form)        
+
 @login_required
 def eliminarProducto(request, pk):
     product = producto.objects.filter(num_ref = pk)

@@ -154,7 +154,7 @@ class producto(models.Model):
     imagen = models.ImageField(max_length=255, upload_to=get_producto_imagenes_filepath, null=True, blank=True, default=get_default_imagen_producto())
 
     def __str__(self):
-        return self.num_ref
+        return str(self.num_ref)
 
     class Meta:
         # managed = True

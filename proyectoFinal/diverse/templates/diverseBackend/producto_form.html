@@ -34,6 +34,7 @@
                                 {% endfor %}
                             {% else  %}
                                 {% for error in field.errors %}
+                                    {{ field }}
                                     {% if 'Ya existe Producto con este Num ref.' == error  %}
                                         <br>
                                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
