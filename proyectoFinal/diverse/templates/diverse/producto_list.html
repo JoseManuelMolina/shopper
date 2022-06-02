@@ -188,10 +188,22 @@
 
                       <!-- Radio -->
                       <div class="mb-2">
+
+                        {% for productotalla in productostalla %}
                         <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioOne" value="6" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioOne">6</label>
+
+                          {% for product in producto %}
+                            {% if product.talla.id == productotalla.talla.id %}
+                              <input type="radio" class="custom-control-input" name="sizeRadio" id="talla{{productotalla.talla.id}}" value="{{productotalla.talla}}" data-toggle="form-caption" data-target="#sizeCaption" checked>
+                            {% else %}  
+                              <input type="radio" class="custom-control-input" name="sizeRadio" id="talla{{productotalla.talla.id}}" value="{{productotalla.talla}}" data-toggle="form-caption" data-target="#sizeCaption">
+                            {% endif %}
+                          {% endfor %}                          
+                          <label class="custom-control-label" for="talla{{productotalla.talla.id}}"><a href="/producto/{{productotalla.num_ref}}" style="text-decoration: none; color: #000;">{{ productotalla.talla }}</a></label>
                         </div>
+                        {% endfor %}
+
+                        <!--
                         <div class="custom-control custom-control-inline custom-control-size mb-2">
                           <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioTwo" value="6.5" data-toggle="form-caption" data-target="#sizeCaption" disabled>
                           <label class="custom-control-label" for="sizeRadioTwo">6.5</label>
@@ -243,7 +255,7 @@
                         <div class="custom-control custom-control-inline custom-control-size mb-2">
                           <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioFourteen" value="14" data-toggle="form-caption" data-target="#sizeCaption">
                           <label class="custom-control-label" for="sizeRadioFourteen">14</label>
-                        </div>
+                        </div>-->
                       </div>
   
                       <!-- Size chart -->
