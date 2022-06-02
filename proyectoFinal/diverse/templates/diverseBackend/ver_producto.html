@@ -42,7 +42,7 @@
                   <th scope="row"><img class="avatar border-gray imgProducto" src="{{ producto.imagen.url }}" alt="..."></th>
                   <th scope="row" class="text-center"><button class="btn btn-info btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit" onclick="window.location.href='/backend/producto/{{ producto.num_ref }}'"><i class="fa fa-eye"></i></button></th>
                   <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit" onclick="window.location.href='/backend/editar-producto/{{ producto.num_ref }}'"><i class="fa fa-edit"></i></button></th>
-                  <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" onclick="window.location.href=''"><i class="fa fa-trash"></i></button></th>
+                  <th scope="row" class="text-center"><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" onclick="window.location.href='/backend/eliminar-producto/{{ producto.num_ref }}'"><i class="fa fa-trash"></i></button></th>
                 </tr>
                 {% endfor %}
               </tbody>

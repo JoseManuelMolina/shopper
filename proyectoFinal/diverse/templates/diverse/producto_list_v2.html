@@ -14,24 +14,24 @@
                   <a class="text-gray-400" href="/">Inicio</a>
                 </li>
                 <li class="breadcrumb-item">
-                  {% for product in producto %}
-                    {% if product.sexo.id == 1 %}
+                  {% for producto in object_list %}
+                    {% if producto.sexo.id == 1 %}
                     <a class="text-gray-400" href="/catalogo/h">Hombre</a>
                     {%endif%}
                     {% if producto.sexo.id == 2 %}
-                    <a class="text-gray-400" href="/catalogo/m">Mujer</a>
+                    <a class="text-gray-400" href="/catalogo/m>Mujer</a>
                     {%endif%}
-                    {% if product.sexo.id == 3 %}
+                    {% if producto.sexo.id == 3 %}
                     <a class="text-gray-400" href="/catalogo/no">Niño</a>
                     {%endif%}
-                    {% if product.sexo.id == 4 %}
+                    {% if producto.sexo.id == 4 %}
                     <a class="text-gray-400" href="/catalogo/na">Niña</a>
                     {%endif%}
                   {% endfor %}
                 </li>
                 <li class="breadcrumb-item active">
-                  {% for product in producto %}
-                  {{ product.categoria }}
+                  {% for producto in object_list %}
+                  {{ producto.categoria }}
                   {% endfor %}
                 </li>
               </ol>
@@ -60,21 +60,23 @@
                     <!-- Slider -->
                     <div class="mb-4" data-flickity='{"draggable": false, "fade": true}' id="productSlider">
   
-                      {% for product in producto %}
-                        <!-- Item -->
-                        <a href="{{ product.imagen.url }}" data-fancybox>
-                          <img src="{{ product.imagen.url }}" alt="..." class="card-img-top">
-                        </a>
-                      {% endfor %}
-
-                      {% for imagen in imagenesextra %}
+                      {% for producto in object_list %}
                       <!-- Item -->
-                      <a href="{{ imagen.imagen.url }}" data-fancybox>
-                        <img src="{{ imagen.imagen.url }}"" alt="..." class="card-img-top">
+                      <a href="{{ producto.imagen.url }}" data-fancybox>
+                        <img src="{{ producto.imagen.url }}" alt="..." class="card-img-top">
                       </a>
+  
+                      <!-- Item -->
+                      <a href="{{ producto.imagen.url }}" data-fancybox>
+                        <img src="{{ producto.imagen.url }}" alt="..." class="card-img-top">
+                      </a>
+  
+                      <!-- Item -->
+                      <a href="{{ producto.imagen.url }}" data-fancybox>
+                        <img src="{{ producto.imagen.url }}" alt="..." class="card-img-top">
+                      </a>
+                      
                       {% endfor %}
-                      
-                      
                     </div>
   
                   </div>
@@ -82,29 +84,29 @@
                   <!-- Slider -->
                   <div class="flickity-nav mx-n2 mb-10 mb-md-0" data-flickity='{"asNavFor": "#productSlider", "contain": true, "wrapAround": false}'>
   
-
-                    {% for product in producto %}
-                    <!-- Item -->
-                    <div class="col-12 px-2 is-selected is-nav-selected" style="max-width: 113px;">
-  
-                      <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{product.imagen.url}});">
-                      </div>
-  
-                    </div>
-
-                    {% endfor %}
-
-                    {% for imagen in imagenesextra %}
                     <!-- Item -->
                     <div class="col-12 px-2" style="max-width: 113px;">
   
                       <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{imagen.imagen.url}});">
-                      </div>
+                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-7.jpg);"></div>
   
                     </div>
-                    {% endfor %}
+  
+                    <!-- Item -->
+                    <div class="col-12 px-2" style="max-width: 113px;">
+  
+                      <!-- Image -->
+                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-122.jpg);"></div>
+  
+                    </div>
+  
+                    <!-- Item -->
+                    <div class="col-12 px-2" style="max-width: 113px;">
+  
+                      <!-- Image -->
+                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-146.jpg);"></div>
+  
+                    </div>
   
                   </div>
   
@@ -116,24 +118,23 @@
                     <div class="col">
   
                       <!-- Preheading -->
-                      {% for product in producto %}
-                        <a class="text-muted" href="shop.html">{{ product.categoria }}</a>
+                      {% for producto in object_list %}
+                        <a class="text-muted" href="shop.html">{{ producto.categoria }}</a>
                       {% endfor %}
                     </div>
                     
                   </div>
   
                   <!-- Heading -->
-                  {% for product in producto %}
-                    <h3 class="mb-2">{{ product.modelo }} </h3>
-                    <h6 class="mb-2">{{ product.marca }} </h6>
+                  {% for producto in object_list %}
+                    <h3 class="mb-2">{{ producto.modelo }} </h3>
                   {% endfor %}
   
                   <!-- Price -->
                   <div class="mb-7">
                     <!--<span class="font-size-lg font-weight-bold text-gray-350 text-decoration-line-through">$115.00</span>-->
-                    {% for product in producto %}
-                      <span class="ml-1 font-size-h5 font-weight-bolder text-primary">{{ product.precio }}€</span>
+                    {% for producto in object_list %}
+                      <span class="ml-1 font-size-h5 font-weight-bolder text-primary">{{ producto.precio }}€</span>
                     {% endfor %}
                     <span class="font-size-sm ml-1">(In Stock)</span>
                   </div>
@@ -143,15 +144,14 @@
                     <div class="form-group">
   
                       <!-- Label -->
-                      {% for product in producto %}
+                      {% for producto in object_list %}
                         <p class="mb-5">
-                          Color: <strong id="colorCaption">{{ product.color }}</strong>
+                          Color: <strong id="colorCaption">{{ producto.color }}</strong>
                         </p>
                       {% endfor %}
 
                       <!-- Radio -->
                       <div class="mb-8 ml-n1">
-                        <!--
                         <div class="custom-control custom-control-inline custom-control-img">
                           <input type="radio" class="custom-control-input" id="imgRadioOne" name="imgRadio" data-toggle="form-caption" data-target="#colorCaption" value="White" checked>
                           <label class="custom-control-label" for="imgRadioOne">
@@ -163,29 +163,17 @@
                           <label class="custom-control-label" for="imgRadioTwo">
                             <span class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-49.jpg);"></span>
                           </label>
-                        </div>-->
-                          {% for productocolor in productoscolor %}
-                          <div class="custom-control custom-control-inline custom-control-img">
-                            <input type="radio" class="custom-control-input" id="producto{{ productocolor.num_ref }}" name="imgRadio" data-toggle="form-caption" data-target="#colorCaption" value="{{productocolor.color}}">
-                            <label class="custom-control-label" for="producto{{ productocolor.num_ref }}">
-                              <a href="/producto/{{ productocolor.num_ref }}">
-                                <span class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{productocolor.imagen.url}});"></span>
-                              </a>
-                            </label>
-                          </div>
-                          {% endfor %}
+                        </div>
                       </div>
   
                     </div>
                     <div class="form-group">
   
                       <!-- Label -->
-                      {% for product in producto %}
-                        <p class="mb-5">
-                          Talla: <strong><span id="sizeCaption">{{ product.talla }}</span></strong>
-                        </p>
-                      {% endfor %}
-
+                      <p class="mb-5">
+                        Talla: <strong><span id="sizeCaption">7.5</span> EU</strong>
+                      </p>
+  
                       <!-- Radio -->
                       <div class="mb-2">
                         <div class="custom-control custom-control-inline custom-control-size mb-2">
@@ -273,6 +261,14 @@
                           </button>
   
                         </div>
+                        <div class="col-12 col-lg-auto">
+  
+                          <!-- Wishlist -->
+                          <button class="btn btn-outline-dark btn-block mb-2" data-toggle="button">
+                            Lista de deseos <i class="fe fe-heart ml-2"></i>
+                          </button>
+  
+                        </div>
                       </div>
   
                     </div>
@@ -285,6 +281,186 @@
         </div>
       </section>
   
+      <!-- DESCRIPTION -->
+      <section class="pt-11">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+  
+              <!-- Nav -->
+              <div class="nav nav-tabs nav-overflow justify-content-start justify-content-md-center border-bottom">
+                <a class="nav-link active" data-toggle="tab" href="#descriptionTab">
+                  Description
+                </a>
+                <a class="nav-link" data-toggle="tab" href="#sizeTab">
+                  Size & Fit
+                </a>
+                <a class="nav-link" data-toggle="tab" href="#shippingTab">
+                  Shipping & Return
+                </a>
+              </div>
+  
+              <!-- Content -->
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="descriptionTab">
+                  <div class="row justify-content-center py-9">
+                    <div class="col-12 col-lg-10 col-xl-8">
+                      <div class="row">
+                        <div class="col-12">
+  
+                          <!-- Text -->
+                          <p class="text-gray-500">
+                            Won't herb first male seas, beast. Let upon, female upon third fifth every. Man subdue rule after years herb after
+                            form. And image may, morning. Behold in tree day sea that together cattle whose. Fifth gathering brought
+                            bearing. Abundantly creeping whose. Beginning form have void two. A whose.
+                          </p>
+  
+                        </div>
+                        <div class="col-12 col-md-6">
+  
+                          <!-- List -->
+                          <ul class="list list-unstyled mb-md-0 text-gray-500">
+                            <li>
+                              <strong class="text-body">SKU</strong>: #61590437
+                            </li>
+                            <li>
+                              <strong class="text-body">Occasion</strong>: Lifestyle, Sport
+                            </li>
+                            <li>
+                              <strong class="text-body">Country</strong>: Italy
+                            </li>
+                          </ul>
+  
+                        </div>
+                        <div class="col-12 col-md-6">
+  
+                          <!-- List -->
+                          <ul class="list list-unstyled mb-0">
+                            <li>
+                              <strong>Outer</strong>: Leather 100%, Polyamide 100%
+                            </li>
+                            <li>
+                              <strong>Lining</strong>: Polyester 100%
+                            </li>
+                            <li>
+                              <strong>CounSoletry</strong>: Rubber 100%
+                            </li>
+                          </ul>
+  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="sizeTab">
+                  <div class="row justify-content-center py-9">
+                    <div class="col-12 col-lg-10 col-xl-8">
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+  
+                          <!-- Text -->
+                          <p class="mb-4">
+                            <strong>Fitting information:</strong>
+                          </p>
+  
+                          <!-- List -->
+                          <ul class="mb-md-0 text-gray-500">
+                            <li>
+                              Upon seas hath every years have whose
+                              subdue creeping they're it were.
+                            </li>
+                            <li>
+                              Make great day bearing.
+                            </li>
+                            <li>
+                              For the moveth is days don't said days.
+                            </li>
+                          </ul>
+  
+                        </div>
+                        <div class="col-12 col-md-6">
+  
+                          <!-- Text -->
+                          <p class="mb-4">
+                            <strong>Model measurements:</strong>
+                          </p>
+  
+                          <!-- List -->
+                          <ul class="list-unstyled text-gray-500">
+                            <li>Height: 1.80 m</li>
+                            <li>Bust/Chest: 89 cm</li>
+                            <li>Hips: 91 cm</li>
+                            <li>Waist: 65 cm</li>
+                            <li>Model size: M</li>
+                          </ul>
+  
+                          <!-- Size -->
+                          <p class="mb-0">
+                            <img src="assets/img/icons/icon-ruler.svg" alt="..." class="img-fluid">
+                            <a class="text-reset text-decoration-underline ml-3" data-toggle="modal" href="#modalSizeChart">Size chart</a>
+                          </p>
+  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="shippingTab">
+                  <div class="row justify-content-center py-9">
+                    <div class="col-12 col-lg-10 col-xl-8">
+  
+                      <!-- Table -->
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-sm table-hover">
+                          <thead>
+                            <tr>
+                              <th>Shipping Options</th>
+                              <th>Delivery Time</th>
+                              <th>Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Standard Shipping</td>
+                              <td>Delivery in 5 - 7 working days</td>
+                              <td>$8.00</td>
+                            </tr>
+                            <tr>
+                              <td>Express Shipping</td>
+                              <td>Delivery in 3 - 5 working days</td>
+                              <td>$12.00</td>
+                            </tr>
+                            <tr>
+                              <td>1 - 2 day Shipping</td>
+                              <td>Delivery in 1 - 2 working days</td>
+                              <td>$12.00</td>
+                            </tr>
+                            <tr>
+                              <td>Free Shipping</td>
+                              <td>
+                                Living won't the He one every subdue meat replenish
+                                face was you morning firmament darkness.
+                              </td>
+                              <td>$0.00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+  
+                      <!-- Caption -->
+                      <p class="mb-0 text-gray-500">
+                        May, life blessed night so creature likeness their, for. <a class="text-body text-decoration-underline" href="#!">Find out more</a>
+                      </p>
+  
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </section>
   
       <!-- PRODUCTS -->
       <section class="pt-11">
@@ -293,7 +469,7 @@
             <div class="col-12">
   
               <!-- Heading -->
-              <h4 class="mb-10 text-center">Te podría interesar</h4>
+              <h4 class="mb-10 text-center">You might also like</h4>
   
               <!-- Items -->
               <div class="row">

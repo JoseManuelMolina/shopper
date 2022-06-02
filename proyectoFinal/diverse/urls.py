@@ -35,7 +35,8 @@ urlpatterns = [
     path('faq', views.faq, name="faq"),
     path('envios-devoluciones', views.enviosDevoluciones, name="envios-devoluciones"),
     path('nosotros', views.nosotros, name="nosotros"),
-    path('producto/<int:pk>',views.productoSingle.as_view(), name="productoSingle"),
+    path('producto/<int:pk>',views.productoSingle, name="productoSingle"),
+    path('productov2/<int:pk>',views.productoSingle2.as_view(), name="productoSinglev2"),
 
 
     #BACKEND
@@ -65,11 +66,13 @@ urlpatterns = [
     path('backend/editar-marca/<int:pk>', viewsBackend.editarMarca.as_view(), name="editarMarca"),
     path('backend/editar-modelo/<int:pk>', viewsBackend.editarModelo.as_view(), name="editarModelo"),
     path('backend/editar-producto/<int:pk>', viewsBackend.editarProducto.as_view(), name="editarProducto"),
+    path('backend/eliminar-producto/<int:pk>', viewsBackend.eliminarProducto, name="eliminarProducto"),
+
+    
 
     path('backend/producto/<int:pk>', viewsBackend.verProductoSimple, name="verProductoSimple"),
     path('backend/imagenProducto/<int:primarykey>', viewsBackend.agregarFotos, name="agregarImagen"),
     path('backend/borrarImagenProducto/<int:pkproducto>/<int:pkfoto>', viewsBackend.eliminarFoto, name="borrarImagen"),
-
 
 
     path('ajax/load-modelos/', viewsBackend.load_modelos, name='ajax_load_modelos'),                            # AJAX

@@ -271,6 +271,13 @@ class editarProducto(LoginRequiredMixin, UpdateView):
     template_name = 'diverseBackend/producto_form.html'
     success_url = reverse_lazy('verProducto')
 
+@login_required
+def eliminarProducto(request, pk):
+    product = producto.objects.filter(num_ref = pk)
+    product.delete()
+    
+    return redirect('verProducto')
+
 @login_required  
 def agregarFotos(request, primarykey):
     if request.method == 'POST':
