@@ -237,21 +237,24 @@ def productoSingle(request, pk):
         modelo_id = productoSimpleDatos.modelo_id,
         talla_id = productoSimpleDatos.talla_id).exclude(color_id = productoSimpleDatos.color_id)
 
-    
-    productosTalla = producto.objects.filter(sexo_id = productoSimpleDatos.sexo_id, 
+    tallas = talla.objects.all()
+
+    productosTalla =producto.objects.filter(sexo_id = productoSimpleDatos.sexo_id, 
         categoria_id = productoSimpleDatos.categoria_id,
         subCategoria_id = productoSimpleDatos.subCategoria_id,
         marca_id = productoSimpleDatos.marca_id,
         modelo_id = productoSimpleDatos.modelo_id,
         color_id = productoSimpleDatos.color_id)
 
-    print(productosTalla.query)
-
+    for product in productosTalla:
+        print(product.num_ref)
 
     context = {
         'producto' : productoSimple,
         'imagenesextra' : imagenesExtra,
         'productoscolor' : productosColor,
+        'tallas' : tallas,
+        'productostalla' : productosTalla,
     }
 
     return render(request, 'diverse/producto_list.html', context)
