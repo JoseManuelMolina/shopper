@@ -216,7 +216,7 @@ def nosotros(request):
     context = {}
     return render(request, 'diverse/nosotros.html', context)
 
-class productoSingle(ListView):
+class productoSingle2(ListView):
     model = producto
     #context_object_name = 'productos'
     template_name: 'diverse/producto_list.html'
@@ -225,4 +225,16 @@ class productoSingle(ListView):
         qs = super().get_queryset(**kwargs)
         return qs.filter(num_ref = self.kwargs['pk'])
 
-   
+def productoSingle(request, pk):
+    
+    productoSimple = producto.objects.filter(num_ref = pk)
+    imagenesExtra = imagenProducto.objects.filter( producto_numref_id = pk)
+
+    print(imagenesExtra)
+
+    context = {
+        'producto' : productoSimple,
+        'imagenesextra' : imagenesExtra,
+    }
+
+    return render(request, 'diverse/producto_list_v2.html', context)

@@ -166,7 +166,7 @@ class producto(models.Model):
     def get_imagen_producto_filename(self):
         return str(self.imagen)[str(self.imagen).index(f'media/imagen/{self.sexo}/{self.categoria}/{self.subCategoria}/{self.marca}/{self.modelo}/{self.color}/'):]
 
-class imagenesProductos(models.Model):
+class imagenProducto(models.Model):
     producto_numref = models.ForeignKey(producto , related_name='imagenes', on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to=get_more_product_images_filepath, blank=True, null=True)
 

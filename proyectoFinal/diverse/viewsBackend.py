@@ -219,7 +219,7 @@ class verProducto(ListView):
 
 def verProductoSimple(request, pk):
     productoSimple = producto.objects.filter(num_ref = pk)
-    imagenesExtra = imagenesProductos.objects.filter(producto_numref_id = pk)
+    imagenesExtra = imagenProducto.objects.filter(producto_numref_id = pk)
     context = {
         'producto' : productoSimple,
         'imagenes' : imagenesExtra,
@@ -277,14 +277,14 @@ class editarProducto(LoginRequiredMixin, UpdateView):
 @login_required  
 def agregarFotos(request, primarykey):
     if request.method == 'POST':
-        form = ImagenProductoForm(request.POST, request.FILES)
+        form = imagenProductoForm(request.POST, request.FILES)
         
         if form.is_valid():
 
             imagenDatosForm = form.cleaned_data
 
             print(imagenDatosForm)
-            imagenDatos = imagenesProductos(
+            imagenDatos = imagenProducto(
                 imagen = imagenDatosForm['imagen'],
                 producto_numref_id = primarykey
             ) 
@@ -304,7 +304,7 @@ def agregarFotos(request, primarykey):
 
 @login_required
 def eliminarFoto(request, pkproducto ,pkfoto):
-    imagen = ImagenProducto.objects.filter(id=pkfoto)
+    imagen = imagenProducto.objects.filter(id=pkfoto)
     product = producto.objects.filter(num_ref = pkproducto)
     imagen.delete()
     

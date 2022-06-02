@@ -237,7 +237,7 @@ class productoForm(forms.ModelForm):
 
 class imagenProductoForm(ModelForm):
     class Meta:
-        model = imagenesProductos
+        model = imagenProducto
         fields = ['imagen'] 
 
     
