@@ -1,9 +1,20 @@
 from itertools import product
-from django.shortcuts import redirect, render
-from django.core.paginator import Paginator
+import re
+import stripe
 
-from django.views.generic import ListView, CreateView, UpdateView, TemplateView
-from django.views.generic.base import View
+from django.http import JsonResponse, HttpResponse
+from django.http.response import HttpResponseRedirect
+
+from urllib import request
+from django.urls import reverse
+from django.shortcuts import redirect, render
+from django.conf import settings
+from django.core.paginator import Paginator
+from django.core.mail import send_mail
+
+from django.views import View
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView, DeleteView
+from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password, check_password
@@ -16,9 +27,18 @@ from diverse.forms import *
 
 from django.urls import reverse_lazy
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 # Create your views here.
 
 # FRONTEND
+
+class SuccessView(TemplateView):
+    template_name = 'diverse/success.html'
+
+class CancelView(TemplateView):
+    template_name = 'diverse/cancel.html'
+
 def page_not_found_view(request, exception):
     return render(request, 'diverse/404.html', status=404)
 
@@ -171,6 +191,40 @@ class añadirCarrito(LoginRequiredMixin, TemplateView):
     
         context['carrito'] = carrito_obj
 
+class editarCarrito(LoginRequiredMixin, TemplateView):
+    template_name = 'diverse/carrito.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+
+class borrarProductoCarrito(LoginRequiredMixin, TemplateView):
+    template_name = 'diverse/carrito.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        pk = self.kwargs.get('pk')
+        productoCarrito_obj = productoCarrito.objects.get(id = pk)
+        carrito_obj = carrito.objects.get(id = productoCarrito_obj.carrito_id)
+
+        print(carrito_obj.precio)
+        carrito_obj.precio = carrito_obj.precio - productoCarrito_obj.precioTotal
+        print(carrito_obj.precio)
+        if (carrito_obj.precio < 60):
+            carrito_obj.gastosEnvio = 10
+        
+        if(carrito_obj.precio == 0):
+            carrito_obj.precioTotal = 0
+        else:
+            carrito_obj.precioTotal = carrito_obj.precio + carrito_obj.gastosEnvio
+        
+        carrito_obj.save()
+        productoCarrito_obj.delete()
+
+        context['carrito'] = carrito_obj
+
+        #return HttpResponseRedirect(reverse('verCarrito', args={ carrito_obj.id, }))
         return context
 
 def checkout(request):
@@ -342,3 +396,92 @@ def productoSingle(request, pk):
     }
 
     return render(request, 'diverse/producto_list.html', context)
+
+class vistaCheackout(TemplateView):
+    template_name = 'diverse/checkout.html'
+
+    def get_context_data(self, **kwargs):
+        direcciones_obj = direccion.objects.filter(usuario_id = self.request.user.id)
+        carrito_obj = carrito.objects.get(id = self.kwargs['pk'])
+        context = super(vistaCheackout, self).get_context_data(**kwargs)
+        context.update({
+            'direcciones': direcciones_obj,
+            'carrito': carrito_obj,
+            "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY
+        })
+        return context
+
+class CrearCheackoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        producto_numref = self.kwargs['pk']
+        producto_obj = producto.objects.get(num_ref = producto_numref)
+        print(producto_obj)
+        YOUR_DOMAIN = 'https://127.0.0.1:8000'
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price_data': {
+                        'currency': 'eur',
+                        'unit_amount': 110, #producto_obj.precio,
+                        'product_data': {
+                            'name': producto_obj.modelo.nombre,
+                        },
+                    },
+                    'quantity': 1,
+                },
+            ],
+            metadata={
+                'product_id': producto_obj.num_ref
+            },
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success/',
+            cancel_url=YOUR_DOMAIN + '/cancel/',
+        )
+        return JsonResponse({
+            'id': checkout_session.id
+        })
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+        payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        print('error')
+        return HttpResponse(status=500)
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+
+        customer_email = session['customer_details']['email']
+        product_id = session['metadata']['product_id']
+
+        produc = producto.objects.get(num_ref = product_id)
+
+        send_mail(
+            subject='Here is your product',
+            message='Thanks for your purchase. Here is your ordered',
+            recipient_list=[customer_email],
+            from_email='noreply@diverse.com'
+        )
+        print(session)
+        # Fulfill the purchase...
+        #fulfill_order(session)
+
+    # Passed signature verification
+    return HttpResponse(status=200)
+
+    #def fulfill_order(session):
+    # TODO: fill me in
+    #print("Fulfilling order")

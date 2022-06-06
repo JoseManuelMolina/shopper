@@ -12,7 +12,7 @@
             <!-- Breadcrumb -->
             <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
                 <li class="breadcrumb-item">
-                <a class="text-gray-400" href="index-2.html">Home</a>
+                <a class="text-gray-400" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">
                 Carrito
@@ -37,93 +37,98 @@
         </div>
         <div class="row">
           {% if carrito != None %}
-            <div class="col-12 col-md-7">
-            
-              <!-- List group -->
-              <ul class="list-group list-group-lg list-group-flush-x mb-6">
+            {% if carrito.productocarrito_set.all.count > 0 %}
+              <div class="col-12 col-md-7">
+              
+                <!-- List group -->
+                <ul class="list-group list-group-lg list-group-flush-x mb-6">
 
-                {% for productoCarrito in carrito.productocarrito_set.all %}
-                  <li class="list-group-item">
-                  <div class="row align-items-center">
-                      <div class="col-3">
+                  {% for productoCarrito in carrito.productocarrito_set.all %}
+                    <li class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-3">
 
-                      <!-- Image -->
-                      <a href="/producto/{{ productoCarrito.producto.num_ref }}">
-                          <img src="{{ productoCarrito.producto.imagen.url }}" alt="..." class="img-fluid">
-                      </a>
+                        <!-- Image -->
+                        <a href="/producto/{{ productoCarrito.producto.num_ref }}">
+                            <img src="{{ productoCarrito.producto.imagen.url }}" alt="..." class="img-fluid">
+                        </a>
 
-                      </div>
-                      <div class="col">
-
-                      <!-- Title -->
-                      <div class="d-flex mb-2 font-weight-bold">
-                          <a class="text-body" href="/producto/{{ productoCarrito.producto.num_ref }}">{{ productoCarrito.producto.modelo }}</a> <span class="ml-auto">{{ productoCarrito.producto.precio }}€</span>
-                      </div>
-
-                      <!-- Text -->
-                      <p class="mb-7 font-size-sm text-muted">
-                          Talla: {{ productoCarrito.producto.talla }} <br>
-                          Color: {{ productoCarrito.producto.color }}
-                      </p>
-
-                      <!--Footer -->
-                      <div class="d-flex align-items-center">
-
-                          <!-- Select -->
-                          <select class="custom-select custom-select-xxs w-auto">
-                          <option value="1">{{ productoCarrito.cantidad }}</option>
-                          </select>
-
-                          <!-- Remove -->
-                          <a class="font-size-xs text-gray-400 ml-auto" href="#!">
-                          <i class="fe fe-x"></i> Quitar
-                          </a>
-
-                      </div>
-
-                      </div>
-                  </div>
-                  </li>
-                {% endfor %}
-              </ul>
-
-              <!-- Footer -->
-              <div class="row align-items-end justify-content-between mb-10 mb-md-0">
-                  <div class="col-12 col-md-7">
-    
-                    <!-- Coupon -->
-                    <form class="mb-7 mb-md-0">
-                      <label class="font-size-sm font-weight-bold" for="cartCouponCode">
-                        Coupon code:
-                      </label>
-                      <div class="row form-row">
+                        </div>
                         <div class="col">
-    
-                          <!-- Input -->
-                          <input class="form-control form-control-sm" id="cartCouponCode" type="text" placeholder="Enter coupon code*">
-    
+
+                        <!-- Title -->
+                        <div class="d-flex mb-2 font-weight-bold">
+                            <a class="text-body" href="/producto/{{ productoCarrito.producto.num_ref }}">{{ productoCarrito.producto.marca }} {{ productoCarrito.producto.modelo }}</a> <span class="ml-auto">{{ productoCarrito.producto.precio }}€</span>
                         </div>
-                        <div class="col-auto">
-    
-                          <!-- Button -->
-                          <button class="btn btn-sm btn-dark" type="submit">
-                            Apply
-                          </button>
-    
+
+                        <!-- Text -->
+                        <p class="mb-7 font-size-sm text-muted">
+                            Talla: {{ productoCarrito.producto.talla }} <br>
+                            Color: {{ productoCarrito.producto.color }} 
+                        </p>
+
+                        <!--Footer -->
+                        <div class="d-flex align-items-center">
+
+                            <!-- Select -->
+                            <select class="custom-select custom-select-xxs w-auto cantidadProducto">
+                              <option value="{{ productoCarrito.cantidad }}">{{ productoCarrito.cantidad }}</option>
+                            </select>
+                            
+                            <a class="font-size-xs text-gray-400 ml-auto" href="/perfil/carrito/borrarProducto/{{ productoCarrito.id }}" onclick="return confirm('Are you sure do you want to delete {{i.name}}')">
+                              <i class="fe fe-x"></i> Quitar
+                            </a>
+
                         </div>
-                      </div>
-                    </form>
-    
+
+                        </div>
+                    </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+
+                <!-- Footer -->
+                <div class="row align-items-end justify-content-between mb-10 mb-md-0">
+                    <div class="col-12 col-md-7">
+      
+                      <!-- Coupon -->
+                      <form class="mb-7 mb-md-0">
+                        <label class="font-size-sm font-weight-bold" for="cartCouponCode">
+                          Coupon code:
+                        </label>
+                        <div class="row form-row">
+                          <div class="col">
+      
+                            <!-- Input -->
+                            <input class="form-control form-control-sm" id="cartCouponCode" type="text" placeholder="Enter coupon code*">
+      
+                          </div>
+                          <div class="col-auto">
+      
+                            <!-- Button -->
+                            <button class="btn btn-sm btn-dark" type="submit">
+                              Apply
+                            </button>
+      
+                          </div>
+                        </div>
+                      </form>
+      
+                    </div>
+                    <div class="col-12 col-md-auto">
+      
+                      <!-- Button -->
+                      <button class="btn btn-sm btn-outline-dark">Actualizar Carrito</button>
+      
+                    </div>
                   </div>
-                  <div class="col-12 col-md-auto">
-    
-                    <!-- Button -->
-                    <button class="btn btn-sm btn-outline-dark">Actualizar Carrito</button>
-    
-                  </div>
+      
                 </div>
-    
-              </div>
+              {% else %}
+                <div class="col-12 col-md-7">
+                  <span>El carrito esta vacio</span>
+                </div>
+              {% endif %}
             {% else %}
               <div class="col-12 col-md-7">
                 <span>El carrito esta vacio</span>
@@ -171,7 +176,7 @@
               </div>
   
               <!-- Button -->
-              <a class="btn btn-block btn-dark mb-2" href="checkout.html">Proceed to Checkout</a>
+              <a class="btn btn-block btn-dark mb-2" href="{% url 'checkout' carrito.id %}">Proceed to Checkout</a>
   
               <!-- Link -->
               <a class="btn btn-link btn-sm px-0 text-body" href="{{ request.META.HTTP_REFERER }}">
@@ -186,4 +191,5 @@
 {% endblock content %}
 
 {% block scriptsfooter %}
+  <script src="{% static 'js/scriptCarrito.js' %}"></script>
 {% endblock scriptsfooter %}

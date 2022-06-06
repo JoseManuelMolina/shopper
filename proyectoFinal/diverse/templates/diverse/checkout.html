@@ -1,1 +1,530 @@
-<h3>Checkout</h3>
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+
+<!-- BREADCRUMB -->
+<nav class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+          <li class="breadcrumb-item">
+            <a class="text-gray-400" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a class="text-gray-400" href="{% url 'verCarrito' %}">Carrito</a>
+          </li>
+          <li class="breadcrumb-item active">
+            Checkout
+          </li>
+        </ol>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<section class="pt-7 pb-12">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-7">
+
+        <!-- Form -->
+        <form>
+
+          <!-- Heading -->
+          <h6 class="mb-7">Detalles de envío</h6>
+
+          <h6 class="mb-7">Elegir una dirección existente</h6>
+
+          <div class="col-12 col-md-12 col-lg-12 px-0">
+            <div class="row">
+
+              {% for direccion in direcciones %}
+              <div class="col-12 col-lg-6">
+
+                <!-- Card -->
+                <div class="card card-lg bg-light mb-8">
+                  <div class="card-body direccionesCheckout" id="direccion{{ direccion.id }}" onclick="seleccionarDireccion(this)">
+
+                    <!-- Heading -->
+                    <h6 class="mb-6">
+                      Dirección {{ direccion.id }}
+                    </h6>
+
+                    <!-- Text -->
+                    <p class="text-muted mb-0">
+                      {{ direccion.nombre }} {{ direccion.apellidos }} <br>
+                      {{ direccion.direccion }} <br>
+                      {% if direccion.direccion2 != null %}
+                        {{ direccion.direccion2 }} <br>
+                      {% endif %} 
+                      {{ direccion.pais }} {{ direccion.provincia }} <br>
+                      {{ direccion.localidad }} {{ direccion.codigoPostal }} <br>
+                      {{ direccion.pais }} <br>
+                      {% if direccion.direccion_pref %}
+                        <i>Dirección elegida como preferida</i>
+                      {% endif %}
+                    </p>
+
+                  </div>
+                </div>
+
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="mb-9">
+
+            <!-- Checkbox -->
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" id="checkoutShippingAddress" type="checkbox">
+              <label class="custom-control-label font-size-sm" data-toggle="collapse" data-target="#checkoutShippingAddressCollapse" for="checkoutShippingAddress">
+                Enviar a una dirección distinta
+              </label>
+            </div>
+
+            <!-- Collapse -->
+            <div class="collapse" id="checkoutShippingAddressCollapse">
+              <div class="row mt-6">
+                
+                <div class="col-6">
+
+                  <!-- Nombre -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressNombre">Nombre *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressNombre" type="text" placeholder="Nombre">
+                  </div>
+
+                </div>
+                <div class="col-6">
+
+                  <!-- Apellidos -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressApellido">Apellidos *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressApellido" type="text" placeholder="Apellidos">
+                  </div>
+
+                </div>
+                <div class="col-12">
+
+                  <!-- Direccion -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressDireccion1">Dirección *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressDireccion1" type="text" placeholder="Dirección">
+                  </div>
+
+                </div>
+                <div class="col-12">
+
+                  <!-- Dirección 2 -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressDireccion2">Dirección 2</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressDireccion2" type="text" placeholder="Dirección 2 (optional)">
+                  </div>
+
+                </div>
+                <div class="col-6">
+
+                  <!-- País -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressPais">País *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressPais" type="text" placeholder="Pais">
+                  </div>
+
+                </div>
+                <div class="col-6">
+
+                  <!-- Provincia -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressProvincia">Provincia *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressProvincia" type="text" placeholder="Provincia">
+                  </div>
+
+                </div>
+                
+                <div class="col-6">
+
+                  <!-- Localidad  -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressTown">Localidad  *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressLocalidad " type="text" placeholder="Localidad">
+                  </div>
+
+                </div>
+                <div class="col-6">
+
+                  <!-- ZIP / Código Postal -->
+                  <div class="form-group">
+                    <label for="checkoutShippingAddressZIP">ZIP / Código Postal *</label>
+                    <input class="form-control form-control-sm" id="checkoutShippingAddressZIP" type="text" placeholder="ZIP / Código Postal">
+                  </div>
+
+                </div>
+                <div class="col-12">
+
+                  <!-- Button -->
+                  <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" id="guardarDireccion" type="checkbox">
+                    <label class="custom-control-label font-size-xs" for="guardarDireccion">
+                      Guardar dirección
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Heading -->
+          <h6 class="mb-7">Metodos Envíos</h6>
+
+          <!-- Shipping details -->
+          <div class="table-responsive mb-6">
+            <table class="table table-bordered table-sm table-hover mb-0">
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="custom-control custom-radio">
+                      <input class="custom-control-input" id="checkoutShippingStandard" name="shipping" type="radio">
+                      <label class="custom-control-label text-body text-nowrap" for="checkoutShippingStandard">
+                        Envío Estandar
+                      </label>
+                    </div>
+                  </td>
+                  <td>Envío en 5 - 7 días laborables</td>
+                  {% if carrito.gastosEnvio > 0 %}
+                    <td id="valorEnvioEstandar"></td>>{{ carrito.gastosEnvio }} €</td>
+                  {% else %}
+                    <td id="valorEnvioEstandar"><i>Gratis</i></td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <td>
+                    <div class="custom-control custom-radio">
+                      <input class="custom-control-input" id="checkoutShippingExpress" name="shipping" type="radio">
+                      <label class="custom-control-label text-body text-nowrap" for="checkoutShippingExpress">
+                        Envío Exprés
+                      </label>
+                    </div>
+                  </td>
+                  <td>Envío en 3 - 5 días laborables</td>
+                  <td id="valorEnvioExpress">15 €</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Heading -->
+          <h6 class="mb-7">Payment</h6>
+
+          <!-- List group -->
+          <div class="list-group list-group-sm mb-7">
+            <div class="list-group-item">
+
+              <!-- Radio -->
+              <div class="custom-control custom-radio">
+
+                <!-- Input -->
+                <input class="custom-control-input" id="checkoutPaymentCard" name="payment" type="radio" data-toggle="collapse" data-action="show" data-target="#checkoutPaymentCardCollapse">
+
+                <!-- Label -->
+                <label class="custom-control-label font-size-sm text-body text-nowrap" for="checkoutPaymentCard">
+                  Tarjeta de Credito <img class="ml-2" src="{% static '/img/brands/color/cards.svg' %}" alt="...">
+                </label>
+
+              </div>
+
+            </div>
+            <div class="list-group-item collapse py-0" id="checkoutPaymentCardCollapse">
+
+              <!-- Form -->
+              <div class="form-row py-5">
+                <div class="col-12">
+                  <div class="form-group mb-4">
+                    <label class="sr-only" for="checkoutPaymentCardNumber">Numero de tarjeta</label>
+                    <input class="form-control form-control-sm" id="checkoutPaymentCardNumber" type="text" placeholder="Numero de tarjeta *" required>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group mb-4">
+                    <label class="sr-only" for="checkoutPaymentCardName">Nombre del propietario de la tarjeta</label>
+                    <input class="form-control form-control-sm" id="checkoutPaymentCardName" type="text" placeholder="Nombre del propietario de la tarjeta *" required>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="form-group mb-md-0">
+                    <label class="sr-only" for="checkoutPaymentMonth">Mes</label>
+                    <select class="custom-select custom-select-sm" id="checkoutPaymentMonth">
+                      <option value="01">Enero</option> 
+                      <option value="02">Febrero</option> 
+                      <option value="03">Marzo</option> 
+                      <option value="04">Abril</option> 
+                      <option value="05">Mayo</option> 
+                      <option value="06">Junio</option> 
+                      <option value="07">Julio</option> 
+                      <option value="08">Agosto</option> 
+                      <option value="09">Septiembre</option> 
+                      <option value="10">Octubre</option> 
+                      <option value="11">Noviembre</option> 
+                      <option value="12">Diciembre</option> 
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="form-group mb-md-0">
+                    <label class="sr-only" for="checkoutPaymentCardYear">Año</label>
+                    <select class="custom-select custom-select-sm" id="checkoutPaymentCardYear">
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option> 
+                      <option value="2026">2026</option> 
+                      <option value="2027">2027</option> 
+                      <option value="2028">2028</option> 
+                      <option value="2029">2029</option> 
+                      <option value="2030">2030</option> 
+                      <option value="2031">2031</option> 
+                      <option value="2032">2032</option> 
+                      <option value="2033">2033</option> 
+                      <option value="2034">2034</option>
+                      <option value="2035">2035</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="input-group input-group-merge">
+                    <input class="form-control form-control-sm" id="checkoutPaymentCardCVV" type="text" placeholder="CVV *" required>
+                    <div class="input-group-append">
+                      <span class="input-group-text" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="The CVV Number on your credit card or debit card is a 3 digit number on VISA, MasterCard and Discover branded credit and debit cards.">
+                        <i class="fe fe-help-circle"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="list-group-item">
+
+              <!-- Radio -->
+              <div class="custom-control custom-radio">
+
+                <!-- Input -->
+                <input class="custom-control-input" id="checkoutPaymentPaypal" name="payment" type="radio" data-toggle="collapse" data-action="hide" data-target="#checkoutPaymentCardCollapse">
+
+                <!-- Label -->
+                <label class="custom-control-label font-size-sm text-body text-nowrap" for="checkoutPaymentPaypal">
+                  <img src="{% static '/img/brands/color/paypal.svg' %}" alt="...">
+                </label>
+
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
+
+        <!-- Heading -->
+        <h6 class="mb-7">Productos en la cesta ({{ carrito.productocarrito_set.all.count }})</h6>
+
+        <!-- Divider -->
+        <hr class="my-7">
+
+        <!-- List group -->
+        <ul class="list-group list-group-lg list-group-flush-y list-group-flush-x mb-7">
+
+          {% for productoCarrito in carrito.productocarrito_set.all %}
+            <li class="list-group-item">
+              <div class="row align-items-center">
+                <div class="col-4">
+
+                  <!-- Image -->
+                  <a href="/producto/{{ productoCarrito.producto.num_ref }}">
+                    <img src="{{ productoCarrito.producto.imagen.url }}" alt="..." class="img-fluid">
+                  </a>
+
+                </div>
+                <div class="col">
+
+                  <!-- Title -->
+                  <p class="mb-4 font-size-sm font-weight-bold">
+                    <a class="text-body" href="/producto/{{ productoCarrito.producto.num_ref }}">{{ productoCarrito.producto.marca }} {{ productoCarrito.producto.modelo }}</a> <br>
+                    <span class="text-muted">{{ productoCarrito.producto.precio }}€</span>
+                  </p>
+
+                  <!-- Text -->
+                  <div class="font-size-sm text-muted">
+                    Talla: {{ productoCarrito.producto.talla }} <br>
+                    Color: {{ productoCarrito.producto.color }} <br>
+                    Cantidad: {{ productoCarrito.cantidad }}
+                  </div>
+
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <!-- Card -->
+        <div class="card mb-9 bg-light">
+          <div class="card-body">
+            <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+              <li class="list-group-item d-flex">
+                <span>Subtotal</span> <span class="ml-auto font-size-sm" id="precioSpan">{{ carrito.precio }} €</span>
+              </li>
+              <li class="list-group-item d-flex">
+                {% if carrito.gastosEnvio > 0 %}
+                  <span>Envío</span> <span class="ml-auto font-size-sm" id="gastosEnvioSpan">{{ carrito.gastosEnvio }} €</span>
+                {% else %}
+                  <span>Envío</span> <span class="ml-auto font-size-sm" id="gastosEnvioSpan"><i>Gratis</i></span>
+                {% endif %}
+                
+              </li>
+              <li class="list-group-item d-flex font-size-lg font-weight-bold">
+                <span>Total</span> <span class="ml-auto" id="precioTotalSpan">{{ carrito.precioTotal }} €</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <p class="mb-7 font-size-xs text-gray-500">
+          Your personal data will be used to process your order, support
+          your experience throughout this website, and for other purposes
+          described in our privacy policy.
+        </p>
+
+        <!-- Button -->
+        <button class="btn btn-block btn-dark">
+          Realizar Pedido
+        </button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="bg-light py-9">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3">
+
+        <!-- Item -->
+        <div class="d-flex mb-6 mb-lg-0">
+
+          <!-- Icon -->
+          <i class="fe fe-truck font-size-lg text-primary"></i>
+
+          <!-- Body -->
+          <div class="ml-6">
+
+            <!-- Heading -->
+            <h6 class="heading-xxs mb-1">
+              Envío Gratis
+            </h6>
+
+            <!-- Text -->
+            <p class="mb-0 font-size-sm text-muted">
+              En los pedidos superiores a 60€
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+
+        <!-- Item -->
+        <div class="d-flex mb-6 mb-lg-0">
+
+          <!-- Icon -->
+          <i class="fe fe-repeat font-size-lg text-primary"></i>
+
+          <!-- Body -->
+          <div class="ml-6">
+
+            <!-- Heading -->
+            <h6 class="mb-1 heading-xxs">
+              Devoluciones Gratuitas
+            </h6>
+
+            <!-- Text -->
+            <p class="mb-0 font-size-sm text-muted">
+              Devolvemos el dinero en menos de 30 días
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+
+        <!-- Item -->
+        <div class="d-flex mb-6 mb-md-0">
+
+          <!-- Icon -->
+          <i class="fe fe-lock font-size-lg text-primary"></i>
+
+          <!-- Body -->
+          <div class="ml-6">
+
+            <!-- Heading -->
+            <h6 class="mb-1 heading-xxs">
+              Compra Segura
+            </h6>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+
+        <!-- Item -->
+        <div class="d-flex">
+
+          <!-- Icon -->
+          <i class="fe fe-tag font-size-lg text-primary"></i>
+
+          <!-- Body -->
+          <div class="ml-6">
+
+            <!-- Heading -->
+            <h6 class="mb-1 heading-xxs">
+              Más de 500 marcas
+            </h6>
+
+            <!-- Text -->
+            <p class="mb-0 font-size-sm text-muted">
+              Tenemos todo lo que necesitas
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block scriptsfooter %}
+  <script src="{% static 'js/scriptCheckout.js' %}"></script>
+{% endblock scriptsfooter %}

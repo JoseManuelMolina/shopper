@@ -16,6 +16,8 @@ from telnetlib import AUTHENTICATION
 from django.urls import reverse_lazy
 import os
 
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'account',
     'diverse',
     'widget_tweaks',
+    'stripe',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,6 +128,8 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
@@ -158,3 +163,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Claves Publicas y Privadas de STRIPE
+# https://codigofacilito.com/articulos/stripe-django
+
+
+STRIPE_PUBLIC_KEY = 'pk_test_51L7G8MIfqs54kPHLZLaG3R7VfsZ1RwnvYbqi6vViMG2ZYG6Z3Q4xfnaUQ9kcTslPlp1eJslKZuBbI6SFXbxphywL00DLPEe2Sd'
+STRIPE_SECRET_KEY = 'sk_test_51L7G8MIfqs54kPHLbI4Dvdi1Ob0uQPRaWcXkg1TT9EzMUzQXrJPXzPsV6rX4BjJBe9omo1cN0tyGWaXZSxYZ3soG00Pe82aHSF'
+STRIPE_WEBHOOK_SECRET = ''

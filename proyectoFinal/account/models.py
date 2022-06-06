@@ -2,6 +2,8 @@ from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+# from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
+
 import datetime
 
 # Crear nuevo usuario.

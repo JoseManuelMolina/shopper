@@ -131,3 +131,13 @@
 .productoRelacionadoLink:hover{
     color: #fff !important;
 }
+
+.direccionesCheckout:hover{
+    border: 3px solid black;
+    box-sizing: inherit;
+    cursor: pointer;
+}
+
+.direccionSeleccionada{
+    border: 3px solid black;
+}
