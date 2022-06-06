@@ -10,6 +10,22 @@
     background-image: url('../img/products/product-111.jpg');
 }
 
+.nav-image-mujer{
+    background-image: url('../img/products/product-110.jpg');
+}
+
+.nav-image-hombre{
+    background-image: url('../img/products/product-138.jpg');
+}
+
+.nav-image-nino{
+    background-image: url('../img/products/product-160.jpg');
+}
+
+.nav-image-nina{
+    background-image: url('../img/products/product-161.jpg');
+}
+
 .footer{
     background-image: url('../img/patterns/pattern-2.svg')
 }

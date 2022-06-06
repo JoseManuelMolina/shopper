@@ -256,7 +256,7 @@
                   <li class="nav-item dropdown position-static">
       
                     <!-- Toggle -->
-                    <a class="nav-link" data-toggle="dropdown" href="#">Mujer</a>
+                    <a class="nav-link" data-toggle="dropdown" href="#"  onclick="window.location.href='/catalogo/m'">Mujer</a>
       
                     <!-- Menu -->
                     <div class="dropdown-menu w-100">
@@ -267,56 +267,39 @@
                               <div class="col-4 col-md">
       
                                 <!-- Heading -->
-                                <div class="mb-5 font-weight-bold">Ropa</div>
+                                <div class="mb-5 font-weight-bold">Categorias</div>
       
                                 <!-- Links -->
                                 <ul class="list-styled mb-0 font-size-sm">
+                                  {% for cat in lista_nav.categoriasM %}
                                   <li class="list-styled-item">
-                                    <a class="list-styled-link" href="{% url 'catalogoM' %}">Vestidos</a>
+                                    <a class="list-styled-link" href="{% url 'catalogoM' %}">{{ cat.nombre }}</a>
                                   </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Camisas y blusas</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Boots</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Dresses</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Bags</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                  </li>
+                                  {% empty %}
+                                    <li class="list-styled-item">
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay categorias disponibles</a>
+                                    </li>
+                                  {% endfor %}
+                                  
                                 </ul>
       
                               </div>
                               <div class="col-4 col-md">
       
                                 <!-- Heading -->
-                                <div class="mb-5 font-weight-bold">Zapatos</div>
+                                <div class="mb-5 font-weight-bold">Marcas</div>
       
                                 <!-- Links -->
                                 <ul class="list-styled mb-0 font-size-sm">
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Clothing</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Shoes</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Coats & Jackets</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Bags</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Sneakers</a>
-                                  </li>
+                                  {% for marca in lista_nav.marcasM %}
+                                    <li class="list-styled-item">
+                                      <a class="list-styled-link" href="/catalogo">{{ marca.nombre }}</a>
+                                    </li>
+                                    {% empty %}
+                                    <li class="list-styled-item">
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay marcas disponibles</a>
+                                    </li>
+                                    {% endfor %}
 
                                 </ul>
       
@@ -346,6 +329,7 @@
                                   <li class="list-styled-item">
                                     <a class="list-styled-link" href="/catalogo">Boots</a>
                                   </li>
+                                
                                 </ul>
       
                               </div>
@@ -356,14 +340,13 @@
       
                                   <!-- Background -->
                                   <div class="card-bg">
-                                    <div class="card-bg-img bg-cover nav-image-discount"></div>
+                                    <div class="card-bg-img bg-cover nav-image-mujer"></div>
                                   </div>
       
                                   <!-- Body -->
                                   <div class="card-body my-auto text-center">
-                                    <a class="stretched-link text-white" href="/catalogo">
-                                      <h1 class="mb-1 font-weight-bolder text-uppercase">50% off</h1>
-                                      <h6>Women’s Watches</h6>
+                                    <a class="stretched-link text-white" href="/catalogo/m">
+                                      <h6>Ropa de mujer</h6>
                                     </a>
                                   </div>
       
@@ -381,7 +364,7 @@
                   <li class="nav-item dropdown position-static">
       
                     <!-- Toggle -->
-                    <a class="nav-link" data-toggle="dropdown" href="#">Hombre</a>
+                    <a class="nav-link" data-toggle="dropdown" href="#"  onclick="window.location.href='/catalogo/h'">Hombre</a>
       
                     <!-- Menu -->
                     <div class="dropdown-menu w-100">
@@ -392,57 +375,39 @@
                                 <div class="col-4 col-md">
         
                                   <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Ropa</div>
+                                  <div class="mb-5 font-weight-bold">Categorias</div>
         
                                   <!-- Links -->
                                   <ul class="list-styled mb-0 font-size-sm">
+                                    {% for cat in lista_nav.categoriasH %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="{% url 'catalogoH' %}">Vestidos</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoH' %}">{{cat.nombre}}</a>
                                     </li>
+                                    {% empty %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Camisas y blusas</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay categorias disponibles</a>
                                     </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Boots</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Dresses</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Bags</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
+                                    {% endfor %}
                                   </ul>
         
                                 </div>
                                 <div class="col-4 col-md">
         
                                   <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Zapatos</div>
+                                  <div class="mb-5 font-weight-bold">Marcas</div>
         
                                   <!-- Links -->
                                   <ul class="list-styled mb-0 font-size-sm">
+                                    {% for marca in lista_nav.marcasH %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Clothing</a>
+                                      <a class="list-styled-link" href="/catalogo">{{ marca.nombre }}</a>
                                     </li>
+                                    {% empty %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Shoes</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay marcas disponibles</a>
                                     </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Coats & Jackets</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Bags</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Sneakers</a>
-                                    </li>
-  
+                                    {% endfor %}
+
                                   </ul>
         
                                 </div>
@@ -481,14 +446,13 @@
         
                                     <!-- Background -->
                                     <div class="card-bg">
-                                      <div class="card-bg-img bg-cover nav-image-discount"></div>
+                                      <div class="card-bg-img bg-cover nav-image-hombre"></div>
                                     </div>
         
                                     <!-- Body -->
                                     <div class="card-body my-auto text-center">
-                                      <a class="stretched-link text-white" href="/catalogo">
-                                        <h1 class="mb-1 font-weight-bolder text-uppercase">50% off</h1>
-                                        <h6>Women’s Watches</h6>
+                                      <a class="stretched-link text-white" href="/catalogo/h">
+                                        <h6>Ropa de hombre</h6>
                                       </a>
                                     </div>
         
@@ -506,7 +470,7 @@
                   <li class="nav-item dropdown position-static">
       
                     <!-- Toggle -->
-                    <a class="nav-link" data-toggle="dropdown" href="#">Niño</a>
+                    <a class="nav-link" data-toggle="dropdown" href="#"  onclick="window.location.href='/catalogo/no'">Niño</a>
       
                      <!-- Menu -->
                     <div class="dropdown-menu w-100">
@@ -517,56 +481,38 @@
                                 <div class="col-4 col-md">
         
                                   <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Ropa</div>
+                                  <div class="mb-5 font-weight-bold">Categorias</div>
         
                                   <!-- Links -->
                                   <ul class="list-styled mb-0 font-size-sm">
+                                    {% for cat in lista_nav.categoriasNo %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">Vestidos</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">{{ cat.nombre }}</a>
                                     </li>
+
+                                    {% empty %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Camisas y blusas</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay categorias disponibles</a>
                                     </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Boots</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Dresses</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Bags</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                  </ul>
-        
+                                    {% endfor %}
+
                                 </div>
                                 <div class="col-4 col-md">
         
                                   <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Zapatos</div>
+                                  <div class="mb-5 font-weight-bold">Marcas</div>
         
                                   <!-- Links -->
                                   <ul class="list-styled mb-0 font-size-sm">
+                                    {% for marca in lista_nav.marcasNo %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Clothing</a>
+                                      <a class="list-styled-link" href="/catalogo">{{ marca.nombre }}</a>
                                     </li>
+                                    {% empty %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Shoes</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay marcas disponibles</a>
                                     </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Coats & Jackets</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Bags</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Sneakers</a>
-                                    </li>
+                                    {% endfor %}
   
                                   </ul>
         
@@ -606,14 +552,13 @@
         
                                     <!-- Background -->
                                     <div class="card-bg">
-                                      <div class="card-bg-img bg-cover nav-image-discount"></div>
+                                      <div class="card-bg-img bg-cover nav-image-nino"></div>
                                     </div>
         
                                     <!-- Body -->
                                     <div class="card-body my-auto text-center">
-                                      <a class="stretched-link text-white" href="/catalogo">
-                                        <h1 class="mb-1 font-weight-bolder text-uppercase">50% off</h1>
-                                        <h6>Women’s Watches</h6>
+                                      <a class="stretched-link text-white" href="/catalogo/no">
+                                        <h6>Ropa de niño</h6>
                                       </a>
                                     </div>
         
@@ -631,7 +576,7 @@
                   <li class="nav-item dropdown position-static">
       
                     <!-- Toggle -->
-                    <a class="nav-link" data-toggle="dropdown" href="#">Niña</a>
+                    <a class="nav-link" data-toggle="dropdown" href="#" onclick="window.location.href='/catalogo/na'">Niña</a>
       
                      <!-- Menu -->
                     <div class="dropdown-menu w-100">
@@ -642,56 +587,38 @@
                                 <div class="col-4 col-md">
         
                                   <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Ropa</div>
+                                  <div class="mb-5 font-weight-bold">Categorias</div>
         
                                   <!-- Links -->
                                   <ul class="list-styled mb-0 font-size-sm">
+                                    {% for cat in lista_nav.categoriasNa %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="{% url 'catalogoNa' %}">Vestidos</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNa' %}">{{ cat.nombre }}</a>
                                     </li>
+                                    {% empty %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Camisas y blusas</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay categorias disponibles</a>
                                     </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Boots</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Dresses</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Bags</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
+                                    {% endfor %}
                                   </ul>
         
                                 </div>
                                 <div class="col-4 col-md">
         
                                   <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Zapatos</div>
+                                  <div class="mb-5 font-weight-bold">Marcas</div>
         
                                   <!-- Links -->
                                   <ul class="list-styled mb-0 font-size-sm">
+                                    {% for marca in lista_nav.marcasNa %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Clothing</a>
+                                      <a class="list-styled-link" href="/catalogo">{{ marca.nombre }}</a>
                                     </li>
+                                    {% empty %}
                                     <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Shoes</a>
+                                      <a class="list-styled-link" href="{% url 'catalogoNo' %}">No hay marcas disponibles</a>
                                     </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Coats & Jackets</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Bags</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Sneakers</a>
-                                    </li>
+                                    {% endfor %}
   
                                   </ul>
         
@@ -731,14 +658,13 @@
         
                                     <!-- Background -->
                                     <div class="card-bg">
-                                      <div class="card-bg-img bg-cover nav-image-discount"></div>
+                                      <div class="card-bg-img bg-cover nav-image-nina"></div>
                                     </div>
         
                                     <!-- Body -->
                                     <div class="card-body my-auto text-center">
-                                      <a class="stretched-link text-white" href="/catalogo">
-                                        <h1 class="mb-1 font-weight-bolder text-uppercase">50% off</h1>
-                                        <h6>Women’s Watches</h6>
+                                      <a class="stretched-link text-white" href="/catalogo/na">
+                                        <h6>Ropa de niña</h6>
                                       </a>
                                     </div>
         

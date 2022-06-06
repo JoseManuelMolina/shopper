@@ -1,4 +1,5 @@
 from itertools import product
+from sys import flags
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
 
@@ -22,8 +23,70 @@ from django.urls import reverse_lazy
 def page_not_found_view(request, exception):
     return render(request, 'diverse/404.html', status=404)
 
+def funcionNav():
+    categoriasHId = producto.objects.filter(sexo_id=1).values_list("categoria_id", flat=True).distinct()
+    categoriasH = []
+    categoriasMId = producto.objects.filter(sexo_id=2).values_list("categoria_id", flat=True).distinct()
+    categoriasM = []
+    categoriasNoId = producto.objects.filter(sexo_id=3).values_list("categoria_id", flat=True).distinct()
+    categoriasNo = []
+    categoriasNaId = producto.objects.filter(sexo_id=4).values_list("categoria_id", flat=True).distinct()
+    categoriasNa = []
+
+    marcasHId = producto.objects.filter(sexo_id=1).values_list("marca_id", flat=True).distinct()
+    marcasH = []
+    marcasMId = producto.objects.filter(sexo_id=2).values_list("marca_id", flat=True).distinct()
+    marcasM = []
+    marcasNoId = producto.objects.filter(sexo_id=3).values_list("marca_id", flat=True).distinct()
+    marcasNo = []
+    marcasNaId = producto.objects.filter(sexo_id=4).values_list("marca_id", flat=True).distinct()
+    marcasNa = []
+
+    for i in marcasHId:
+        marcasH.append(marca.objects.get(id=i))
+
+    for j in marcasMId:
+        marcasM.append(marca.objects.get(id=j))
+
+    for u in marcasNoId:
+        marcasNo.append(marca.objects.get(id=u))
+
+    for r in marcasNaId:
+        marcasNa.append(marca.objects.get(id=r))
+
+    for w in categoriasNaId:
+        categoriasNa.append(categoria.objects.get(id=w))
+
+    for v in categoriasNoId:
+        categoriasNo.append(categoria.objects.get(id=v))
+    
+    for y in categoriasHId:
+        categoriasH.append(categoria.objects.get(id=y))
+
+    for x in categoriasMId:
+        categoriasM.append(categoria.objects.get(id=x))
+
+    contenido = {
+        'categoriasM' : categoriasM,
+        'categoriasH' : categoriasH,
+        'categoriasNo' : categoriasNo,
+        'categoriasNa' : categoriasNa,
+        'marcasH' : marcasH,
+        'marcasM' : marcasM,
+        'marcasNo' : marcasNo,
+        'marcasNa' : marcasNa,
+    }
+
+    return contenido
+
 def index(request):
-    context = {}
+
+    lista_nav = funcionNav()
+
+    context = {
+        "lista_nav" : lista_nav
+
+    }
     return render(request, 'diverse/index.html', context)
 
 @login_required(login_url='login')
@@ -191,6 +254,9 @@ def catalogoH(request):
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
 
+    
+    lista_nav = funcionNav()
+
     context = {
         "sexo" : "hombre",
         #"productos" : productosH,
@@ -200,8 +266,11 @@ def catalogoH(request):
         "tallas" : tallas,
         "categorias" : categorias,
         "subcategorias" : subcategorias,
-
+        "lista_nav" : lista_nav,
     }
+
+    print(context)
+
 
 
     return render(request, 'diverse/catalogo.html', context)
@@ -219,6 +288,7 @@ def catalogoM(request):
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
 
+    lista_nav = funcionNav()
 
 
     context = {
@@ -230,6 +300,7 @@ def catalogoM(request):
         "tallas" : tallas,
         "categorias" : categorias,
         "subcategorias" : subcategorias,
+        "lista_nav" : lista_nav,
 
     }
 
@@ -248,6 +319,9 @@ def catalogoNo(request):
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
 
+    lista_nav = funcionNav()
+
+
     context = {
         "sexo" : "niño",
         #"productos" : productosH,
@@ -257,6 +331,7 @@ def catalogoNo(request):
         "tallas" : tallas,
         "categorias" : categorias,
         "subcategorias" : subcategorias,
+        "lista_nav" : lista_nav,
 
     }
     return render(request, 'diverse/catalogo.html', context)
@@ -274,6 +349,9 @@ def catalogoNa(request):
     page_number = request.GET.get('page')
     productos_pagina = paginator.get_page(page_number)
 
+    lista_nav = funcionNav()
+
+
     context = {
         "sexo" : "niña",
         #"productos" : productosH,
@@ -283,6 +361,7 @@ def catalogoNa(request):
         "tallas" : tallas,
         "categorias" : categorias,
         "subcategorias" : subcategorias,
+        "lista_nav" : lista_nav,
 
     }
     return render(request, 'diverse/catalogo.html', context)

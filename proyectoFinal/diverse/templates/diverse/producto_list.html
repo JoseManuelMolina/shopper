@@ -202,60 +202,6 @@
                           <label class="custom-control-label" for="talla{{productotalla.talla.id}}"><a href="/producto/{{productotalla.num_ref}}" style="text-decoration: none; color: #000;">{{ productotalla.talla }}</a></label>
                         </div>
                         {% endfor %}
-
-                        <!--
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioTwo" value="6.5" data-toggle="form-caption" data-target="#sizeCaption" disabled>
-                          <label class="custom-control-label" for="sizeRadioTwo">6.5</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioThree" value="7" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioThree">7</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioFour" value="7.5" data-toggle="form-caption" data-target="#sizeCaption" checked>
-                          <label class="custom-control-label" for="sizeRadioFour">7.5</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioFive" value="8" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioFive">8</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioSix" value="8.5" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioSix">8.5</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioSeven" value="9" data-toggle="form-caption" data-target="#sizeCaption" disabled>
-                          <label class="custom-control-label" for="sizeRadioSeven">9</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioEight" value="9.5" data-toggle="form-caption" data-target="#sizeCaption" disabled>
-                          <label class="custom-control-label" for="sizeRadioEight">9.5</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioNine" value="10" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioNine">10</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioTen" value="10.5" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioTen">10.5</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioEleven" value="11" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioEleven">11</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioTwelve" value="12" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioTwelve">12</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioThirteen" value="13" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioThirteen">13</label>
-                        </div>
-                        <div class="custom-control custom-control-inline custom-control-size mb-2">
-                          <input type="radio" class="custom-control-input" name="sizeRadio" id="sizeRadioFourteen" value="14" data-toggle="form-caption" data-target="#sizeCaption">
-                          <label class="custom-control-label" for="sizeRadioFourteen">14</label>
-                        </div>-->
                       </div>
   
                       <!-- Size chart -->
@@ -278,12 +224,15 @@
   
                         </div>
                         <div class="col-12 col-lg">
-  
+                          
+                          {% for product in producto %}
                           <!-- Submit -->
-                          <button type="submit" class="btn btn-block btn-dark mb-2">
+                          <button type="submit" class="btn btn-block btn-dark mb-2" onclick="window.location.href='/perfil/añadir-carrito/{{ product.num_ref }}'">
                             Añadir al carrito <i class="fe fe-shopping-cart ml-2"></i>
                           </button>
   
+                          {% endfor %}
+                          
                         </div>
                       </div>
   
@@ -333,7 +282,7 @@
                           </button>
                         </span>
                         <span class="card-action">
-                          <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button">
+                          <button class="btn btn-xs btn-circle btn-white-primary" data-toggle="button" onclick="window.location.href='/perfil/añadir-carrito/{{ productorelacionado.num_ref }}'">
                             <i class="fe fe-shopping-cart"></i>
                           </button>
                         </span>
