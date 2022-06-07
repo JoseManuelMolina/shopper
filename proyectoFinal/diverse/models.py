@@ -150,7 +150,7 @@ class producto(models.Model):
         'talla', on_delete=models.SET_NULL, null=True
     )
     num_ref = models.PositiveBigIntegerField(primary_key=True, null=False, blank=True)
-    precio = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
+    precio = models.DecimalField(max_digits=10, decimal_places=0, validators=[MinValueValidator(1)])
     imagen = models.ImageField(max_length=255, upload_to=get_producto_imagenes_filepath, null=True, blank=True, default=get_default_imagen_producto())
 
     def __str__(self):
@@ -208,7 +208,6 @@ class productoCarrito(models.Model):
 
 class pedido(models.Model):
     
-    PENDIENTE = 'PEND'
     PAGADO = 'PAGD'
     ENVIADO = 'ENVI'
     RECIBIDO = 'RECB'
@@ -216,7 +215,6 @@ class pedido(models.Model):
     DEVUELTO = 'DELV'
 
     OPCIONES_ESTADO = [
-        (PENDIENTE, 'Pendiente'),
         (PAGADO, 'Pagado'),
         (ENVIADO, 'Enviado'),
         (RECIBIDO, 'Recibido'),
@@ -225,13 +223,18 @@ class pedido(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    id_cliente =  models.ForeignKey(
+    cliente =  models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    estado = models.CharField(max_length=4, choices=OPCIONES_ESTADO, default=PENDIENTE)
-    fecha = models.PositiveIntegerField()
-    total = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
+    carrito = models.ForeignKey(
+        'carrito',
+        on_delete=models.CASCADE,
+        null=True, blank=True
+    )
+    estado = models.CharField(max_length=4, choices=OPCIONES_ESTADO, default=PAGADO)
+    fecha = models.DateField()
+    total = models.DecimalField(max_digits=10, decimal_places=0, validators=[MinValueValidator(1)])
 
 class productos_pedido(models.Model):
     

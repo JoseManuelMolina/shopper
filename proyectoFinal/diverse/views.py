@@ -1,13 +1,16 @@
+from importlib.metadata import metadata
 from itertools import product
-import re
-import stripe
+from sys import flags
+from urllib import request
+from datetime import date
+
+import stripe, re
 
 from django.http import JsonResponse, HttpResponse
 from django.http.response import HttpResponseRedirect
 
-from urllib import request
 from django.urls import reverse
-from sys import flags
+
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.core.paginator import Paginator
@@ -29,6 +32,7 @@ from diverse.forms import *
 from django.urls import reverse_lazy
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 # Create your views here.
 
@@ -163,8 +167,16 @@ class editarDireccion(LoginRequiredMixin, UpdateView):
     model = direccion
     fields = '__all__'
     exclude = ['usuario', ]
-    template_name = 'diverse/crearDireccion.html'
+    template_name = 'diverse/editarDirecciones.html'
     success_url = reverse_lazy('direcciones')
+
+class verPedidos(LoginRequiredMixin, ListView):
+    model = pedido
+    context_object_name = 'pedidos'
+    template_name = 'diverse/pedidos.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(cliente_id=self.request.user.id, estado=1)
 
 class verCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
@@ -289,10 +301,6 @@ class borrarProductoCarrito(LoginRequiredMixin, TemplateView):
 
         #return HttpResponseRedirect(reverse('verCarrito', args={ carrito_obj.id, }))
         return context
-
-def checkout(request):
-    context = {}
-    return render(request, 'diverse/checkout.html', context)
 
 def catalogoH(request):
 
@@ -476,13 +484,20 @@ def productoSingle(request, pk):
 
     return render(request, 'diverse/producto_list.html', context)
 
-class vistaCheackout(TemplateView):
+# new
+@csrf_exempt
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPE_PUBLIC_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+class vistaCheckout(TemplateView):
     template_name = 'diverse/checkout.html'
 
     def get_context_data(self, **kwargs):
         direcciones_obj = direccion.objects.filter(usuario_id = self.request.user.id)
         carrito_obj = carrito.objects.get(id = self.kwargs['pk'])
-        context = super(vistaCheackout, self).get_context_data(**kwargs)
+        context = super(vistaCheckout, self).get_context_data(**kwargs)
         context.update({
             'direcciones': direcciones_obj,
             'carrito': carrito_obj,
@@ -490,77 +505,88 @@ class vistaCheackout(TemplateView):
         })
         return context
 
-class CrearCheackoutSessionView(View):
-    def post(self, request, *args, **kwargs):
-        producto_numref = self.kwargs['pk']
-        producto_obj = producto.objects.get(num_ref = producto_numref)
-        print(producto_obj)
-        YOUR_DOMAIN = 'https://127.0.0.1:8000'
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price_data': {
-                        'currency': 'eur',
-                        'unit_amount': 110, #producto_obj.precio,
-                        'product_data': {
-                            'name': producto_obj.modelo.nombre,
-                        },
-                    },
-                    'quantity': 1,
-                },
-            ],
-            metadata={
-                'product_id': producto_obj.num_ref
-            },
-            mode='payment',
-            success_url=YOUR_DOMAIN + '/success/',
-            cancel_url=YOUR_DOMAIN + '/cancel/',
-        )
-        return JsonResponse({
-            'id': checkout_session.id
-        })
+@csrf_exempt
+def crear_checkout_session(request, pk):
+    if request.method == 'GET':
+        domain_url = 'http://localhost:8000/'
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        
+        carrito_id = pk
+        carrito_obj = carrito.objects.get(id=carrito_id)
+        productos_carrito = productoCarrito.objects.filter(carrito_id=carrito_id)
+
+        line_items_list = []
+        metadata_list = {'carritoID':carrito_id}
+        metadata_list['cliente_id']=carrito_obj.cliente_id
+        for producto_obj in productos_carrito:
+            line_items_list.append({'name': producto_obj.producto.marca.nombre+' '+producto_obj.producto.modelo.nombre,'quantity': producto_obj.cantidad, 'currency': 'eur','amount': producto_obj.precio*100}),
+            metadata_list['producto_numref_'+str(producto_obj.producto.num_ref)]=producto_obj.producto.num_ref
+        try:
+            # Create new Checkout Session for the order
+            # Other optional params include:
+            # [billing_address_collection] - to display billing address details on the page
+            # [customer] - if you have an existing Stripe Customer ID
+            # [payment_intent_data] - capture the payment later
+            # [customer_email] - prefill the email input in the form
+            # For full details see https://stripe.com/docs/api/checkout/sessions/create
+
+            # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
+
+            checkout_session = stripe.checkout.Session.create(
+                success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=domain_url + 'cancel/',
+                customer_email = request.user.email,
+                payment_method_types=['card'],
+                mode='payment',
+                line_items = line_items_list,
+                metadata = metadata_list,
+            )
+            return JsonResponse({'sessionId': checkout_session['id']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
 
 @csrf_exempt
 def stripe_webhook(request):
-    payload = request.body
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    payload = request.body.decode('utf-8')
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
 
     try:
         event = stripe.Webhook.construct_event(
-        payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+            payload, sig_header, endpoint_secret
         )
     except ValueError as e:
         # Invalid payload
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        print('error')
         return HttpResponse(status=500)
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
 
-        customer_email = session['customer_details']['email']
-        product_id = session['metadata']['product_id']
+        carrito_id = session['metadata']['carritoID']
+        cliente_id = session['metadata']['cliente_id']
+        carrito_obj = carrito.objects.get(id=carrito_id)
 
-        produc = producto.objects.get(num_ref = product_id)
+        carrito_obj.estado = 1
+        carrito_obj.save()
+
+        pedido_obj = pedido.objects.create(cliente_id = cliente_id, carrito_id = carrito_id, total = carrito_obj.precioTotal, fecha = date.today())        
+
+        customer_email = session['customer_email']
+        productos_list = session['metadata']
 
         send_mail(
-            subject='Here is your product',
-            message='Thanks for your purchase. Here is your ordered',
+            subject='DIVERSE [ES] - Confirmación del pedido',
+            message='Gracias por su compra. Aqui estan los detalles de su pedido',
             recipient_list=[customer_email],
-            from_email='noreply@diverse.com'
+            from_email='noreplyDiverseES@gmail.com',
         )
-        print(session)
-        # Fulfill the purchase...
-        #fulfill_order(session)
+        #for producto_obj_list in productos_list:
+        #    print(session['metadata'][producto_obj_list])
+        # TODO: run some custom code here
 
-    # Passed signature verification
     return HttpResponse(status=200)
-
-    #def fulfill_order(session):
-    # TODO: fill me in
-    #print("Fulfilling order")

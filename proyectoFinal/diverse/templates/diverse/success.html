@@ -1,1 +1,36 @@
-Success!
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+
+<!-- CONTENT -->
+<section class="py-12">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6 text-center">
+
+          <!-- Icon -->
+          <div class="mb-7 font-size-h1">❤️</div>
+
+          <!-- Heading -->
+          <h2 class="mb-5">¡Se pedido ha sido realizado!</h2>
+
+          <!-- Text -->
+          <p class="mb-7 text-gray-500">
+            Tu pedido <span class="text-body text-decoration-underline">673290789</span> ha sido completado. Puede revisar los detalles de su pedido en su cuenta.
+          </p>
+
+          <!-- Button -->
+          <a class="btn btn-dark" href="{% url 'verPedidos' %}">
+            Ver Mis Pedidos
+          </a>
+
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block scriptsfooter %}
+{% endblock scriptsfooter %}

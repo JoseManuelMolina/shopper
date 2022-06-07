@@ -176,7 +176,11 @@
               </div>
   
               <!-- Button -->
-              <a class="btn btn-block btn-dark mb-2" href="{% url 'checkout' carrito.id %}">Proceed to Checkout</a>
+              {% if carrito != None %}
+                {% if carrito.productocarrito_set.all.count > 0 %}
+                  <a class="btn btn-block btn-dark mb-2" href="{% url 'checkout' carrito.id %}">Tramitar Pedido</a>
+                {% endif %}
+              {% endif %}
   
               <!-- Link -->
               <a class="btn btn-link btn-sm px-0 text-body" href="{{ request.META.HTTP_REFERER }}">
