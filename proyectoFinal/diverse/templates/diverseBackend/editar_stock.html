@@ -6,11 +6,11 @@
 
     {% for st in stock %}
     <h5 id="productoNumRef">{{ st.num_ref_producto_id }}</h5>
-    {% endfor %}
+   
     
     <label for="cantidad">Cantidad:</label>
-    <input type="number" step="1" min="1" max="999999" value="0" id="cantidad">
-
+    <input type="number" step="1" min="1" max="999999" value="{{st.cantidad}}" id="cantidad">
+    {% endfor %}
     <button onclick="add()">Añadir</button>
     <button onclick="less()">Eliminar</button>
 

@@ -114,6 +114,7 @@ def perfil(request):
     usuario = request.user
     contraseñaAntigua = usuario.password
     form = infoPersonal(instance=usuario)
+    lista_nav = funcionNav()
 
     if request.method == 'POST':
         form = infoPersonal(request.POST, instance=usuario)
@@ -135,12 +136,20 @@ def perfil(request):
     else:
         form = infoPersonal(instance=request.user)
     
-    return render(request, 'diverse/perfil.html', {'form':form, 'usuario':request.user})
+    return render(request, 'diverse/perfil.html', {'form':form, 'usuario':request.user, "lista_nav" : lista_nav})
 
 class direcciones(LoginRequiredMixin, ListView):
     model = direccion
     context_object_name = 'direcciones'
     template_name = 'diverse/direcciones.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(direcciones,self).get_context_data(**kwargs)
+        context.update({
+            'direcciones' : direccion.objects.all(),
+            "lista_nav" : funcionNav(),
+        })
+        return context
 
     def get_queryset(self):
         return super().get_queryset().filter(usuario=self.request.user.id)
@@ -157,7 +166,7 @@ def crearDireccion(request):
     else:
         form = direccionesForm(initial={'usuario': request.user.id})
 
-    return render(request, 'diverse/crearDireccion.html', {'form' : form})
+    return render(request, 'diverse/crearDireccion.html', {'form' : form, "lista_nav" : funcionNav()})
 
 class editarDireccion(LoginRequiredMixin, UpdateView):
     model = direccion
@@ -165,6 +174,13 @@ class editarDireccion(LoginRequiredMixin, UpdateView):
     exclude = ['usuario', ]
     template_name = 'diverse/crearDireccion.html'
     success_url = reverse_lazy('direcciones')
+
+    def get_context_data(self, **kwargs):
+        context = super(editarDireccion,self).get_context_data(**kwargs)
+        context.update({
+            "lista_nav" : funcionNav(),
+        })
+        return context
 
 class verCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
@@ -183,6 +199,9 @@ class verCarrito(LoginRequiredMixin, TemplateView):
             carrito_obj = None
 
         context['carrito'] = carrito_obj
+        context.update({
+            "lista_nav" : funcionNav(),
+        })
 
         return context
 
@@ -253,13 +272,19 @@ class añadirCarrito(LoginRequiredMixin, TemplateView):
             carrito_obj.save()
     
         context['carrito'] = carrito_obj
+        context.update({
+            "lista_nav" : funcionNav(),
+        })
 
 class editarCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context)
+        context.update({
+            "lista_nav" : funcionNav(),
+        })
+        #print(context)
 
 class borrarProductoCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
@@ -286,6 +311,9 @@ class borrarProductoCarrito(LoginRequiredMixin, TemplateView):
         productoCarrito_obj.delete()
 
         context['carrito'] = carrito_obj
+        context.update({
+            "lista_nav" : funcionNav(),
+        })
 
         #return HttpResponseRedirect(reverse('verCarrito', args={ carrito_obj.id, }))
         return context
