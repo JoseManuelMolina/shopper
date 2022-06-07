@@ -332,21 +332,13 @@ def eliminarFoto(request, pkproducto ,pkfoto):
 
 @login_required
 def verStock(request):
-    stock.objects.all()
     context = {
-        'stock' : stock,
+        'stock' : stock.objects.all(),
+        'productos' : producto.objects.all()
     }
     return render(request, 'diverseBackend/ver_stock.html', context)
 
-@login_required
-def verStockSingle(request, pk):
-    product = producto.objects.filter(num_ref = pk)
 
-    context = {
-        'producto' : product
-    }
-
-    return render(request, 'diverseBackend/ver_stock_single.html', context)
 
 
 class crearStock(LoginRequiredMixin, TemplateView):

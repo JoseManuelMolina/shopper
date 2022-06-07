@@ -18,11 +18,11 @@
                 <th scope="col" class="text-center">Editar</th>
               </tr></thead>
               <tbody>
-                {% for producto in stock %}
+                {% for st in stock %}
                 <tr>
-                  <th scope="row">{{ producto.num_ref_producto_id }}</th>
-                  <td>{{ producto.cantidad }}</td>
-                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit" onclick="editar()"><i class="fa fa-edit"></i></button></th>
+                  <th scope="row">{{ st.num_ref_producto_id }}</th>
+                  <td>{{ st.cantidad }}</td>
+                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit" onclick="window.location.href='/backend/crear-stock/{{ st.num_ref_producto_id }}'"><i class="fa fa-edit"></i></button></th>
                 </tr>
                 {% endfor %}
               </tbody>

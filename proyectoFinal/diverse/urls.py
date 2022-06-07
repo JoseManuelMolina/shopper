@@ -75,7 +75,7 @@ urlpatterns = [
     path('backend/eliminar-producto/<int:pk>', viewsBackend.eliminarProducto, name="eliminarProducto"),
 
     path('backend/ver-stock', viewsBackend.verStock, name='verStock'),
-    path('backend/ver-stock/<int:pk>', viewsBackend.verStockSingle, name="verStockSingle"),
+   # path('backend/ver-stock/<int:pk>', viewsBackend.verStockSingle, name="verStockSingle"),
     path('backend/crear-stock/<int:pk>', crearStock.as_view(), name='crearStock'),
     path('backend/editar-stock/<int:pk>', editarStock.as_view(), name='editarStock'),
     path('backend/stock/add/<int:numRef>/<int:cantidad>', addStock.as_view(), name="addStock"),
