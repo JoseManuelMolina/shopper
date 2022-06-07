@@ -408,7 +408,6 @@ def catalogoNa(request):
 
     context = {
         "sexo" : "niña",
-        #"productos" : productosH,
         "productos" : productos_pagina,
         "marcas" : marcas,
         "colores" : colores,
@@ -466,12 +465,15 @@ def productoSingle(request, pk):
 
     productosRelacionados = producto.objects.filter(sexo_id = productoSimpleDatos.sexo_id)[:4]
 
+    lista_nav = funcionNav()
+
     context = {
         'producto' : productoSimple,
         'imagenesextra' : imagenesExtra,
         'productoscolor' : productosColor,
         'productostalla' : productosTalla,
         'productosrelacionados' : productosRelacionados,
+        'lista_nav' : lista_nav
     }
 
     return render(request, 'diverse/producto_list.html', context)

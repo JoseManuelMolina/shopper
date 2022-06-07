@@ -1,6 +1,7 @@
 from cProfile import label
 from dataclasses import fields
 from tkinter import FLAT
+from tkinter.tix import Select
 from typing import Type
 from django import forms
 
@@ -240,4 +241,4 @@ class imagenProductoForm(ModelForm):
         model = imagenProducto
         fields = ['imagen'] 
 
-    
+

@@ -1,0 +1,38 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+{% load widget_tweaks %}
+
+    <h4>Editar stock del producto:</h4>
+
+    {% for st in stock %}
+    <h5 id="productoNumRef">{{ st.num_ref_producto_id }}</h5>
+    {% endfor %}
+    
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" step="1" min="1" max="999999" value="0" id="cantidad">
+
+    <button onclick="add()">Añadir</button>
+    <button onclick="less()">Eliminar</button>
+
+{% endblock content %}
+
+{% block scriptsfooter %}
+
+    <script>
+        function add(){
+            let numRef = document.getElementById("productoNumRef").innerText;
+            let cantidad = document.getElementById('cantidad').value;
+            let addurl = '/backend/stock/add/' + numRef + '/' + cantidad;
+            window.location.href = addurl;
+        }
+
+        function less(){
+            let numRef = document.getElementById("productoNumRef").innerText;
+            let cantidad = document.getElementById('cantidad').value;
+            let lessurl = '/backend/stock/less/' + numRef + '/' + cantidad;
+            window.location.href = lessurl;
+        }
+        
+    </script>
+
+{% endblock scriptsfooter %}

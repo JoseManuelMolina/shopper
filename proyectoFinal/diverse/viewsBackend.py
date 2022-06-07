@@ -1,5 +1,7 @@
 from audioop import reverse
 from math import prod
+from multiprocessing import get_context
+from pipes import Template
 from pyexpat import model
 import re
 from django.shortcuts import redirect, render
@@ -217,6 +219,16 @@ class verProducto(ListView):
     context_object_name = 'productos'
     template_name = 'diverseBackend/ver_producto.html'
 
+    def get_context_data(self, **kwargs):
+        context = {
+            'stocks' : stock.objects.all(),
+            'productos' : producto.objects.all(),
+            'numRefs' : list(set(producto.objects.all().values_list('num_ref', flat=True))),
+        }
+
+        return context
+
+
 def verProductoSimple(request, pk):
     productoSimple = producto.objects.filter(num_ref = pk)
     imagenesExtra = imagenProducto.objects.filter(producto_numref_id = pk)
@@ -297,32 +309,118 @@ def agregarFotos(request, primarykey):
 
             imagenDatosForm = form.cleaned_data
 
-            print(imagenDatosForm)
             imagenDatos = imagenProducto(
                 imagen = imagenDatosForm['imagen'],
                 producto_numref_id = primarykey
             ) 
 
-            print(request.FILES)
-
             imagenDatos.save()
             
         return redirect('verProductoSimple', pk=primarykey)
         
-        
     else:
         form = imagenProductoForm()
         
-
     return render(request, 'diverseBackend/imagenProducto.html', {'form' : form})
 
 @login_required
 def eliminarFoto(request, pkproducto ,pkfoto):
     imagen = imagenProducto.objects.filter(id=pkfoto)
-    product = producto.objects.filter(num_ref = pkproducto)
     imagen.delete()
     
     return redirect('verProductoSimple', pk=pkproducto)
+
+@login_required
+def verStock(request):
+    stock.objects.all()
+    context = {
+        'stock' : stock,
+    }
+    return render(request, 'diverseBackend/ver_stock.html', context)
+
+@login_required
+def verStockSingle(request, pk):
+    product = producto.objects.filter(num_ref = pk)
+
+    context = {
+        'producto' : product
+    }
+
+    return render(request, 'diverseBackend/ver_stock_single.html', context)
+
+
+class crearStock(LoginRequiredMixin, TemplateView):
+    template_name = "diverseBackend/crear_stock.html"
+
+
+    def get_context_data(self, **kwargs):
+
+        #obtiene el numRef del producto por la requested url
+        producto_numRef = self.kwargs['pk']
+        #obtener el producto
+        producto_obj = producto.objects.get(num_ref = producto_numRef)
+
+
+    def dispatch(self, request, *args, **kwargs):
+        producto_numRef = self.kwargs['pk']
+
+        try:
+            stock_producto = stock.objects.get(num_ref_producto_id = producto_numRef)
+        except stock.DoesNotExist:
+            stock_producto = -1
+
+        if(stock_producto == -1):
+            #si el stock es -1 crearmos el stock
+            stock_producto = stock.objects.create(cantidad=0, num_ref_producto_id = producto_numRef)
+            stock_producto.save()
+            print(stock_producto)
+
+        
+        return redirect('editarStock', pk=producto_numRef)
+
+
+
+class editarStock(LoginRequiredMixin, TemplateView):
+    template_name = "diverseBackend/editar_stock.html"
+
+    def get_context_data(self, **kwargs):
+        stock_obj = stock.objects.filter(num_ref_producto_id = self.kwargs['pk'])
+        context = super(editarStock, self).get_context_data(**kwargs)
+        context.update({
+            'stock' : stock_obj
+        })
+
+        return context
+
+class addStock(LoginRequiredMixin, TemplateView):
+    def dispatch(self, request, *args, **kwargs):
+        num_ref = self.kwargs['numRef']
+        cantidadPasada = self.kwargs['cantidad']
+
+        stockDado = stock.objects.get(num_ref_producto_id = num_ref)
+        cantidadAnterior = stockDado.cantidad
+        cantidadNueva = cantidadAnterior + cantidadPasada
+
+        stockDado.cantidad = cantidadNueva
+
+        stockDado.save()
+
+        return redirect('verProducto')
+
+class lessStock(LoginRequiredMixin, TemplateView):
+    def dispatch(self, request, *args, **kwargs):
+        num_ref = self.kwargs['numRef']
+        cantidadPasada = self.kwargs['cantidad']
+
+        stockDado = stock.objects.get(num_ref_producto_id = num_ref)
+        cantidadAnterior = stockDado.cantidad
+        cantidadNueva = cantidadAnterior - cantidadPasada
+
+        stockDado.cantidad = cantidadNueva
+
+        stockDado.save()
+
+        return redirect('verProducto')
 
 #--------------------------------------------------------------------- Obtener modelos ------------------------------------------------------------------------------
 # AJAX

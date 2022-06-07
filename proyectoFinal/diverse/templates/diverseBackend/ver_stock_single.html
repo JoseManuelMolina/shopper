@@ -1,0 +1,36 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-md-10">
+        <h3>Añadir Stock</h3>
+
+        <br>
+        {% for product in producto %}
+            <h4 id="num_ref" data-value="{{ product.num_ref }}"><b>Producto:</b> {{ product.num_ref }}</h4>
+        {% endfor %}
+
+        <form method="POST">
+            {% csrf_token %}
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input id="cantidad" type="number" min="1" step="1" value="0">
+                    </div>
+
+            <button type="button" class="btn btn-primary" onclick="addFunction()">Añadir</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scriptsfooter %}
+    <script>
+        function addFunction(){
+            let cantidad = document.getElementById("cantidad").value;
+            let num_ref = document.getElementById("num_ref").getAttribute('data-value');
+            let enlace = "/backend/crear-stock/" + num_ref +"/" + cantidad
+
+            window.location.href = enlace;
+        }
+
+    </script>
+{% endblock scriptsfooter %}

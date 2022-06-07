@@ -74,7 +74,14 @@ urlpatterns = [
     path('backend/editar-producto/<int:pk>', viewsBackend.editarProducto.as_view(), name="editarProducto"),
     path('backend/eliminar-producto/<int:pk>', viewsBackend.eliminarProducto, name="eliminarProducto"),
 
-    
+    path('backend/ver-stock', viewsBackend.verStock, name='verStock'),
+    path('backend/ver-stock/<int:pk>', viewsBackend.verStockSingle, name="verStockSingle"),
+    path('backend/crear-stock/<int:pk>', crearStock.as_view(), name='crearStock'),
+    path('backend/editar-stock/<int:pk>', editarStock.as_view(), name='editarStock'),
+    path('backend/stock/add/<int:numRef>/<int:cantidad>', addStock.as_view(), name="addStock"),
+    path('backend/stock/less/<int:numRef>/<int:cantidad>', lessStock.as_view(), name="lessStock"),
+
+
 
     path('backend/producto/<int:pk>', viewsBackend.verProductoSimple, name="verProductoSimple"),
     path('backend/imagenProducto/<int:primarykey>', viewsBackend.agregarFotos, name="agregarImagen"),

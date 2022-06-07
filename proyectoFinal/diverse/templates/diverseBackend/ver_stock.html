@@ -1,0 +1,37 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h4 class="card-title"> Tabla de stock</h4>
+          <button type="submit" class="btn btn-primary btn-round" onclick="window.location.href='/backend/crear-talla'"><a href="{% url 'crearTalla' %}" style="text-decoration: none; color: #fff">Crear Talla</a></button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th scope="col">NumRef</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col" class="text-center">Editar</th>
+              </tr></thead>
+              <tbody>
+                {% for producto in stock %}
+                <tr>
+                  <th scope="row">{{ producto.num_ref_producto_id }}</th>
+                  <td>{{ producto.cantidad }}</td>
+                  <th scope="row" class="text-center"><button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit" onclick="editar()"><i class="fa fa-edit"></i></button></th>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+</div>
+
+{% endblock content %}
