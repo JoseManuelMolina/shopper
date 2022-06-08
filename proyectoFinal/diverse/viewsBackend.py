@@ -300,6 +300,56 @@ def eliminarProducto(request, pk):
     
     return redirect('verProducto')
 
+@login_required
+def eliminarColor(request,pk):
+    col = color.objects.filter(id = pk)
+    col.delete()
+
+    return redirect('verColor')
+
+@login_required
+def eliminarTalla(request,pk):
+    obj = talla.objects.filter(id = pk)
+    obj.delete()
+
+    return redirect('verTalla')
+
+@login_required
+def eliminarSubCategoria(request,pk):
+    obj = subCategoria.objects.filter(id = pk)
+    obj.delete()
+
+    return redirect('verSubCategoria')
+
+@login_required
+def eliminarModelo(request,pk):
+    obj = modelo.objects.filter(id = pk)
+    obj.delete()
+
+    return redirect('verModelo')
+
+@login_required
+def eliminarCategoria(request, pk):
+    obj = categoria.objects.filter(id = pk)
+    obj_hijos = subCategoria.objects.filter(categoria_id = pk)
+
+    for h in obj_hijos:
+        h.delete()
+    obj.delete()
+
+    return redirect('verCategoria')
+
+@login_required
+def eliminarMarca(request, pk):
+    obj = marca.objects.filter(id = pk)
+    obj_hijos = modelo.objects.filter(marca_id = pk)
+
+    for h in obj_hijos:
+        h.delete()
+    obj.delete()
+
+    return redirect('verMarca')
+
 @login_required  
 def agregarFotos(request, primarykey):
     if request.method == 'POST':

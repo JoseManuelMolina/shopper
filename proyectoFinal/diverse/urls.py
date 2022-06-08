@@ -75,6 +75,12 @@ urlpatterns = [
     path('backend/editar-modelo/<int:pk>', viewsBackend.editarModelo.as_view(), name="editarModelo"),
     path('backend/editar-producto/<int:pk>', viewsBackend.editarProducto.as_view(), name="editarProducto"),
     path('backend/eliminar-producto/<int:pk>', viewsBackend.eliminarProducto, name="eliminarProducto"),
+    path('backend/eliminar-color/<int:pk>', viewsBackend.eliminarColor, name="eliminarColor"),
+    path('backend/eliminar-talla/<int:pk>', viewsBackend.eliminarTalla, name="eliminarTalla"),
+    path('backend/eliminar-subcategoria/<int:pk>', viewsBackend.eliminarSubCategoria, name="eliminarSubCategoria"),
+    path('backend/eliminar-modelo/<int:pk>', viewsBackend.eliminarModelo, name="eliminarModelo"),
+    path('backend/eliminar-categoria/<int:pk>', viewsBackend.eliminarCategoria, name="eliminarCategoria"),
+    path('backend/eliminar-marca/<int:pk>', viewsBackend.eliminarMarca, name="eliminarMarca"),
 
     path('backend/ver-stock', viewsBackend.verStock, name='verStock'),
    # path('backend/ver-stock/<int:pk>', viewsBackend.verStockSingle, name="verStockSingle"),
