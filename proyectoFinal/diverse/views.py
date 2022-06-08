@@ -24,10 +24,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from diverse.models import *
 from account.models import *
 from diverse.forms import *
+
+from django.db.models import Q
 
 from django.urls import reverse_lazy
 
@@ -103,12 +106,73 @@ def funcionNav():
 
     return contenido
 
+class filtros(TemplateView):
+    template_name = 'diverse/filter.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        try:
+            col = self.request.GET.get('color')
+            color_obj = color.objects.filter(id = col)
+        except:
+            col = -1
+            color_obj = color.objects.all()
+        try:
+            sc = self.request.GET.get('sc')       
+        except:
+            sc = -1
+        print("----------------------------------------")    
+        print('sc', sc) 
+
+        if sc != -1:
+            sc_obj = subCategoria.objects.filter(id = sc)
+        else:
+            sc_obj = subCategoria.objects.all()
+
+        try:
+            tall = request.GET('talla')
+            talla_obj = talla.objects.filter(id = tall)
+        except:
+            tall = -1
+            tall_obj = talla.objects.all()
+        print("----------------------------------------")    
+        print('talla', tall)
+
+        if tall != -1:
+            tall_obj = talla.objects.filter(id = sc)
+        else:
+            tall_obj = talla.objects.all()
+
+        try:
+            mc = request.GET('marca')
+            print('mc', mc)
+            marca_obj = marca.objects.filter(id = mc)
+        except:
+            mc = -1
+            marca_obj = marca.objects.all()
+
+        productos = ''
+
+        context ={
+            "color" : color_obj,
+            "subcategoria" : sc_obj,
+            "talla" : tall_obj,
+            "marca" : marca_obj,
+            'productos' : productos
+        }
+
+        print(context)
+
+        return context
+
 def index(request):
 
     lista_nav = funcionNav()
 
     context = {
-        "lista_nav" : lista_nav
+        "lista_nav" : lista_nav,
+        "productos" : producto.objects.all().distinct('modelo_id')
 
     }
     return render(request, 'diverse/index.html', context)
@@ -236,7 +300,8 @@ class verCarrito(LoginRequiredMixin, TemplateView):
 class añadirCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
 
-    def get_context_data(self, **kwargs):
+    #def get_context_data(self, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # obtiene el numRef del producto por la requested url
@@ -245,6 +310,16 @@ class añadirCarrito(LoginRequiredMixin, TemplateView):
         producto_obj = producto.objects.get(num_ref=producto_numRef)
         # obtiene los carritos del cliente
         carritos_usuario = carrito.objects.filter(cliente_id = self.request.user.id)
+
+        try:
+            st_producto = stock.objects.get(num_ref_producto_id = producto_numRef)
+            messages.error(request, 'Producto fuera de stock')
+        except:
+            return redirect('verCarrito')
+
+        if stock.objects.get(num_ref_producto_id = producto_numRef).cantidad <= 0:
+            messages.error(request, 'Producto fuera de stock')
+            return redirect('verCarrito')
 
         # chequea si el usuario tiene algun carrito
         if carritos_usuario.count() > 0:
@@ -259,6 +334,9 @@ class añadirCarrito(LoginRequiredMixin, TemplateView):
                 # producto ya existente en el carrito
                 if producto_en_carrito.exists():
                     productocarrito = producto_en_carrito.last()
+                    if stock.objects.get(num_ref_producto_id = producto_numRef).cantidad < productocarrito.cantidad+1:
+                        messages.error(request, 'Producto fuera de stock')
+                        return redirect('verCarrito')
                     productocarrito.cantidad += 1
                     productocarrito.precioTotal += producto_obj.precio
                     productocarrito.save()
@@ -301,6 +379,8 @@ class añadirCarrito(LoginRequiredMixin, TemplateView):
     
         context['carrito'] = carrito_obj
         context['lista_nav'] = funcionNav()
+
+        return redirect('verCarrito')
 
 class editarCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
@@ -348,7 +428,23 @@ def catalogoH(request):
     tallas = talla.objects.all()
     categorias = categoria.objects.all()
     subcategorias = subCategoria.objects.all()
-    productos = producto.objects.filter(sexo=1)
+    #productos = producto.objects.filter(sexo=1)
+
+    try:
+        order = request.GET['order']
+    except:
+        order = -1
+    print(order)
+    if order == -1:
+        productos = list(producto.objects.filter(sexo=1))
+    elif order == 0:
+        productos = list(producto.objects.filter(sexo=1).order_by('precio'))
+    else:
+        productos = list(producto.objects.filter(sexo=1).order_by('-precio'))
+
+    #print(productos)
+
+    #filtros(request)        
     
     paginator = Paginator(productos, 5)
 
@@ -359,7 +455,8 @@ def catalogoH(request):
     lista_nav = funcionNav()
 
     context = {
-        "sexo" : "hombre",
+        "sexo_obj" : 'h',
+        'sexo' : 'Hombre',
         #"productos" : productosH,
         "productos" : productos_pagina,
         "marcas" : marcas,
@@ -369,10 +466,6 @@ def catalogoH(request):
         "subcategorias" : subcategorias,
         "lista_nav" : lista_nav,
     }
-
-    print(context)
-
-
 
     return render(request, 'diverse/catalogo.html', context)
 
@@ -495,6 +588,7 @@ def productoSingle(request, pk):
     productoSimpleDatos = producto.objects.get(num_ref = pk)
     productoSimple = producto.objects.filter(num_ref = pk)
     imagenesExtra = imagenProducto.objects.filter( producto_numref_id = pk)
+    stock_obj = stock.objects.filter(num_ref_producto_id = pk)
 
     productosColor = producto.objects.filter(sexo_id = productoSimpleDatos.sexo_id, 
         categoria_id = productoSimpleDatos.categoria_id,
@@ -520,7 +614,8 @@ def productoSingle(request, pk):
         'productoscolor' : productosColor,
         'productostalla' : productosTalla,
         'productosrelacionados' : productosRelacionados,
-        'lista_nav' : lista_nav
+        'lista_nav' : lista_nav,
+        'stock' : stock_obj,
     }
 
     return render(request, 'diverse/producto_list.html', context)

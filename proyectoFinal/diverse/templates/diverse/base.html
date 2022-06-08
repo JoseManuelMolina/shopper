@@ -304,35 +304,7 @@
                                 </ul>
       
                               </div>
-                              <div class="col-4 col-md">
-      
-                                <!-- Heading -->
-                                <div class="mb-5 font-weight-bold">Accesorios</div>
-      
-                                <!-- Links -->
-                                <ul class="list-styled mb-0 font-size-sm">
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo>Clothing"></a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Shoes</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Sunglasses</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Denim</a>
-                                  </li>
-                                  <li class="list-styled-item">
-                                    <a class="list-styled-link" href="/catalogo">Boots</a>
-                                  </li>
-                                
-                                </ul>
-      
-                              </div>
+
                               <div class="d-none d-md-flex flex-column col-md-3">
       
                                 <!-- Card -->
@@ -411,34 +383,7 @@
                                   </ul>
         
                                 </div>
-                                <div class="col-4 col-md">
-        
-                                  <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Accesorios</div>
-        
-                                  <!-- Links -->
-                                  <ul class="list-styled mb-0 font-size-sm">
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Clothing</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Shoes</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Sunglasses</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Denim</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Boots</a>
-                                    </li>
-                                  </ul>
-        
-                                </div>
+
                                 <div class="d-none d-md-flex flex-column col-md-3">
         
                                   <!-- Card -->
@@ -517,34 +462,7 @@
                                   </ul>
         
                                 </div>
-                                <div class="col-4 col-md">
-        
-                                  <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Accesorios</div>
-        
-                                  <!-- Links -->
-                                  <ul class="list-styled mb-0 font-size-sm">
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Clothing</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Shoes</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Sunglasses</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Denim</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Boots</a>
-                                    </li>
-                                  </ul>
-        
-                                </div>
+
                                 <div class="d-none d-md-flex flex-column col-md-3">
         
                                   <!-- Card -->
@@ -623,34 +541,7 @@
                                   </ul>
         
                                 </div>
-                                <div class="col-4 col-md">
-        
-                                  <!-- Heading -->
-                                  <div class="mb-5 font-weight-bold">Accesorios</div>
-        
-                                  <!-- Links -->
-                                  <ul class="list-styled mb-0 font-size-sm">
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Clothing</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Shoes</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Accessories</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Sunglasses</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Denim</a>
-                                    </li>
-                                    <li class="list-styled-item">
-                                      <a class="list-styled-link" href="/catalogo">Boots</a>
-                                    </li>
-                                  </ul>
-        
-                                </div>
+
                                 <div class="d-none d-md-flex flex-column col-md-3">
         
                                   <!-- Card -->
@@ -717,6 +608,19 @@
       
             </div>
           </nav>
+          {% if messages %}
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                  {% for message in messages %}
+                  <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                  </div>
+                  {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
     {% block content %}
     {% endblock content %}
 

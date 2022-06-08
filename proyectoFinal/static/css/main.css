@@ -157,3 +157,7 @@
 .direccionSeleccionada{
     border: 3px solid black;
 }
+
+.fancybox-button--zoom{
+    display: none !important;
+}

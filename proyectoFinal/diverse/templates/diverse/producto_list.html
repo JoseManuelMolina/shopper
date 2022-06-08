@@ -135,7 +135,13 @@
                     {% for product in producto %}
                       <span class="ml-1 font-size-h5 font-weight-bolder text-primary">{{ product.precio }}€</span>
                     {% endfor %}
-                    <span class="font-size-sm ml-1">(In Stock)</span>
+                    {% for st in stock %}
+                      {% if st.cantidad > 0 %}
+                        <span class="font-size-sm ml-1">(Stock Disponible)</span>
+                      {% else %}
+                      <span class="badge badge-danger font-size-sm ml-1">(Fuera de Stock)</span>
+                      {% endif %}
+                    {% endfor %}
                   </div>
   
                   <!-- Form -->
@@ -227,10 +233,17 @@
                           
                           {% for product in producto %}
                           <!-- Submit -->
-                          <button type="submit" class="btn btn-block btn-dark mb-2" onclick="window.location.href='/perfil/añadir-carrito/{{ product.num_ref }}'">
-                            Añadir al carrito <i class="fe fe-shopping-cart ml-2"></i>
-                          </button>
-  
+                            {% for st in stock %}
+                              {% if st.cantidad > 0 %}
+                                <button type="submit" class="btn btn-block btn-dark mb-2" onclick="window.location.href='/perfil/añadir-carrito/{{ product.num_ref }}'">
+                                  Añadir al carrito <i class="fe fe-shopping-cart ml-2"></i>
+                                </button>
+                                {% else %}
+                                <button type="submit" class="btn btn-block btn-danger mb-2" onclick="window.location.href='/perfil/añadir-carrito/{{ product.num_ref }}'" disabled>
+                                  Añadir al carrito <i class="fe fe-shopping-cart ml-2"></i>
+                                </button>
+                                {% endif %}
+                            {% endfor %}
                           {% endfor %}
                           
                         </div>

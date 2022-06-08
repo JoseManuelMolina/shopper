@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import date
 
 from account.models import *
 
@@ -233,7 +234,7 @@ class pedido(models.Model):
         null=True, blank=True
     )
     estado = models.CharField(max_length=4, choices=OPCIONES_ESTADO, default=PAGADO)
-    fecha_pedido = models.DateField()
+    fecha_pedido = models.DateField(default=date.today)
     total = models.DecimalField(max_digits=10, decimal_places=0, validators=[MinValueValidator(1)])
 
 class productos_pedido(models.Model):

@@ -1,0 +1,40 @@
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <p>Resultados de filtros:</p>
+
+                <ul class="list=group">
+                    {% for cl in color %}
+                        <li>Color: {{ cl.nombre }}</li>
+                    {% endfor %}
+                    {% for sc in subcategoria %}
+                        <li>Subcategoria: {{ sc.nombre }}</li>
+                    {% endfor %}
+                    {% for tl in talla %}
+                    
+                        <li>Talla: {{ tl.nombre }}</li>
+                    {% endfor %}
+                    {% for mc in marca %}
+                        <li>Marca: {{ mc.nombre }}</li>
+                    {% endfor %}
+                </ul>
+                    
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% for pr in productos %}
+
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <a href="{% url 'index' %}">Volver al catalogo</a>
+            </div>
+        </div>
+    </div>
+{%  endblock content %}
