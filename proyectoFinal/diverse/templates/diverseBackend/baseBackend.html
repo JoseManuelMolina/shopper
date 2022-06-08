@@ -164,7 +164,16 @@
                         <p>PRODUCTO</p>
                       </a>
                     </li>
-
+                    {% if user.is_authenticated %}
+                      {% if user.is_admin %}
+                        <li>
+                          <a href="{% url 'backendRegistrarUsuario' %}" class="dropdown-item">
+                            <i class="nc-icon nc-tie-bow"></i>
+                            <p>USUARIO</p>
+                          </a>
+                        </li>
+                      {% endif %}
+                    {% endif %}
                     </li>
                   </ul>
                 </div>
@@ -201,7 +210,6 @@
                       </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                      <a class="dropdown-item" href="{% url 'backendPerfil' %}">Perfil</a>
                       <a class="dropdown-item" href="{% url 'index' %}">Volver a la tienda</a>
                       <a class="dropdown-item" href="{% url 'backendCerrarSesion' %}">Cerrar sesión</a>
                     </div>

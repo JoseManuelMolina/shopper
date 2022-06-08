@@ -47,6 +47,7 @@ urlpatterns = [
     path('nosotros', views.nosotros, name="nosotros"),
     path('producto/<int:pk>',views.productoSingle, name="productoSingle"),
     path('productov2/<int:pk>',views.productoSingle2.as_view(), name="productoSinglev2"),
+    path('catalogo/filter', views.filtros.as_view(), name="filtros"),
 
 
     #BACKEND

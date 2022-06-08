@@ -11,7 +11,7 @@
         <div class="col-12 col-md-4 col-lg-3">
 
           <!-- Filters -->
-          <form class="mb-10 mb-md-0">
+          <form class="mb-10 mb-md-0" method="GET" action="">
             <ul class="nav nav-vertical" id="filterNav">
               <li class="nav-item">
 
@@ -25,7 +25,7 @@
                   <div class="form-group">
                     <ul class="list-styled mb-0" id="productsNav">
                       <li class="list-styled-item">
-                        <a class="list-styled-link" href="#">
+                        <a class="list-styled-link" href="/catalogo/{{sexo_obj}}">
                           Todos los productos
                         </a>
                       </li>
@@ -34,17 +34,17 @@
                       <li class="list-styled-item">
 
                         <!-- Toggle -->
-                        <a class="list-styled-link" data-toggle="collapse" href="#cateogira{{categoria.id}}Collapse">
+                        <a class="list-styled-link" data-toggle="collapse" href="#categoria{{categoria.id}}Collapse">
                           {{categoria.nombre}}
                         </a>
 
                         <!-- Collapse -->
-                        <div class="collapse" id="cateogira{{categoria.id}}Collapse" data-parent="#productsNav">
+                        <div class="collapse" id="categoria{{categoria.id}}Collapse" data-parent="#productsNav">
                           <div class="py-4 pl-5">
 
                             {% for subcategoria in subcategorias|in_categoria:categoria %}
                             <div class="custom-control custom-checkbox mb-3">
-                              <input class="custom-control-input" id="sc{{subcategoria.id}}" type="checkbox">
+                              <input class="custom-control-input" id="sc{{subcategoria.id}}" type="radio" name="sc" value="{{subcategoria.id}}">
                               <label class="custom-control-label" for="sc{{subcategoria.id}}">
                                 {{subcategoria.nombre}}
                               </label>
@@ -77,7 +77,7 @@
 
                     {% for talla in tallas %}
                     <div class="custom-control custom-control-inline custom-control-size mb-2">
-                      <input class="custom-control-input" id="talla{{talla.id}}" type="checkbox">
+                      <input class="custom-control-input" id="talla{{talla.id}}" type="radio" name="talla" value="{{talla.id}}">
                       <label class="custom-control-label" for="talla{{talla.id}}">
                         {{talla.nombre}}
                       </label>
@@ -101,7 +101,7 @@
 
                     {% for color in colores%}
                     <div class="custom-control custom-control-color mb-3">
-                      <input class="custom-control-input" id="color{{color.id}}" type="checkbox">
+                      <input class="custom-control-input" id="color{{color.id}}" type="radio" name="color" value="{{color.id}}">
                       <label class="text-dark colores" for="color{{color.id}}">
                         <div class="colorCircle" data-color="{{color.hexcolor}}">
                           <i class="fas fa-check check-color" id="checkColor{{color.id}}"></i>
@@ -161,7 +161,7 @@
                         -->
                         {% for marca in marcas %}
                         <div class="custom-control custom-checkbox mb-3">
-                          <input class="custom-control-input" id="marca{{marca.id}}" type="checkbox">
+                          <input class="custom-control-input" id="marca{{marca.id}}" type="radio" name="marca" value="{{marca.id}}">
                           <label class="custom-control-label name" for="marca{{marca.id}}">
                             {{ marca.nombre }}
                           </label>
@@ -176,62 +176,9 @@
                 </div>
 
               </li>
-              <li class="nav-item">
 
-                <!-- Toggle -->
-                <a class="nav-link dropdown-toggle font-size-lg text-reset border-bottom mb-6" data-toggle="collapse" href="#priceCollapse">
-                  Precio
-                </a>
-
-                <!-- Collapse -->
-                <div class="collapse" id="priceCollapse" data-toggle="simplebar" data-target="#priceGroup">
-
-                  <!-- Form group-->
-                  <div class="form-group form-group-overflow mb-6" id="priceGroup">
-                    <div class="custom-control custom-checkbox mb-3">
-                      <input class="custom-control-input" id="priceOne" type="checkbox" checked>
-                      <label class="custom-control-label" for="priceOne">
-                        10.00€ - 49.00€
-                      </label>
-                    </div>
-                    <div class="custom-control custom-checkbox mb-3">
-                      <input class="custom-control-input" id="priceTwo" type="checkbox" checked>
-                      <label class="custom-control-label" for="priceTwo">
-                        50.00€ - 99.00€
-                      </label>
-                    </div>
-                    <div class="custom-control custom-checkbox mb-3">
-                      <input class="custom-control-input" id="priceThree" type="checkbox">
-                      <label class="custom-control-label" for="priceThree">
-                        100.00€ - 199.00€
-                      </label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                      <input class="custom-control-input" id="priceFour" type="checkbox">
-                      <label class="custom-control-label" for="priceFour">
-                        200.00€ en adelante
-                      </label>
-                    </div>
-                  </div>
-
-                  <!-- Range -->
-                  <div class="d-flex align-items-center">
-
-                    <!-- Input -->
-                    <input type="number" class="form-control form-control-xs" placeholder="10.00€" min="10">
-
-                    <!-- Divider -->
-                    <div class="text-gray-350 mx-2">‒</div>
-
-                    <!-- Input -->
-                    <input type="number" class="form-control form-control-xs" placeholder="350.00€" max="350">
-
-                  </div>
-
-                </div>
-
-              </li>
             </ul>
+                <button>Filtrar</button>
           </form>
 
         </div>
@@ -257,13 +204,15 @@
             </div>
             <div class="col-12 col-md-auto">
 
-              <!-- Select -->
-              <select class="custom-select custom-select-xs">
-                <option selected>Más vendidos</option>
-                <option>Más recientes</option>
-                <option>Precio más bajo</option>
-                <option>Precio más alto</option>
-              </select>
+              <form action="" method="GET">
+                  <!-- Select -->
+                  <select class="custom-select custom-select-xs" name="order" onchange="this.form.submit()">
+                    <option value="-1">Ordenar</option>
+                    <option value="0">Precio más bajo</option>
+                    <option value="1">Precio más alto</option>
+                  </select>
+              </form>
+              
 
             </div>
           </div>
