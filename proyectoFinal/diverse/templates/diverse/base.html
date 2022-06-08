@@ -252,7 +252,7 @@
               <div class="collapse navbar-collapse" id="navbarClassicCollapse">
       
                 <!-- Nav -->
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" style="flex:1">
                   <li class="nav-item dropdown position-static">
       
                     <!-- Toggle -->
@@ -682,17 +682,21 @@
                 </ul>
       
                 <!-- Brand -->
-                <a class="navbar-brand mx-auto d-none d-xl-block" href="/">
+                <a class="navbar-brand mx-auto d-none d-xl-block" href="/" style="flex:1">
                   Diverse
                 </a>
       
                 <!-- Nav -->
                 <ul class="navbar-nav flex-row">
+                  {% if user.is_authenticated %}
+                    {% if user.is_staff %}
                     <li class="nav-item ml-lg-n4">
-                    <a class="nav-link" href="/backend">
-                        <i class="fe fe-lock"></i>
-                    </a>
-                  </li>
+                      <a class="nav-link" href="/backend">
+                          <i class="fe fe-lock"></i>
+                      </a>
+                    </li>
+                    {% endif %}
+                  {% endif %}
                   <li class="nav-item ml-lg-n4">
                     <a class="nav-link" href="/perfil">
                       <i class="fe fe-user"></i>
