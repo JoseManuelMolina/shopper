@@ -1,0 +1,264 @@
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+
+<!-- BREADCRUMB -->
+<nav class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+
+          <!-- Breadcrumb -->
+          <ol class="breadcrumb mb-0 font-size-xs text-gray-400">
+            <li class="breadcrumb-item">
+              <a class="text-gray-400" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">
+              Mi Pedido
+            </li>
+          </ol>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <section class="pt-7 pb-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+
+          <!-- Heading -->
+          <h3 class="mb-10">Mi Pedido</h3>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-3">
+
+          <!-- Nav -->
+          <nav class="mb-10 mb-md-0">
+            <div class="list-group list-group-sm list-group-strong list-group-flush-x">
+              <a class="list-group-item list-group-item-action dropright-toggle active" href="{% url 'verPedidos' %}">
+                Pedidos
+              </a>
+              <a class="list-group-item list-group-item-action dropright-toggle" href="{% url 'perfil' %}">
+                Datos Personales
+              </a>
+              <a class="list-group-item list-group-item-action dropright-toggle" href="{% url 'direcciones' %}">
+                Direcciones
+              </a>
+              <a class="list-group-item list-group-item-action" href="#!">
+                Cerrar Sesion
+              </a>
+            </div>
+          </nav>
+
+
+        </div>
+        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+
+          <!-- Order -->
+          <div class="card card-lg mb-5 border">
+            <div class="card-body pb-0">
+
+              <!-- Info -->
+              <div class="card card-sm">
+                <div class="card-body bg-light">
+                  <div class="row">
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">Pedido ID:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-lg-0 font-size-sm font-weight-bold">
+                        {{pedido.id}}
+                      </p>
+
+                    </div>
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">Fecha de Compra:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-lg-0 font-size-sm font-weight-bold">
+                        <time datetime="2019-10-01">
+                            {{ pedido.fecha_pedido|date:'d-m-Y' }}
+                        </time>
+                      </p>
+
+                    </div>
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">Estado:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-0 font-size-sm font-weight-bold">
+                        {% if pedido.estado == 'PAGD' %}
+                          Envio Pendiente
+                        {% elif pedido.estado == 'ENVI' %}
+                          ENVIADO
+                        {% elif pedido.estado == 'RECB' %}
+                          COMPLETADO
+                        {% elif pedido.estado == 'DELV' %}
+                          DEVUELTO
+                        {% endif %}
+                      </p>
+
+                    </div>
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">Precio:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-0 font-size-sm font-weight-bold">
+                        {{ pedido.total }}€
+                      </p>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer">
+
+              <!-- Heading -->
+              <h6 class="mb-7">Productos Pedidos ({{pedido.carrito.productocarrito_set.all.count}})</h6>
+
+              <!-- Divider -->
+              <hr class="my-5">
+
+              <!-- List group -->
+              <ul class="list-group list-group-lg list-group-flush-y list-group-flush-x">
+                {% for productoCarrito in pedido.carrito.productocarrito_set.all %}
+                    <li class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-4 col-md-3 col-xl-2">
+
+                        <!-- Image -->
+                        <a href="/producto/{{ productoCarrito.producto.num_ref }}"><img src="{{ productoCarrito.producto.imagen.url }}" alt="..." class="img-fluid"></a>
+
+                        </div>
+                        <div class="col">
+
+                        <!-- Title -->
+                        <p class="mb-4 font-size-sm font-weight-bold">
+                            <a class="text-body" href="/producto/{{ productoCarrito.producto.num_ref }}">{{ productoCarrito.producto.marca }} {{ productoCarrito.producto.modelo }} x {{ productoCarrito.cantidad }}</a> <br>
+                            <span class="text-muted">{{ productoCarrito.precioTotal }}€</span>
+                        </p>
+
+                        <!-- Text -->
+                        <div class="font-size-sm text-muted">
+                            Talla: {{ productoCarrito.producto.talla }} <br>
+                            Color: {{ productoCarrito.producto.color }}
+                        </div>
+
+                        </div>
+                    </div>
+                    </li>
+                {% endfor %}
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Total -->
+          <div class="card card-lg mb-5 border">
+            <div class="card-body">
+
+              <!-- Heading -->
+              <h6 class="mb-7">Desglose Precio Pedido</h6>
+
+              <!-- List group -->
+              <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+                <li class="list-group-item d-flex">
+                  <span>Subtotal</span>
+                  <span class="ml-auto">{{ pedido.carrito.precio }}€</span>
+                </li>
+                <li class="list-group-item d-flex">
+                  <span>Envío</span>
+                  {% if pedido.carrito.gastosEnvio == 0 %}
+                    <span class="ml-auto"><i>Gratis</i></span>
+                  {% else %}
+                    <span class="ml-auto">{{ pedido.carrito.gastosEnvio }}€</span>
+                  {% endif %}
+                </li>
+                <li class="list-group-item d-flex font-size-lg font-weight-bold">
+                  <span>Total</span>
+                  <span class="ml-auto">{{ pedido.total }}€</span>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Details -->
+          <div class="card card-lg border">
+            <div class="card-body">
+
+              <!-- Heading -->
+              <h6 class="mb-7">Detalles Envío Pedido</h6>
+
+              <!-- Content -->
+              <div class="row">
+                <div class="col-12 col-md-4">
+
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Dirección Envío:
+                  </p>
+
+                  <p class="mb-7 mb-md-0 text-gray-500">
+                    Daniel Robinson, <br>
+                    3997 Raccoon Run, <br>
+                    Kingston, 45644, <br>
+                    United States, <br>
+                    6146389574
+                  </p>
+
+                </div>
+                <div class="col-12 col-md-4">
+
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Metodo Envío:
+                  </p>
+
+                  <p class="mb-7 text-gray-500">
+                    Standart Shipping <br>
+                    (5 - 7 days)
+                  </p>
+
+                </div>
+                <div class="col-12 col-md-4">
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Metodo de pago:
+                  </p>
+
+                  <p class="mb-0 text-gray-500">
+                    Debit Mastercard
+                  </p>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block scriptsfooter %}
+{% endblock scriptsfooter %}

@@ -27,14 +27,13 @@
   </div>
 </nav>
 
-<!-- CONTENT -->
 <section class="pt-7 pb-12">
   <div class="container">
     <div class="row">
       <div class="col-12 col-md-7">
 
         <!-- Form -->
-        <form>
+        <form class="formCheckout" id="payment-form">
 
           <!-- Heading -->
           <h6 class="mb-7">Detalles de envío</h6>
@@ -79,7 +78,7 @@
 
             </div>
           </div>
-
+          {% csrf_token %}
           <!-- Address -->
           <div class="mb-9">
 
@@ -202,7 +201,7 @@
                   </td>
                   <td>Envío en 5 - 7 días laborables</td>
                   {% if carrito.gastosEnvio > 0 %}
-                    <td id="valorEnvioEstandar"></td>>{{ carrito.gastosEnvio }} €</td>
+                    <td id="valorEnvioEstandar">{{ carrito.gastosEnvio }} €</td>
                   {% else %}
                     <td id="valorEnvioEstandar"><i>Gratis</i></td>
                   {% endif %}
@@ -223,114 +222,6 @@
             </table>
           </div>
 
-          <!-- Heading -->
-          <h6 class="mb-7">Payment</h6>
-
-          <!-- List group -->
-          <div class="list-group list-group-sm mb-7">
-            <div class="list-group-item">
-
-              <!-- Radio -->
-              <div class="custom-control custom-radio">
-
-                <!-- Input -->
-                <input class="custom-control-input" id="checkoutPaymentCard" name="payment" type="radio" data-toggle="collapse" data-action="show" data-target="#checkoutPaymentCardCollapse">
-
-                <!-- Label -->
-                <label class="custom-control-label font-size-sm text-body text-nowrap" for="checkoutPaymentCard">
-                  Tarjeta de Credito <img class="ml-2" src="{% static '/img/brands/color/cards.svg' %}" alt="...">
-                </label>
-
-              </div>
-
-            </div>
-            <div class="list-group-item collapse py-0" id="checkoutPaymentCardCollapse">
-
-              <!-- Form -->
-              <div class="form-row py-5">
-                <div class="col-12">
-                  <div class="form-group mb-4">
-                    <label class="sr-only" for="checkoutPaymentCardNumber">Numero de tarjeta</label>
-                    <input class="form-control form-control-sm" id="checkoutPaymentCardNumber" type="text" placeholder="Numero de tarjeta *" required>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group mb-4">
-                    <label class="sr-only" for="checkoutPaymentCardName">Nombre del propietario de la tarjeta</label>
-                    <input class="form-control form-control-sm" id="checkoutPaymentCardName" type="text" placeholder="Nombre del propietario de la tarjeta *" required>
-                  </div>
-                </div>
-                <div class="col-12 col-md-4">
-                  <div class="form-group mb-md-0">
-                    <label class="sr-only" for="checkoutPaymentMonth">Mes</label>
-                    <select class="custom-select custom-select-sm" id="checkoutPaymentMonth">
-                      <option value="01">Enero</option> 
-                      <option value="02">Febrero</option> 
-                      <option value="03">Marzo</option> 
-                      <option value="04">Abril</option> 
-                      <option value="05">Mayo</option> 
-                      <option value="06">Junio</option> 
-                      <option value="07">Julio</option> 
-                      <option value="08">Agosto</option> 
-                      <option value="09">Septiembre</option> 
-                      <option value="10">Octubre</option> 
-                      <option value="11">Noviembre</option> 
-                      <option value="12">Diciembre</option> 
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-4">
-                  <div class="form-group mb-md-0">
-                    <label class="sr-only" for="checkoutPaymentCardYear">Año</label>
-                    <select class="custom-select custom-select-sm" id="checkoutPaymentCardYear">
-                      <option value="2022">2022</option>
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025">2025</option> 
-                      <option value="2026">2026</option> 
-                      <option value="2027">2027</option> 
-                      <option value="2028">2028</option> 
-                      <option value="2029">2029</option> 
-                      <option value="2030">2030</option> 
-                      <option value="2031">2031</option> 
-                      <option value="2032">2032</option> 
-                      <option value="2033">2033</option> 
-                      <option value="2034">2034</option>
-                      <option value="2035">2035</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-4">
-                  <div class="input-group input-group-merge">
-                    <input class="form-control form-control-sm" id="checkoutPaymentCardCVV" type="text" placeholder="CVV *" required>
-                    <div class="input-group-append">
-                      <span class="input-group-text" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="The CVV Number on your credit card or debit card is a 3 digit number on VISA, MasterCard and Discover branded credit and debit cards.">
-                        <i class="fe fe-help-circle"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="list-group-item">
-
-              <!-- Radio -->
-              <div class="custom-control custom-radio">
-
-                <!-- Input -->
-                <input class="custom-control-input" id="checkoutPaymentPaypal" name="payment" type="radio" data-toggle="collapse" data-action="hide" data-target="#checkoutPaymentCardCollapse">
-
-                <!-- Label -->
-                <label class="custom-control-label font-size-sm text-body text-nowrap" for="checkoutPaymentPaypal">
-                  <img src="{% static '/img/brands/color/paypal.svg' %}" alt="...">
-                </label>
-
-              </div>
-
-            </div>
-          </div>
-
         </form>
 
       </div>
@@ -343,7 +234,7 @@
         <hr class="my-7">
 
         <!-- List group -->
-        <ul class="list-group list-group-lg list-group-flush-y list-group-flush-x mb-7">
+        <ul class="list-group list-group-lg list-group-flush-y list-group-flush-x mb-7 ulProductosCesta">
 
           {% for productoCarrito in carrito.productocarrito_set.all %}
             <li class="list-group-item">
@@ -360,7 +251,7 @@
 
                   <!-- Title -->
                   <p class="mb-4 font-size-sm font-weight-bold">
-                    <a class="text-body" href="/producto/{{ productoCarrito.producto.num_ref }}">{{ productoCarrito.producto.marca }} {{ productoCarrito.producto.modelo }}</a> <br>
+                    <a class="text-body" href="/producto/{{ productoCarrito.producto.num_ref }}"  data-value="{{ productoCarrito.producto.num_ref }}">{{ productoCarrito.producto.marca }} {{ productoCarrito.producto.modelo }}</a> <br>
                     <span class="text-muted">{{ productoCarrito.producto.precio }}€</span>
                   </p>
 
@@ -530,4 +421,7 @@
   <script src="{% static 'js/scriptCheckout.js' %}"></script>
   <script src="https://js.stripe.com/v3/"></script>
   <script src="{% static 'js/mainScript.js' %}"></script>
+  <script type="text/javascript">
+
+  </script>
 {% endblock scriptsfooter %}

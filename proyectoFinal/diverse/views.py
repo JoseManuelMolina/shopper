@@ -149,14 +149,13 @@ class direcciones(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(direcciones,self).get_context_data(**kwargs)
-        context.update({
-            'direcciones' : direccion.objects.all(),
-            "lista_nav" : funcionNav(),
-        })
+        context['direcciones'] = direccion.objects.filter(usuario_id=self.request.user.id)
+        context['lista_nav'] = funcionNav()
+
         return context
 
     def get_queryset(self):
-        return super().get_queryset().filter(usuario=self.request.user.id)
+        return super().get_queryset().filter(usuario_id=self.request.user.id)
 
 @login_required(login_url='login')
 def crearDireccion(request):
@@ -181,18 +180,37 @@ class editarDireccion(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(editarDireccion,self).get_context_data(**kwargs)
-        context.update({
-            "lista_nav" : funcionNav(),
-        })
+        context['lista_nav'] = funcionNav()
         return context
 
-class verPedidos(LoginRequiredMixin, ListView):
-    model = pedido
-    context_object_name = 'pedidos'
+class verPedidos(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/pedidos.html'
 
-    def get_queryset(self):
-        return super().get_queryset().filter(cliente_id=self.request.user.id, estado=1)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pedidos_obj = pedido.objects.filter(cliente_id=self.request.user.id)
+
+        paginator = Paginator(pedidos_obj, 3)
+
+        page_number = self.request.GET.get('page')
+        pedidos_pagina = paginator.get_page(page_number)
+
+        context['pedidos']=pedidos_obj
+        context['pedidos_lista']=pedidos_pagina
+
+        return context
+
+class verPedido(LoginRequiredMixin, TemplateView):
+    template_name = 'diverse/pedido.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pedido_id = self.kwargs['pk']
+        pedido_obj = pedido.objects.get(id=pedido_id, cliente_id=self.request.user.id)
+
+        context['pedido']=pedido_obj
+
+        return context
 
 class verCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
@@ -211,9 +229,7 @@ class verCarrito(LoginRequiredMixin, TemplateView):
             carrito_obj = None
 
         context['carrito'] = carrito_obj
-        context.update({
-            "lista_nav" : funcionNav(),
-        })
+        context['lista_nav'] = funcionNav()
 
         return context
 
@@ -284,18 +300,15 @@ class añadirCarrito(LoginRequiredMixin, TemplateView):
             carrito_obj.save()
     
         context['carrito'] = carrito_obj
-        context.update({
-            "lista_nav" : funcionNav(),
-        })
+        context['lista_nav'] = funcionNav()
 
 class editarCarrito(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/carrito.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            "lista_nav" : funcionNav(),
-        })
+        context['lista_nav'] = funcionNav()
+
         #print(context)
 
 class borrarProductoCarrito(LoginRequiredMixin, TemplateView):
@@ -323,9 +336,7 @@ class borrarProductoCarrito(LoginRequiredMixin, TemplateView):
         productoCarrito_obj.delete()
 
         context['carrito'] = carrito_obj
-        context.update({
-            "lista_nav" : funcionNav(),
-        })
+        context['lista_nav'] = funcionNav()
 
         #return HttpResponseRedirect(reverse('verCarrito', args={ carrito_obj.id, }))
         return context
@@ -521,7 +532,7 @@ def stripe_config(request):
         stripe_config = {'publicKey': settings.STRIPE_PUBLIC_KEY}
         return JsonResponse(stripe_config, safe=False)
 
-class vistaCheckout(TemplateView):
+class vistaCheckout(LoginRequiredMixin, TemplateView):
     template_name = 'diverse/checkout.html'
 
     def get_context_data(self, **kwargs):
@@ -546,6 +557,7 @@ def crear_checkout_session(request, pk):
         productos_carrito = productoCarrito.objects.filter(carrito_id=carrito_id)
 
         line_items_list = []
+        line_items_list.append({'name': 'Gastos Envío','currency': 'eur','quantity': 1, 'amount': carrito_obj.gastosEnvio*100}),
         metadata_list = {'carritoID':carrito_id}
         metadata_list['cliente_id']=carrito_obj.cliente_id
         for producto_obj in productos_carrito:
@@ -571,6 +583,7 @@ def crear_checkout_session(request, pk):
                 line_items = line_items_list,
                 metadata = metadata_list,
             )
+            print(checkout_session)
             return JsonResponse({'sessionId': checkout_session['id']})
         except Exception as e:
             return JsonResponse({'error': str(e)})
@@ -600,11 +613,17 @@ def stripe_webhook(request):
         carrito_id = session['metadata']['carritoID']
         cliente_id = session['metadata']['cliente_id']
         carrito_obj = carrito.objects.get(id=carrito_id)
+        productoCarrito_obj = productoCarrito.objects.filter(carrito_id=carrito_id)
 
         carrito_obj.estado = 1
         carrito_obj.save()
 
-        pedido_obj = pedido.objects.create(cliente_id = cliente_id, carrito_id = carrito_id, total = carrito_obj.precioTotal, fecha = date.today())        
+        for producto_obj in productoCarrito_obj:
+            stockProducto_obj = stock.objects.get(num_ref_producto_id=producto_obj.producto_id)
+            stockProducto_obj.cantidad = stockProducto_obj.cantidad-producto_obj.cantidad
+            stockProducto_obj.save()
+
+        pedido_obj = pedido.objects.create(cliente_id = cliente_id, carrito_id = carrito_id, total = carrito_obj.precioTotal, fecha_pedido = date.today())        
 
         customer_email = session['customer_email']
         productos_list = session['metadata']

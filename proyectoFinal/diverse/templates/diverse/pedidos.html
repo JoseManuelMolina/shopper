@@ -60,7 +60,7 @@
         </div>
         <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
 
-        {% for pedido in pedidos %}
+        {% for pedido in pedidos_lista %}
           <!-- Order -->
           <div class="card card-lg mb-5 border">
             <div class="card-body pb-0">
@@ -72,7 +72,7 @@
                     <div class="col-6 col-lg-3">
 
                       <!-- Heading -->
-                      <h6 class="heading-xxxs text-muted">Pedido Num. Ref:</h6>
+                      <h6 class="heading-xxxs text-muted">Pedido ID:</h6>
 
                       <!-- Text -->
                       <p class="mb-lg-0 font-size-sm font-weight-bold">
@@ -83,12 +83,12 @@
                     <div class="col-6 col-lg-3">
 
                       <!-- Heading -->
-                      <h6 class="heading-xxxs text-muted">Shipped date:</h6>
+                      <h6 class="heading-xxxs text-muted">Fecha de Compra:</h6>
 
                       <!-- Text -->
                       <p class="mb-lg-0 font-size-sm font-weight-bold">
                         <time datetime="2019-10-01">
-                          01 Oct, 2019
+                          {{ pedido.fecha_pedido|date:'d-m-Y' }}
                         </time>
                       </p>
 
@@ -96,22 +96,30 @@
                     <div class="col-6 col-lg-3">
 
                       <!-- Heading -->
-                      <h6 class="heading-xxxs text-muted">Status:</h6>
+                      <h6 class="heading-xxxs text-muted">Estado:</h6>
 
                       <!-- Text -->
                       <p class="mb-0 font-size-sm font-weight-bold">
-                        Awating Delivery
+                        {% if pedido.estado == 'PAGD' %}
+                          Envio Pendiente
+                        {% elif pedido.estado == 'ENVI' %}
+                          ENVIADO
+                        {% elif pedido.estado == 'RECB' %}
+                          COMPLETADO
+                        {% elif pedido.estado == 'DELV' %}
+                          DEVUELTO
+                        {% endif %}
                       </p>
 
                     </div>
                     <div class="col-6 col-lg-3">
 
                       <!-- Heading -->
-                      <h6 class="heading-xxxs text-muted">Order Amount:</h6>
+                      <h6 class="heading-xxxs text-muted">Precio:</h6>
 
                       <!-- Text -->
                       <p class="mb-0 font-size-sm font-weight-bold">
-                        $259.00
+                        {{ pedido.total }}€
                       </p>
 
                     </div>
@@ -122,55 +130,65 @@
             </div>
             <div class="card-footer">
               <div class="row align-items-center">
+              {% if pedido.carrito.productocarrito_set.all.count < 3 %}
                 <div class="col-12 col-lg-6">
                   <div class="form-row mb-4 mb-lg-0">
+                    {% for productoCarrito in pedido.carrito.productocarrito_set.all %}
+                      <div class="col-3">
+
+                        <!-- Image -->
+                        <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{productoCarrito.producto.imagen.url}});"></div>
+
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% else %}
+                <div class="col-12 col-lg-6">
+                  <div class="form-row mb-4 mb-lg-0">
+                    {% for productoCarrito in pedido.carrito.productocarrito_set.all %}
+                      {% if forloop.counter == 1%}
+                        <div class="col-3">
+
+                          <!-- Image -->
+                          <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{productoCarrito.producto.imagen.url}});"></div>
+
+                        </div>
+                      {% elif forloop.counter == 2%}
+                        <div class="col-3">
+
+                          <!-- Image -->
+                          <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{productoCarrito.producto.imagen.url}});"></div>
+
+                        </div>
+                      {% elif forloop.counter == 3%}
+                        <div class="col-3">
+
+                          <!-- Image -->
+                          <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url({{productoCarrito.producto.imagen.url}});"></div>
+
+                        </div>
+                      {% endif %}
+                    {% endfor %}
                     <div class="col-3">
-
-                      <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-5.jpg);"></div>
-
-                    </div>
-                    <div class="col-3">
-
-                      <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-112.jpg);"></div>
-
-                    </div>
-                    <div class="col-3">
-
-                      <!-- Image -->
-                      <div class="embed-responsive embed-responsive-1by1 bg-cover" style="background-image: url(assets/img/products/product-7.jpg);"></div>
-
-                    </div>
-                    <div class="col-3">
-
-                      <!-- Image -->
                       <div class="embed-responsive embed-responsive-1by1 bg-light">
-                        <a class="embed-responsive-item embed-responsive-item-text text-reset" href="#!">
+                        <a class="embed-responsive-item embed-responsive-item-text text-reset" href="{% url 'verPedido' pedido.id %}">
                           <div class="font-size-xxs font-weight-bold">
-                            +2 <br> more
+                            Más
                           </div>
                         </a>
                       </div>
-
                     </div>
                   </div>
                 </div>
+              {% endif %}
                 <div class="col-12 col-lg-6">
-                  <div class="form-row">
-                    <div class="col-6">
+                  <div class="form-row justify-content-end">
+                    <div class="col-6 ">
 
                       <!-- Button -->
-                      <a class="btn btn-sm btn-block btn-outline-dark" href="account-order.html">
-                        Order Details
-                      </a>
-
-                    </div>
-                    <div class="col-6">
-
-                      <!-- Button -->
-                      <a class="btn btn-sm btn-block btn-outline-dark" href="#!">
-                        Track order
+                      <a class="btn btn-sm btn-block btn-outline-dark" href="{% url 'verPedido' pedido.id %}">
+                        Detalles Pedido
                       </a>
 
                     </div>
@@ -184,36 +202,38 @@
         {% endfor %}
 
           <!-- Pagination -->
-          <nav class="d-flex justify-content-center justify-content-md-end mt-10">
-            <ul class="pagination pagination-sm text-gray-400">
+          <nav class="d-flex justify-content-center justify-content-md-end">
+            <ul class="pagination pagination-sm text-gray-400">  
+              {% if pedidos_lista.has_previous %}
               <li class="page-item">
-                <a class="page-link page-link-arrow" href="#">
-                  <i class="fa fa-caret-left"></i>
+                <a class="page-link page-link-arrow" href="?page=1">
+                  <i class="fas fa-angle-double-left"></i>
                 </a>
               </li>
+              <li class="page-item">
+                <a class="page-link page-link-arrow" href="?page={{ pedidos_lista.previous_page_number }}">
+                  <i class="fas fa-caret-left"></i>
+                </a>
+              </li>
+              {% endif %}
+              
               <li class="page-item active">
-                <a class="page-link" href="#">1</a>
+                <a class="page-link" href="?page={{ pedidos_lista.number }}">{{pedidos_lista.number}}</a>
               </li>
+              {% if pedidos_lista.has_next %}
               <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">5</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">6</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link page-link-arrow" href="#">
-                  <i class="fa fa-caret-right"></i>
+                <a class="page-link page-link-arrow" href="?page={{ pedidos_lista.next_page_number }}">
+                  <i class="fas fa-caret-right"></i>
                 </a>
               </li>
+              <li class="page-item">
+                <a class="page-link page-link-arrow" href="?page=9999">
+                  <i class="fas fa-angle-double-right"></i>
+                </a>
+              </li>
+              {% endif %}
+              
+              
             </ul>
           </nav>
 

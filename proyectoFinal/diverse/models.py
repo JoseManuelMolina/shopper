@@ -233,7 +233,7 @@ class pedido(models.Model):
         null=True, blank=True
     )
     estado = models.CharField(max_length=4, choices=OPCIONES_ESTADO, default=PAGADO)
-    fecha = models.DateField()
+    fecha_pedido = models.DateField()
     total = models.DecimalField(max_digits=10, decimal_places=0, validators=[MinValueValidator(1)])
 
 class productos_pedido(models.Model):

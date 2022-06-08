@@ -2,6 +2,11 @@
 
 console.log("Sanity check!");
 idCarrito = document.querySelector("#carritoId").value;
+productos = document.getElementsByClassName('ulProductosCesta')[0].getElementsByTagName('li');
+
+for (let i = 0; i < productos.length; i++) {
+  console.log((productos[i].children[0].children[1].children[0].getElementsByTagName('span')[0].textContent).substring(0, productos[i].children[0].children[1].children[0].getElementsByTagName('span')[0].textContent.length - 1));
+}
 
 // Get Stripe publishable key
 fetch("/config/")
@@ -13,8 +18,14 @@ fetch("/config/")
   // new
   // Event handler
   document.querySelector("#comprarBtn").addEventListener("click", () => {
+    form = document.querySelector('.formCheckout');
     // Get Checkout Session ID
-    fetch("/crear-checkout-session/"+idCarrito)
+    fetch("/crear-checkout-session/"+idCarrito,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
     .then((result) => { return result.json(); })
     .then((data) => {
       console.log(data);

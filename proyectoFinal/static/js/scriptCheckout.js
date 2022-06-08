@@ -1,17 +1,25 @@
 var direcciones = document.getElementsByClassName('direccionesCheckout');
+var botonDireccionNueva = document.getElementById('checkoutShippingAddress');
+var direccionNueva = document.getElementById('checkoutShippingAddressCollapse');
 
 function seleccionarDireccion(event) {
     for (let i = 0; i < direcciones.length; i++) {
         direcciones[i].classList.remove('direccionSeleccionada')
     }
     event.classList.add('direccionSeleccionada')
+    if(direccionNueva.classList.contains('show')){
+        botonDireccionNueva.click()
+        direccionNueva.classList.remove('show')
+    }
 }
 
-document.getElementById('checkoutShippingAddress').onclick  = function(){
+function quitarDirecciones (){
     for (let i = 0; i < direcciones.length; i++) {
         direcciones[i].classList.remove('direccionSeleccionada')
     }
 }
+
+botonDireccionNueva.onclick = quitarDirecciones;
 
 var estandar = document.getElementById('checkoutShippingStandard');
 var express = document.getElementById('checkoutShippingExpress');
