@@ -65,6 +65,7 @@ class Account(AbstractBaseUser):
     is_usuario          = models.BooleanField(default=True)
     is_staff            = models.BooleanField(default=False)
     is_superusuario     = models.BooleanField(default=False)
+    is_email_verificado = models.BooleanField(default=False)
     imagen_perfil       = models.ImageField(max_length=255, upload_to=get_imagen_perfil_filepath, null=True, blank=True, default=get_default_imagen_perfil())
     hide_email          = models.BooleanField(default=False)
 

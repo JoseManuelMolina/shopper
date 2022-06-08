@@ -1,0 +1,109 @@
+{% extends 'diverseBackend/baseBackend.html' %}
+{% block content %}
+{% load widget_tweaks %}
+    <div class="row">
+        <div class="col-xs-12 col-md-10">
+            <h3>Crear Usuario</h3>
+
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == 40 %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" id="productoForm" enctype="multipart/form-data" data-modelos-url="{% url 'ajax_load_modelos' %}" data-subcategoria-url="{% url 'ajax_load_subcategorias' %}" novalidate>
+                {% csrf_token %}
+
+                    {% for field in form.visible_fields %}
+                        {% if 'password' == field.name  %}
+                            <div class="form-group col-md-10">
+                                {% if 'num_ref' != field.name  %}
+                                    <label form="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {% endif %}
+    
+                                {% render_field field type='password' class="form-control" name="field.label" placeholder=field.label %}
+
+                                {% if 'num_ref' != field.name  %}
+                                    {% for error in field.errors %}
+                                    <br>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="nc-icon nc-simple-remove"></i>
+                                            </button>
+                                            <span><b> {{ field.label }} - </b>{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif  %}
+    
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label form="passwordConfirmar">Confirmar Contraseña</label>
+                                <input type="password" maxlength="128" name="passwordConfirmar" class="form-control" required="" id="passwordConfirmar" placeholder='Confirmar contraseña'>
+
+                                {% if errorContraseña != '' %}
+                                <br>
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="nc-icon nc-simple-remove"></i>
+                                        </button>
+                                        <span><b> Contraseña - </b>Las contraseñas no coinciden.</span>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                            <br>
+                        {% else  %}
+                            <div class="form-group col-md-10">
+                                {% if 'num_ref' != field.name  %}
+                                    <label form="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {% endif %}
+
+                                {% if 'email' == field.name  %}
+                                    {% render_field field type='email' class="form-control" name="field.label" placeholder=field.label %}
+                                {% else  %}
+                                    {% render_field field class="form-control" name="field.label" placeholder=field.label %}
+                                {% endif  %}
+                                
+
+                                {% if 'num_ref' != field.name  %}
+                                    {% for error in field.errors %}
+                                    <br>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="nc-icon nc-simple-remove"></i>
+                                            </button>
+                                            <span><b> {{ field.label }} - </b>{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else  %}
+                                    {% for error in field.errors %}
+                                        {{ field }}
+                                        {% if 'Ya existe Producto con este Num ref.' == error  %}
+                                        <br>
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <i class="nc-icon nc-simple-remove"></i>
+                                                    </button>
+                                                    <span>Este <b>producto</b> ya esta creado. Num Ref: <b>{{ field.value }}</b></span>
+                                                </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                <button type="submit" class="btn btn-primary" id="guardarProducto">Crear</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

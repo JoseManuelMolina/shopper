@@ -1,18 +1,9 @@
-from cProfile import label
-from dataclasses import fields
-from tkinter import FLAT
-from tkinter.tix import Select
-from typing import Type
 from django import forms
-
-from django.contrib.auth.models import User
-from django.urls import clear_script_prefix
 
 from diverse.models import *
 from account.models import *
 
-from django.db import models
-from django.forms import ModelChoiceField, ModelForm
+from django.forms import ModelForm
 
 
 # FORM FRONTEND
@@ -28,7 +19,13 @@ class direccionesForm(forms.ModelForm):
     class Meta:
         model = direccion
         fields = '__all__'
-        
+
+class registrarUsuarioForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('nombre', 'apellidos', 'username', 'email', 'telefono', 'password')
+
 
 # FORM BACKEND
 
@@ -38,6 +35,12 @@ class usuarioForm(forms.ModelForm):
         model = Account
         fields = '__all__'
         
+
+class registrarUsuarioBackendForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('nombre', 'apellidos', 'username', 'email', 'telefono', 'password', 'is_staff', 'is_admin')
 
 class imagenUsuario(forms.ModelForm):
 

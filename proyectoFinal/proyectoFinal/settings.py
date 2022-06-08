@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'verify_email.apps.VerifyEmailConfig',
 
 ]
 
@@ -170,3 +171,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STRIPE_PUBLIC_KEY = 'pk_test_51L7G8MIfqs54kPHLZLaG3R7VfsZ1RwnvYbqi6vViMG2ZYG6Z3Q4xfnaUQ9kcTslPlp1eJslKZuBbI6SFXbxphywL00DLPEe2Sd'
 STRIPE_SECRET_KEY = 'sk_test_51L7G8MIfqs54kPHLbI4Dvdi1Ob0uQPRaWcXkg1TT9EzMUzQXrJPXzPsV6rX4BjJBe9omo1cN0tyGWaXZSxYZ3soG00Pe82aHSF'
 STRIPE_WEBHOOK_SECRET = 'whsec_265b6aa9ed7ed338d36132444e4b39904194a71ed1c3d0076e2a382e71e70136'
+
+# EMAIL CONFIG
+
+DEFAULT_FROM_EMAIL = 'noreplydiversees@gmail.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'noreplydiversees@gmail.com'
+EMAIL_HOST_PASSWORD = 'cxep egon wgim coor'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587

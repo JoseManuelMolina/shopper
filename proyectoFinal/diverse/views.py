@@ -1,4 +1,4 @@
-from importlib.metadata import metadata
+from email import message
 from itertools import product
 from sys import flags
 from urllib import request
@@ -12,22 +12,31 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 
 from django.shortcuts import redirect, render
+from django.template import RequestContext
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 
 from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView, TemplateView, DeleteView
+from django.views.generic import ListView, UpdateView, TemplateView
 from django.views.decorators.csrf import csrf_exempt
 
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes,force_str,force_text,DjangoUnicodeDecodeError
+from .utils import generate_token
 
 from diverse.models import *
 from account.models import *
 from diverse.forms import *
+from django.contrib.auth.models import User
 
 from django.urls import reverse_lazy
 
@@ -38,6 +47,23 @@ endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 # FRONTEND
 
+def enviar_correo_activacion(user, request):
+    current_site = get_current_site(request)
+    email_subject = 'Activa tu cuenta en DIVERSE [ES]'
+    email_body = render_to_string('diverse/activar.html', {
+        'usuario': user.username,
+        'dominio': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': generate_token.make_token(user),
+    })
+
+    email = EmailMessage(subject=email_subject,body=email_body,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        to=[user.email]
+                        )
+
+    email.send()
+
 class SuccessView(TemplateView):
     template_name = 'diverse/success.html'
 
@@ -46,6 +72,64 @@ class CancelView(TemplateView):
 
 def page_not_found_view(request, exception):
     return render(request, 'diverse/404.html', status=404)
+
+def login_user(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST.get('loginEmail', False)
+        password = request.POST.get('loginPassword', False)
+
+        user = authenticate(email=username, password=password)
+        print(user)
+        if user is not None:
+            if user.is_email_verificado:
+                login(request, user)
+                return HttpResponseRedirect('perfil')
+            else:
+                messages.add_message(request, messages.ERROR, 'Debe verificar su cuenta para poder loguearse')
+    return render(request, 'diverse/login.html', {'request': RequestContext(request)})
+
+def registarUsuario(request):
+    errorContraseña = ''
+    if request.method == 'POST':
+        form = registrarUsuarioForm(request.POST)
+
+        print(form.errors)
+        if form.is_valid():
+            
+            usuarioDatosForm = form.cleaned_data
+            confirmarContraseña = request.POST.get('confirmarContraseña' , False)
+
+            if(usuarioDatosForm['password']==confirmarContraseña):
+            
+                contraseñaEncriptada=make_password(usuarioDatosForm['password'])
+                
+                usuarioDatos = Account(
+                    nombre = usuarioDatosForm['nombre'],
+                    apellidos = usuarioDatosForm['apellidos'],
+                    username = usuarioDatosForm['username'],
+                    email = usuarioDatosForm['email'],
+                    telefono = usuarioDatosForm['telefono'],
+                    password = contraseñaEncriptada,
+                    is_email_verificado = False,
+                )
+
+                usuarioDatos.save()
+                enviar_correo_activacion(usuarioDatos, request)
+
+                messages.add_message(request, messages.SUCCESS, '!Cuenta creada! Le hemos enviado un email de verificación, debe verificar su cuenta para loguearse')
+
+                return redirect('login')
+
+            errorContraseña = 'Error'
+
+        return render(request, 'diverse/registro.html', {'form' : form, 'errorContraseña': errorContraseña})
+    else:
+        form = registrarUsuarioForm()
+
+    return render(request, 'diverse/registro.html', {'form' : form, 'errorContraseña': errorContraseña})
+
 
 def funcionNav():
     categoriasHId = producto.objects.filter(sexo_id=1).values_list("categoria_id", flat=True).distinct()
@@ -639,3 +723,21 @@ def stripe_webhook(request):
         # TODO: run some custom code here
 
     return HttpResponse(status=200)
+
+def activate_user(request, uidb64, token):
+    try:
+        uid=force_text(urlsafe_base64_decode(uidb64))
+
+        user=Account.objects.get(pk=uid)
+
+    except Exception as e:
+        user = None
+
+    if user and generate_token.check_token(user,token):
+        user.is_email_verificado=True
+        user.save()
+
+        messages.add_message(request, messages.SUCCESS, 'Email verificado correctamente')
+        return redirect(reverse('login'))
+
+    return render(request,'diverse/error-activacion.html',{'user':user})

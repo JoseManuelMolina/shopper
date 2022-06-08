@@ -1,0 +1,131 @@
+{% extends 'diverse/base.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+
+<!-- CONTENT -->
+<section class="py-12">
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10">
+
+            <!-- Card -->
+            <div class="card card-lg">
+                <div class="card-body">
+
+                    <!-- Heading -->
+                    <h6 class="mb-7">Nuevo Cliente</h6>
+
+                    <!-- Form -->
+                    <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        {% for field in form.visible_fields %}
+                            {% if 'password' == field.name  %}
+                            <div class="col-12 col-md-6">
+
+                                <!-- Password -->
+                                <div class="form-group">
+                                    <label class="sr-only" for="registerPassword">
+                                        Contraseña *
+                                    </label>
+                                    {% render_field field class="form-control form-control-sm" type="password" name="field.label" placeholder='Contreña' %}
+                                </div>
+                    
+                            </div>
+                            <div class="col-12 col-md-6">
+                    
+                                <!-- Password -->
+                                <div class="form-group">
+                                    <label class="sr-only" for="registerPasswordConfirm">
+                                        Confirmar Contraseña *
+                                    </label>
+                                    <input class="form-control form-control-sm" id="registerPasswordConfirm" name="confirmarContraseña" type="password" placeholder="Confimar Contraseña *" required>
+                                </div>
+                    
+                            </div>
+                            {% elif 'telefono' == field.name  %}
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="registerFirstName">
+                                            {{ field.label}}
+                                        </label>
+                                        {% render_field field class="form-control form-control-sm" name="field.label" placeholder=field.label min="0" max="999999999" %}
+                                    </div>
+                                </div>
+                            {% else  %}
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="sr-only" for="registerFirstName">
+                                        {{ field.label}} *
+                                    </label>
+                                    {% render_field field class="form-control form-control-sm" name="field.label" placeholder=field.label %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% for error in field.errors %}
+                                {% if field.label == 'Email' %}
+                                    <div class="col-12">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="nc-icon nc-simple-remove"></i>
+                                            </button>
+                                            <span><b> {{ field.label }} - </b>Ya existe un usuario con este dirección de correo.</span>
+                                        </div>
+                                    </div>
+                                {% elif field.label == 'Username' %}
+                                    <div class="col-12">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="nc-icon nc-simple-remove"></i>
+                                            </button>
+                                            <span><b> {{ field.label }} - </b>Ya existe un usuario con este username.</span>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-12">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="nc-icon nc-simple-remove"></i>
+                                            </button>
+                                            <span><b> {{ field.label }} - </b>{{error}}</span>
+                                        </div>
+                                    </div>
+                                {% endif %}                            
+                            {% endfor %}
+
+                        {% endfor %}
+                        {% if errorContraseña != '' %}
+                            <div class="col-12">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="nc-icon nc-simple-remove"></i>
+                                    </button>
+                                    <span><b> Contraseña - </b>Las contraseñas no coinciden.</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="col-12">
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-dark" type="submit">
+                            Crear Cuenta
+                        </button>
+
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
+
+{% block scriptsfooter %}
+{% endblock scriptsfooter %}
